@@ -44,7 +44,5 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(name: AppRoutes.upload, page: () => UploadImageScreen()),
   GetPage(name: AppRoutes.discription, page: () => DiscriptionScreen()),
   GetPage(name: AppRoutes.setting, page: () => SettingScreen()),
-  GetPage(
-    
-    name: AppRoutes.profile, page: () => ProfileScreen()),
+  GetPage(name: AppRoutes.profile, page: () => ProfileScreen()),
 ];

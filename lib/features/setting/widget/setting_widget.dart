@@ -38,7 +38,7 @@ class SettingTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      EnumLocale.setting.name.tr,
+      EnumLocale.settings.name.tr,
       style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 18.sp),
       overflow: TextOverflow.ellipsis,
     );

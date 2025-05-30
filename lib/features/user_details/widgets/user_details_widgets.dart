@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:afriqueen/common/widgets/user_state.dart';
+import 'package:afriqueen/common/widgets/user_status.dart';
 import 'package:afriqueen/features/home/model/home_model.dart';
 import 'package:afriqueen/features/user_details/screen/user_details_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -45,7 +45,7 @@ class StackWidget extends StatelessWidget {
                   )
                   : null,
         ),
-        Positioned(top: 8.r, right: 8.r, child: UserState(id: widget.data.id)),
+        Positioned(top: 8.r, right: 8.r, child: UserStatus(id: widget.data.id)),
       ],
     );
   }

@@ -30,9 +30,9 @@ class LoginRepository {
       null; // Important: clear the credential if login fails!
 
       if (e.code == 'user-not-found') {
-        error = EnumLocale.userNotFounderro.name.tr;
+        error = EnumLocale.userNotFoundError.name.tr;
       } else if (e.code == 'wrong-password') {
-        error = EnumLocale.wrongPassworderror.name.tr;
+        error = EnumLocale.wrongPasswordError.name.tr;
       } else {
         error = e.message ?? EnumLocale.defaultError.name.tr;
       }

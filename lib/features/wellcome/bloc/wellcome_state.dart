@@ -1,11 +1,12 @@
 import 'package:equatable/equatable.dart';
+
 //------------------------------------------------ State------------------------------------
 class WellcomeState extends Equatable {
   final String? languageCode;
   const WellcomeState({this.languageCode});
 
   factory WellcomeState.initil() {
-    return WellcomeState(languageCode: 'en');
+    return WellcomeState(languageCode: 'fr');
   }
 
   WellcomeState copyWith({String? languageCode}) {

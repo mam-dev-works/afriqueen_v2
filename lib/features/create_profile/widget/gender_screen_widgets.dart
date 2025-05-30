@@ -25,7 +25,7 @@ class GenderDiscription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      EnumLocale.genderDiscription.name.tr,
+      EnumLocale.genderDescription.name.tr,
       style: Theme.of(context).textTheme.bodySmall,
     );
   }

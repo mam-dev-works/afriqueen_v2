@@ -19,7 +19,7 @@ class NameDiscription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      EnumLocale.nameDiscription.name.tr,
+      EnumLocale.nameDescription.name.tr,
       style: Theme.of(context).textTheme.bodySmall,
     );
   }

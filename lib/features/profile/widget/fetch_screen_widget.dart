@@ -34,7 +34,7 @@ class ArchiveListTile extends StatelessWidget {
       trailing: Icon(CupertinoIcons.forward),
       leading: Icon(HugeIcons.strokeRoundedArchive),
       title: Text(
-        EnumLocale.archieve.name.tr,
+        EnumLocale.archive.name.tr,
         style: Theme.of(context).textTheme.bodyMedium,
         overflow: TextOverflow.ellipsis,
       ),

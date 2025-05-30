@@ -134,11 +134,11 @@ class RegisterDiscription extends StatelessWidget {
         Expanded(
           child: Text.rich(
             TextSpan(
-              text: EnumLocale.registeringDescriptionTexts1.name.tr,
+              text: EnumLocale.registeringDescriptionText1.name.tr,
               style: Theme.of(context).textTheme.bodySmall,
               children: [
                 TextSpan(
-                  text: EnumLocale.registeringDescriptionTexts2.name.tr,
+                  text: EnumLocale.registeringDescriptionText2.name.tr,
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: AppColors.primaryColor,
                   ),
@@ -147,11 +147,11 @@ class RegisterDiscription extends StatelessWidget {
                         ..onTap = () => Get.toNamed(AppRoutes.conditionOfUse),
                 ),
                 TextSpan(
-                  text: EnumLocale.registeringDescriptionTexts3.name.tr,
+                  text: EnumLocale.registeringDescriptionText3.name.tr,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 TextSpan(
-                  text: EnumLocale.registeringDescriptionTexts4.name.tr,
+                  text: EnumLocale.registeringDescriptionText4.name.tr,
 
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: AppColors.primaryColor,

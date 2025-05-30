@@ -25,19 +25,19 @@ class AppStrings {
       EnumLocale.chatting.name.tr,
       EnumLocale.makingNewFriends.name.tr,
       EnumLocale.studyBuddy.name.tr,
-      EnumLocale.moviesNights.name.tr,
+      EnumLocale.movieNights.name.tr,
       EnumLocale.coffeeHangouts.name.tr,
     ],
     "Love & Romance": [
       EnumLocale.romanticDates.name.tr,
-      EnumLocale.candlight.name.tr,
+      EnumLocale.candlelight.name.tr,
       EnumLocale.sweet.name.tr,
       EnumLocale.slowDancing.name.tr,
       EnumLocale.loveLetters.name.tr,
     ],
 
     "Sports & Outdoors": [
-      EnumLocale.fotball.name.tr,
+      EnumLocale.football.name.tr,
       EnumLocale.yoga.name.tr,
       EnumLocale.hiking.name.tr,
       EnumLocale.running.name.tr,
@@ -51,7 +51,7 @@ class AppStrings {
       EnumLocale.baking.name.tr,
     ],
     "Adventure & Travel": [
-      EnumLocale.backPacking.name.tr,
+      EnumLocale.backpacking.name.tr,
       EnumLocale.roadTrips.name.tr,
       EnumLocale.soloTravel.name.tr,
       EnumLocale.camping.name.tr,

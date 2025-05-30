@@ -1,6 +1,6 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/widgets/seniority.dart';
-import 'package:afriqueen/common/widgets/user_state.dart';
+import 'package:afriqueen/common/widgets/user_status.dart';
 import 'package:afriqueen/features/profile/bloc/profile_bloc.dart';
 import 'package:afriqueen/features/profile/bloc/profile_state.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
@@ -217,7 +217,7 @@ class ProfileImage extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topRight,
 
-                child: UserState(id: auth.currentUser!.uid),
+                child: UserStatus(id: auth.currentUser!.uid),
               ),
             ),
           ),

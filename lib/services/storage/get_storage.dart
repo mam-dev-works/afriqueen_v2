@@ -4,7 +4,7 @@ class AppGetStorage {
   final box = GetStorage();
   //------------------------- For language------------------
   String getLanguageCode() {
-    return box.read('code') ?? 'en';
+    return box.read('code') ?? 'fr';
   }
 
   void setLanguageCode(String value) {

@@ -87,7 +87,7 @@ class SignupScreen extends StatelessWidget {
       Get.back();
       snackBarMessage(
         context,
-        EnumLocale.signupSuccessfully.name.tr,
+        EnumLocale.signupSuccessful.name.tr,
         Theme.of(context),
       );
       Get.offAllNamed(AppRoutes.emailVerification);

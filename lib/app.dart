@@ -11,7 +11,6 @@ import 'package:afriqueen/features/create_profile/screen/upload_image_screen.dar
 import 'package:afriqueen/features/email_verification/screen/email_verification_screen.dart';
 import 'package:afriqueen/features/login/screen/login_screen.dart';
 import 'package:afriqueen/features/main/screen/main_screen.dart';
-
 import 'package:afriqueen/features/wellcome/screen/wellcome_screen.dart';
 import 'package:afriqueen/routes/app_pages.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
@@ -37,36 +36,35 @@ class _MyAppState extends State<MyApp> {
       designSize: Size(360, 690), // screen size
       minTextAdapt: true,
       splitScreenMode: true,
-      builder:
-          (context, child) => GetMaterialApp(
-            title: 'Afriqueen',
-            debugShowCheckedModeBanner: false,
-            translations: AppTranslations(),
-            // defaultTransition: Transition.downToUp,
-            locale: Locale(app.getLanguageCode()),
+      builder: (context, child) => GetMaterialApp(
+        title: 'Afriqueen',
+        debugShowCheckedModeBanner: false,
+        translations: AppTranslations(),
+        // defaultTransition: Transition.downToUp,
+        locale: Locale(app.getLanguageCode()),
 
-            getPages: getPages,
-            theme: lightTheme,
+        getPages: getPages,
+        theme: lightTheme,
 
-            //----------------- checking whether user opening app first time or not--------------------------------
-            home: StreamBuilder(
-              stream: FirebaseAuth.instance.authStateChanges(),
-              builder: (context, snapShot) {
-                if (snapShot.connectionState == ConnectionState.waiting) {
-                  return Scaffold(body: SizedBox());
-                }
+        //----------------- checking whether user opening app first time or not--------------------------------
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapShot) {
+            if (snapShot.connectionState == ConnectionState.waiting) {
+              return Scaffold(body: SizedBox());
+            }
 
-                if (snapShot.hasData) {
-                  //    ---------------- User is logged in, restore profile creation progress---------------------
-                  return _pageNumber();
-                } else {
-                  return app.hasOpenedApp() == true
-                      ? LoginScreen()
-                      : WellcomeScreen();
-                }
-              },
-            ),
-          ),
+            if (snapShot.hasData) {
+              //    ---------------- User is logged in, restore profile creation progress---------------------
+              return _pageNumber();
+            } else {
+              return app.hasOpenedApp() == true
+                  ? LoginScreen()
+                  : WellcomeScreen();
+            }
+          },
+        ),
+      ),
     );
   }
 

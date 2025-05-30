@@ -24,7 +24,7 @@ class AgeDiscription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      EnumLocale.dobDiscription.name.tr,
+      EnumLocale.dobDescription.name.tr,
       style: Theme.of(context).textTheme.bodySmall,
     );
   }

@@ -22,13 +22,13 @@ final Map<String, String> frFR = {
       'Le mot de passe doit contenir une lettre minuscule',
   EnumLocale.passwordDigitRequiredText.name:
       'Le mot de passe doit contenir un chiffre',
-  EnumLocale.passwordSpecialcharcterRequiredText.name:
+  EnumLocale.passwordSpecialCharacterRequiredText.name:
       'Le mot de passe doit contenir un caractère spécial',
-  EnumLocale.registeringDescriptionTexts1.name:
+  EnumLocale.registeringDescriptionText1.name:
       "En vous inscrivant, vous acceptez nos",
-  EnumLocale.registeringDescriptionTexts2.name: " Conditions d'utilisation",
-  EnumLocale.registeringDescriptionTexts3.name: " et notre",
-  EnumLocale.registeringDescriptionTexts4.name: " Politique de confidentialité",
+  EnumLocale.registeringDescriptionText2.name: " Conditions d'utilisation",
+  EnumLocale.registeringDescriptionText3.name: " et notre",
+  EnumLocale.registeringDescriptionText4.name: " Politique de confidentialité",
   EnumLocale.acceptPolicyAndCondition.name:
       'J\'accepte les Conditions d\'utilisation et notre Politique de confidentialité',
   EnumLocale.alreadyHaveAccount.name: "Vous avez déjà un compte ? ",
@@ -77,20 +77,21 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
 
 12. Coordonnées : Si vous avez des questions concernant ces conditions, veuillez nous contacter à l’adresse suivante : support@Afriqueen.app.
 """,
-  EnumLocale.wrongPassworderror.name:
+  EnumLocale.wrongPasswordError.name:
       'Mot de passe incorrect pour cet utilisateur.',
-  EnumLocale.userNotFounderro.name: "Aucun utilisateur trouvé pour cet e-mail.",
+  EnumLocale.userNotFoundError.name:
+      "Aucun utilisateur trouvé pour cet e-mail.",
   EnumLocale.defaultError.name: "Une erreur s'est produite, veuillez réessayer",
   EnumLocale.forgotPassword.name: "Mot de passe oublié",
   EnumLocale.forgotPassword.name: "Mot de passe oublié",
   EnumLocale.passwordResetInstruction.name:
       "Entrez votre adresse e-mail enregistrée ci-dessous pour recevoir les instructions de réinitialisation du mot de passe",
   EnumLocale.sendButtonText.name: "Envoyer",
-  EnumLocale.remeberPassword.name: "Se souvenir du mot de passe ?",
-  EnumLocale.emailSend.name: "E-mail envoyé !",
+  EnumLocale.rememberPassword.name: "Se souvenir du mot de passe ?",
+  EnumLocale.emailSent.name: "E-mail envoyé !",
   EnumLocale.checkEmail.name:
       "Veuillez vérifier votre boîte de réception et cliquer sur le lien reçu pour réinitialiser votre mot de passe",
-  EnumLocale.didnotRecieveTheLink.name: "Vous n'avez pas reçu le lien ?",
+  EnumLocale.didNotReceiveTheLink.name: "Vous n'avez pas reçu le lien ?",
   EnumLocale.resend.name: "Renvoyer",
   EnumLocale.verifyEmailTitle.name: "Vérifiez votre adresse e-mail",
   EnumLocale.verifyEmailBody.name:
@@ -99,20 +100,20 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.deleteAccountText.name:
       "Si cet e-mail ne vous était pas destiné, n'hésitez pas à le ",
   EnumLocale.delete.name: "supprimer",
-  EnumLocale.loginSuccessfully.name: "Connexion réussie",
-  EnumLocale.signupSuccessfully.name: "Inscription réussie",
-  EnumLocale.deleteSuccessfully.name: "Suppression réussie",
+  EnumLocale.loginSuccessful.name: "Connexion réussie",
+  EnumLocale.signupSuccessful.name: "Inscription réussie",
+  EnumLocale.deleteSuccessful.name: "Suppression réussie",
   EnumLocale.emailVerifyRequired.name:
       "La vérification de l'e-mail est requise !",
-  EnumLocale.wellcome.name: "Bienvenue",
-  EnumLocale.wellcomeDescriptionText.name:
+  EnumLocale.welcome.name: "Bienvenue",
+  EnumLocale.welcomeDescriptionText.name:
       """Bienvenue sur Afriqueen ! Prêt(e) à rencontrer des personnes intéressantes ? Parlez-nous un peu de vous et de ce que vous recherchez. Restez authentique, partagez un sourire sur votre photo et commencez à explorer. Votre prochaine connexion est peut-être à portée de balayage !""",
   EnumLocale.next.name: "Suivant",
   EnumLocale.locationPermissionRequired.name:
       "L'autorisation de localisation est requise pour continuer",
   EnumLocale.nameHintText.name: "Entrez un pseudonyme",
   EnumLocale.nameTitle.name: "Votre pseudonyme",
-  EnumLocale.nameDiscription.name:
+  EnumLocale.nameDescription.name:
       "Il sera affiché sur votre profil et vous ne pourrez plus le modifier ultérieurement",
   EnumLocale.pseudoRequired.name: 'Le pseudonyme est obligatoire.',
   EnumLocale.pseudoLengthError.name:
@@ -120,24 +121,24 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.pseudoOnlyContains.name:
       'Seules les lettres, les chiffres et les tirets bas sont autorisés.',
   EnumLocale.genderTitle.name: "Comment vous identifiez-vous ?",
-  EnumLocale.genderDiscription.name:
+  EnumLocale.genderDescription.name:
       "Vous pourrez modifier ces informations ultérieurement en contactant notre service client.",
   EnumLocale.genderMale.name: "Homme",
   EnumLocale.genderFemale.name: "Femme",
   EnumLocale.dobTitle.name: "Votre date de naissance",
-  EnumLocale.dobDiscription.name:
+  EnumLocale.dobDescription.name:
       "Veuillez indiquer votre âge correctement ; vous ne pourrez plus le modifier ultérieurement.",
   EnumLocale.setYourDob.name: 'Définissez votre date de naissance',
   EnumLocale.ageErrorText.name: "L'âge doit être supérieur à 18 ans",
   EnumLocale.addressTitle.name: "Trouvez des coups de cœur dans votre ville",
-  EnumLocale.addressDiscription.name:
+  EnumLocale.addressDescription.name:
       "Le pays et la ville sont automatiquement détectés une fois le service de localisation activé",
   EnumLocale.countryName.name: "Pays",
   EnumLocale.cityName.name: "Ville",
   EnumLocale.interestTitle.name:
       "Choisissez une variété de mots-clés qui reflètent le mieux vos centres d'intérêt",
   EnumLocale.friendshipInterests.name: "Amitié :",
-  EnumLocale.foodandRestaurantsInterests.name: "Cuisine et Restaurants :",
+  EnumLocale.foodAndRestaurantsInterests.name: "Cuisine et Restaurants :",
   EnumLocale.passionAndPersonalityInterests.name: "Passion et Personnalité :",
   EnumLocale.loveAndRomanceInterests.name: "Amour et Romance :",
   EnumLocale.sportsAndOutdoorsInterests.name: "Sports et Plein air :",
@@ -153,14 +154,14 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.chatting.name: "Discussion",
   EnumLocale.makingNewFriends.name: "Se faire de nouveaux amis",
   EnumLocale.studyBuddy.name: "Compagnon d'étude",
-  EnumLocale.moviesNights.name: "Soirées cinéma",
+  EnumLocale.movieNights.name: "Soirées cinéma",
   EnumLocale.coffeeHangouts.name: "Rendez-vous café",
   EnumLocale.romanticDates.name: "Rendez-vous romantiques",
-  EnumLocale.candlight.name: "Dîners aux chandelles",
+  EnumLocale.candlelight.name: "Dîners aux chandelles",
   EnumLocale.sweet.name: "Douces surprises",
   EnumLocale.slowDancing.name: "Danse lente",
   EnumLocale.loveLetters.name: "Lettres d'amour",
-  EnumLocale.fotball.name: "Football",
+  EnumLocale.football.name: "Football",
   EnumLocale.yoga.name: "Yoga",
   EnumLocale.hiking.name: "Randonnée",
   EnumLocale.running.name: "Course à pied",
@@ -170,7 +171,7 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.fineDining.name: "Cuisine raffinée",
   EnumLocale.coffeeLover.name: "Amateur(e) de café",
   EnumLocale.baking.name: "Pâtisserie",
-  EnumLocale.backPacking.name: "Randonnée sac à dos",
+  EnumLocale.backpacking.name: "Randonnée sac à dos",
   EnumLocale.roadTrips.name: "Voyages en voiture",
   EnumLocale.soloTravel.name: "Voyage en solo",
   EnumLocale.camping.name: "Camping",
@@ -179,17 +180,17 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
       "Vous ne pouvez en sélectionner que 2 au maximum",
 
   EnumLocale.uploadImageTitle.name: "Ajoutez au moins une photo",
-  EnumLocale.uploadImageDiscription.name:
+  EnumLocale.uploadImageDescription.name:
       "Sélectionnez des photos qui expriment votre personnalité et vous montrent en train de faire ce que vous aimez.",
   EnumLocale.submit.name: "Soumettre",
   EnumLocale.storagePermissionRequired.name:
       "L'autorisation de stockage est requise pour continuer",
   EnumLocale.photosPermissionDeniedText.name:
       "L'autorisation d'accéder aux photos est requise pour continuer",
-  EnumLocale.discriptionTitle.name: "Pourriez-vous me parler un peu de vous ?",
-  EnumLocale.discriptionBody.name:
+  EnumLocale.descriptionTitle.name: "Pourriez-vous me parler un peu de vous ?",
+  EnumLocale.descriptionBody.name:
       "Vous pourrez modifier ces informations ultérieurement en contactant notre service client.",
-  EnumLocale.discriptionLabelText.name: "Description",
+  EnumLocale.descriptionLabelText.name: "Description",
   EnumLocale.joinedJustNow.name: 'Vient de s\'inscrire',
   EnumLocale.joined.name: 'S\'est inscrit(e)',
   EnumLocale.minutesAgo.name: 'minutes',
@@ -197,14 +198,14 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.daysAgo.name: 'jours',
   EnumLocale.ago.name: 'il y a',
   EnumLocale.joinedOn.name: 'Inscrit(e) le',
-  EnumLocale.setting.name: "Paramètres",
+  EnumLocale.settings.name: "Paramètres",
   EnumLocale.logout.name: "Se déconnecter",
   EnumLocale.notifications.name: 'Notifications',
   EnumLocale.privacySettings.name: 'Paramètres de confidentialité',
   EnumLocale.helpCenter.name: 'Centre d\'aide',
   EnumLocale.changeLanguage.name: 'Changer de langue',
   EnumLocale.favorites.name: "Favoris",
-  EnumLocale.archieve.name: "Archive",
+  EnumLocale.archive.name: "Archive",
   EnumLocale.block.name: "Bloquer",
   EnumLocale.report.name: "Signaler",
   EnumLocale.more.name: "Plus",

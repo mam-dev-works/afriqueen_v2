@@ -25,9 +25,8 @@ class LoginScreen extends StatelessWidget {
           lazy: true,
           create: (context) => LoginRepository(),
           child: BlocProvider(
-            create:
-                (context) =>
-                    LoginBloc(loginrepository: context.read<LoginRepository>()),
+            create: (context) =>
+                LoginBloc(loginrepository: context.read<LoginRepository>()),
             child: BlocListener<LoginBloc, LoginState>(
               listener: _listener,
               child: SingleChildScrollView(
@@ -86,7 +85,7 @@ class LoginScreen extends StatelessWidget {
       debugPrint("Successs");
       snackBarMessage(
         context,
-        EnumLocale.loginSuccessfully.name.tr,
+        EnumLocale.loginSuccessful.name.tr,
         Theme.of(context),
       );
       Get.offAllNamed(AppRoutes.main);

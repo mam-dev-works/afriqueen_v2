@@ -34,7 +34,7 @@ abstract class AppValidator {
       return EnumLocale.passwordDigitRequiredText.name.tr;
     }
     if (!value.contains(RegExp(r'[!@#\$%^&*(),.?":{}|<>]'))) {
-      return EnumLocale.passwordSpecialcharcterRequiredText.name.tr;
+      return EnumLocale.passwordSpecialCharacterRequiredText.name.tr;
     }
     return null;
   }

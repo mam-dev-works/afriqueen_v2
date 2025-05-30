@@ -1,6 +1,6 @@
 //------------ main part of data fetched state-----------------
 import 'package:afriqueen/common/constant/constant_colors.dart';
-import 'package:afriqueen/common/widgets/user_state.dart';
+import 'package:afriqueen/common/widgets/user_status.dart';
 import 'package:afriqueen/features/home/bloc/home_bloc.dart';
 import 'package:afriqueen/features/home/bloc/home_state.dart';
 import 'package:afriqueen/features/home/model/home_model.dart';
@@ -75,11 +75,11 @@ class UserImageGrid extends StatelessWidget {
                           ),
                         ),
               
-                      // Top right UserState
+                      // Top right UserStatus
                       Positioned(
                         top: 8.r,
                         right: 8.r,
-                        child: UserState(
+                        child: UserStatus(
                           id: data[index]!.id,
                           width: 15.w,
                           height: 15.h,

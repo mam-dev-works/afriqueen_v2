@@ -618,7 +618,7 @@ class FoodText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      EnumLocale.foodandRestaurantsInterests.name.tr,
+      EnumLocale.foodAndRestaurantsInterests.name.tr,
       style: Theme.of(context).textTheme.bodyMedium,
     );
   }

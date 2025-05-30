@@ -14,11 +14,11 @@ class WellcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: BlocProvider(
-            create: (context) => WellcomeBloc(),
+    return BlocProvider(
+      create: (context) => WellcomeBloc(),
+      child: Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
             child: BlocListener<WellcomeBloc, WellcomeState>(
               listener: (context, state) async {
                 await Get.updateLocale(Locale(state.languageCode!));

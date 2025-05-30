@@ -70,7 +70,7 @@ class EmailVerificationScreen extends StatelessWidget {
       Get.back();
       snackBarMessage(
         context,
-        EnumLocale.deleteSuccessfully.name.tr,
+        EnumLocale.deleteSuccessful.name.tr,
         Theme.of(context),
       );
 

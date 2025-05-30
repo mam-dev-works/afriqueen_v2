@@ -84,7 +84,7 @@ class RememberPassword extends StatelessWidget {
     return Center(
       child: RichText(
         text: TextSpan(
-          text: EnumLocale.remeberPassword.name.tr,
+          text: EnumLocale.rememberPassword.name.tr,
           style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14),
           children: [
             TextSpan(
@@ -144,7 +144,7 @@ class SendButtonInSuccessedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonButton(
-      onPressed: () => Get.toNamed(AppRoutes.login),
+      onPressed: () => Get.offAllNamed(AppRoutes.login),
 
       buttonText: EnumLocale.loginText.name.tr,
     );
@@ -183,7 +183,7 @@ class HeadingInSuccessedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      EnumLocale.emailSend.name.tr,
+      EnumLocale.emailSent.name.tr,
       style: Theme.of(context).textTheme.bodyLarge,
     );
   }
@@ -199,7 +199,7 @@ class DidnotRecieveTheLink extends StatelessWidget {
     return Center(
       child: RichText(
         text: TextSpan(
-          text: EnumLocale.didnotRecieveTheLink.name.tr,
+          text: EnumLocale.didNotReceiveTheLink.name.tr,
           style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14),
           children: [
             TextSpan(

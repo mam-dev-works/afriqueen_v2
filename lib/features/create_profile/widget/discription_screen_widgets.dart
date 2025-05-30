@@ -20,7 +20,7 @@ class DiscriptionBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      EnumLocale.discriptionBody.name.tr,
+      EnumLocale.descriptionBody.name.tr,
       style: Theme.of(context).textTheme.bodySmall,
     );
   }
@@ -33,7 +33,7 @@ class DiscriptionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      EnumLocale.discriptionTitle.name.tr,
+      EnumLocale.descriptionTitle.name.tr,
 
       style: Theme.of(context).textTheme.bodyLarge,
     );
@@ -82,7 +82,7 @@ class _TextFieldForDiscriptionState extends State<TextFieldForDiscription> {
           isDense: true,
           contentPadding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
           errorMaxLines: 3,
-          labelText: EnumLocale.discriptionLabelText.name.tr,
+          labelText: EnumLocale.descriptionLabelText.name.tr,
           labelStyle: Theme.of(context).textTheme.bodySmall,
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),

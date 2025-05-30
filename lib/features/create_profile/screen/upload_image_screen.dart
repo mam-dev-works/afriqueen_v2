@@ -71,7 +71,6 @@ class UploadImageScreen extends StatelessWidget {
     }
 
     if (state is Success) {
-      Get.offAllNamed(AppRoutes.main);
       box.remove('pageNumber');
       box.remove('pseudo');
       box.remove('sex');
@@ -86,6 +85,7 @@ class UploadImageScreen extends StatelessWidget {
       box.remove('adventure');
       box.remove('imageURL');
       box.remove('discription');
+      Get.offAllNamed(AppRoutes.main);
     }
   }
 }

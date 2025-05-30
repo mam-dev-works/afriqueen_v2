@@ -41,7 +41,7 @@ class WelcomeDiscription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      EnumLocale.wellcomeDescriptionText.name.tr,
+      EnumLocale.welcomeDescriptionText.name.tr,
       style: Theme.of(context).textTheme.bodySmall,
     );
   }
@@ -57,7 +57,7 @@ class WellcomeTextAndDropDown extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          EnumLocale.wellcome.name.tr,
+          EnumLocale.welcome.name.tr,
           style: Theme.of(context).textTheme.bodyLarge,
         ),
 
@@ -74,17 +74,18 @@ class DropDownForLanguage extends StatelessWidget {
   final DropdownController controller = DropdownController();
 
   final List<CoolDropdownItem<String>> country = [
-    CoolDropdownItem(
-      label: "English",
-      value: "en",
-      icon: Image.asset(AppStrings.us, height: 30.h, width: 30.w),
-      selectedIcon: Image.asset(AppStrings.us, height: 30.h, width: 30.w),
-    ),
+ 
     CoolDropdownItem(
       label: "Français",
       value: "fr",
       icon: Image.asset(AppStrings.fr, height: 30.h, width: 30.w),
       selectedIcon: Image.asset(AppStrings.fr, height: 30.h, width: 30.w),
+    ),
+       CoolDropdownItem(
+      label: "English",
+      value: "en",
+      icon: Image.asset(AppStrings.us, height: 30.h, width: 30.w),
+      selectedIcon: Image.asset(AppStrings.us, height: 30.h, width: 30.w),
     ),
   ];
 

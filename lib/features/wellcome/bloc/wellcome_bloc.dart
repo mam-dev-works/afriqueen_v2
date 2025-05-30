@@ -1,10 +1,8 @@
-
-
 import 'package:afriqueen/features/wellcome/bloc/wellcome_event.dart';
 import 'package:afriqueen/features/wellcome/bloc/wellcome_state.dart';
 
-
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+
 //-----------------------------Bloc for wellcome page-----------------------------------
 class WellcomeBloc extends HydratedBloc<WellcomeEvent, WellcomeState> {
   WellcomeBloc() : super(WellcomeInitial()) {
@@ -17,7 +15,6 @@ class WellcomeBloc extends HydratedBloc<WellcomeEvent, WellcomeState> {
   WellcomeState? fromJson(Map<String, dynamic> json) {
     try {
       final languageCode = json['languageCode'] as String?;
-
 
       return WellcomeState(languageCode: languageCode);
     } catch (_) {

@@ -62,7 +62,7 @@ class AddressDiscription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      EnumLocale.addressDiscription.name.tr,
+      EnumLocale.addressDescription.name.tr,
       style: Theme.of(context).textTheme.bodySmall,
     );
   }

@@ -120,7 +120,7 @@ class UploadImageDiscription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      EnumLocale.uploadImageDiscription.name.tr,
+      EnumLocale.uploadImageDescription.name.tr,
       style: Theme.of(context).textTheme.bodySmall,
     );
   }
