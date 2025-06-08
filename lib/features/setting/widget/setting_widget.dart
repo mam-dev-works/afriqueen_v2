@@ -13,7 +13,70 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 
-//-------------------App Bar
+
+class FavoritesListTile extends StatelessWidget {
+  const FavoritesListTile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: ()=> Get.toNamed(AppRoutes.favorite),
+      trailing: SizedBox(
+          width: 50.w,
+          child: Icon(
+            CupertinoIcons.forward,
+          )),
+      leading: Icon(HugeIcons.strokeRoundedFavouriteSquare),
+      title: SizedBox(
+        width: 50.w,
+        child: Text(
+          EnumLocale.favorites.name.tr,
+          style: Theme.of(context).textTheme.bodyMedium,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+    );
+  }
+}
+
+//-------------------Archive user-----------------------
+class ArchiveListTile extends StatelessWidget {
+  const ArchiveListTile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: ()=> Get.toNamed(AppRoutes.archive),
+      trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
+      leading: Icon(HugeIcons.strokeRoundedArchive),
+      title: Text(
+        EnumLocale.archive.name.tr,
+        style: Theme.of(context).textTheme.bodyMedium,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+}
+
+//-------------------Blocked user-----------------------
+class BlockedListTile extends StatelessWidget {
+  const BlockedListTile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () {},
+      trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
+      leading: Icon(HugeIcons.strokeRoundedBlocked),
+      title: Text(
+        EnumLocale.blocked.name.tr,
+        style: Theme.of(context).textTheme.bodyMedium,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+}
+//-----------App Bar--------------------------
 class SettingAppBar extends StatelessWidget {
   const SettingAppBar({super.key});
 
@@ -30,7 +93,6 @@ class SettingAppBar extends StatelessWidget {
     );
   }
 }
-
 //----------------Title Text------------------------
 class SettingTitle extends StatelessWidget {
   const SettingTitle({super.key});
@@ -52,80 +114,77 @@ class LanguageListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap:
-          () => showModalBottomSheet(
-            context: context,
-            backgroundColor: AppColors.floralWhite,
-            isScrollControlled: false,
-            builder:
-                (context) => Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+      onTap: () => showModalBottomSheet(
+        context: context,
+        backgroundColor: AppColors.floralWhite,
+        isScrollControlled: false,
+        builder: (context) => Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          spacing: 20.h,
+          children: [
+            ListTile(
+              title: Text(
+                EnumLocale.chooseOption.name.tr,
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: AppColors.primaryColor,
+                  fontSize: 19.sp,
+                ),
+              ),
+              trailing: SizedBox(
+                width: 50.w,
+                child: IconButton(
+                  onPressed: () => Get.back(),
+                  icon: Icon(
+                    HugeIcons.strokeRoundedMultiplicationSignCircle,
+                    color: AppColors.primaryColor,
+                  ),
+                ),
+              ),
+            ),
+    
+            SizedBox(
+              height: 100.h,
+              child: ListView.builder(
+                itemCount: AppStrings.language.length,
+    
+                itemBuilder: (context, index) => Column(
                   mainAxisSize: MainAxisSize.min,
-                  spacing: 20.h,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 5.h,
                   children: [
-                    ListTile(
-                      title: Text(
-                        EnumLocale.chooseOption.name.tr,
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: AppColors.primaryColor,
-                          fontSize: 19.sp,
-                        ),
-                      ),
-                      trailing: IconButton(
-                        onPressed: () => Get.back(),
-                        icon: Icon(
-                          HugeIcons.strokeRoundedMultiplicationSignCircle,
-                          color: AppColors.primaryColor,
+                    SizedBox(height: 15.h),
+                    InkWell(
+                      onTap: () async {
+                        if (index == 0) {
+                          await Get.updateLocale(Locale('en'));
+                          app.setLanguageCode('en');
+                        } else {
+                          await Get.updateLocale(Locale('fr'));
+                          app.setLanguageCode('fr');
+                        }
+                        Navigator.pop(context);
+                      },
+                      child: SizedBox(
+                        width: double.maxFinite,
+                        child: Center(
+                          child: Text(
+                            AppStrings.language[index],
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
                         ),
                       ),
                     ),
-
-                    SizedBox(
-                      height: 100.h,
-                      child: ListView.builder(
-                        itemCount: AppStrings.language.length,
-
-                        itemBuilder:
-                            (context, index) => Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              spacing: 5.h,
-                              children: [
-                                SizedBox(height: 15.h),
-                                InkWell(
-                                  onTap: () async {
-                                    if (index == 0) {
-                                      await Get.updateLocale(Locale('en'));
-                                      app.setLanguageCode('en');
-                                    } else {
-                                      await Get.updateLocale(Locale('fr'));
-                                      app.setLanguageCode('fr');
-                                    }
-                                    Get.back();
-                                  },
-                                  child: SizedBox(
-                                    width: double.maxFinite,
-                                    child: Center(
-                                      child: Text(
-                                        AppStrings.language[index],
-                                        style:
-                                            Theme.of(
-                                              context,
-                                            ).textTheme.bodyMedium,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                CustomDivider(),
-                              ],
-                            ),
-                      ),
-                    ),
-                    SizedBox(height: 10.h),
+                    CustomDivider(),
                   ],
                 ),
-          ),
-      trailing: Icon(CupertinoIcons.forward),
+              ),
+            ),
+            SizedBox(height: 10.h),
+          ],
+        ),
+      ),
+      trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
       leading: Icon(HugeIcons.strokeRoundedLanguageSquare),
       title: Text(
         EnumLocale.changeLanguage.name.tr,
@@ -144,7 +203,7 @@ class HelpListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {},
-      trailing: Icon(CupertinoIcons.forward),
+      trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
       leading: Icon(HugeIcons.strokeRoundedHelpSquare),
       title: Text(
         EnumLocale.helpCenter.name.tr,
@@ -163,7 +222,7 @@ class PrivacyListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {},
-      trailing: Icon(CupertinoIcons.forward),
+      trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
       leading: Icon(HugeIcons.strokeRoundedLocked),
       title: Text(
         EnumLocale.privacySettings.name.tr,
@@ -182,7 +241,7 @@ class NotificationListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {},
-      trailing: Icon(CupertinoIcons.forward),
+      trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
       leading: Icon(HugeIcons.strokeRoundedNotification01),
       title: Text(
         EnumLocale.notifications.name.tr,
@@ -209,13 +268,17 @@ class LogoutListTile extends StatelessWidget {
       onTap: () async {
         final BuildContext currentContext = context;
         await FirebaseAuth.instance.signOut();
-
+    
         if (!currentContext.mounted) return;
         customLoading(context);
-        await Future.delayed(Duration(milliseconds:1500));
-        Get.offAllNamed(AppRoutes.login);
+        await Future.delayed(Duration(milliseconds: 1500));
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRoutes.login,
+          (Route<dynamic> route) => false,
+        );
       },
-      trailing: Icon(CupertinoIcons.forward),
+      trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
     );
   }
 }

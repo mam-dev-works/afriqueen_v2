@@ -26,7 +26,7 @@ ThemeData lightTheme = ThemeData(
       fontFamily: AppStrings.robotoLight,
     ),
 
-    // for discription text
+    // for description text
     bodySmall: TextStyle(
       color: AppColors.grey,
       fontSize: 15.sp,

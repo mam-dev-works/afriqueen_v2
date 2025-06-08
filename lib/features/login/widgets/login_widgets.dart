@@ -6,12 +6,11 @@ import 'package:afriqueen/common/widgets/common_textfield.dart';
 import 'package:afriqueen/features/login/bloc/login_bloc.dart';
 import 'package:afriqueen/features/login/bloc/login_event.dart';
 import 'package:afriqueen/features/login/bloc/login_state.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:flutter/gestures.dart';
-
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
@@ -53,10 +52,8 @@ class _LoginEmailInputState extends State<LoginEmailInput> {
       validator: AppValidator.validateEmail,
       obscureText: false,
 
-      onChanged:
-          (value) => context.read<LoginBloc>().add(
-            LoginEmailChanged(email: value.trim()),
-          ),
+      onChanged: (value) =>
+          context.read<LoginBloc>().add(LoginEmailChanged(email: value.trim())),
       keyboardType: TextInputType.emailAddress,
     );
   }
@@ -88,13 +85,12 @@ class _LoginPasswordInputState extends State<LoginPasswordInput> {
           controller: _passwordController,
           validator: AppValidator.validateLoginPassword,
           obscureText: state.isLoginPasswordVisible,
-          onChanged:
-              (value) => context.read<LoginBloc>().add(
-                LoginPasswordChanged(password: value.trim()),
-              ),
+          onChanged: (value) => context.read<LoginBloc>().add(
+            LoginPasswordChanged(password: value.trim()),
+          ),
           suffixIcon: IconButton(
-            onPressed:
-                () => context.read<LoginBloc>().add(LoginPasswordVisibility()),
+            onPressed: () =>
+                context.read<LoginBloc>().add(LoginPasswordVisibility()),
             icon: Icon(
               state.isLoginPasswordVisible
                   ? Icons.visibility_off_outlined
@@ -177,9 +173,8 @@ class DonotHaveAccount extends StatelessWidget {
                 fontSize: 16,
               ),
 
-              recognizer:
-                  TapGestureRecognizer()
-                    ..onTap = () => Get.toNamed(AppRoutes.signup),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => Get.toNamed(AppRoutes.signup),
             ),
           ],
         ),
@@ -201,8 +196,8 @@ class GoogleSignInButton extends StatelessWidget {
         width: 120.w,
         child: ElevatedButton(
           // Using ElevatedButton for better default styling
-          onPressed:
-              () => context.read<LoginBloc>().add(GoogleSignInButtonClicked()),
+          onPressed: () =>
+              context.read<LoginBloc>().add(GoogleSignInButtonClicked()),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.transparent,
             padding: EdgeInsets.zero,
@@ -239,7 +234,10 @@ class LoginAndGoogleSigninButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 20,
 
-      children: [LoginButton(formKey: formKey), GoogleSignInButton()],
+      children: [
+        LoginButton(formKey: formKey),
+        GoogleSignInButton(),
+      ],
     );
   }
 }

@@ -39,7 +39,7 @@ class AddressNextButton extends StatelessWidget {
             if (isGranted) {
               app.setPageNumber(6);
 
-              Get.offAllNamed(AppRoutes.interests);
+              Get.toNamed(AppRoutes.interests);
             } else {
               snackBarMessage(
                 currentContext,
@@ -55,9 +55,9 @@ class AddressNextButton extends StatelessWidget {
   }
 }
 
-//----------------Text Regarding Address discription--------------------------
-class AddressDiscription extends StatelessWidget {
-  const AddressDiscription({super.key});
+//----------------Text Regarding Address description--------------------------
+class AddressDescription extends StatelessWidget {
+  const AddressDescription({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +148,7 @@ class City extends StatelessWidget {
           ); // Show loading indicator
         } else if (snapshot.hasError) {
           return Text(
-            'Error: ${snapshot.error}',
+            EnumLocale.defaultError.name.tr,
             style: Theme.of(context).textTheme.bodySmall,
           );
         } else if (snapshot.hasData && snapshot.data != null) {
@@ -170,7 +170,7 @@ class City extends StatelessWidget {
           );
         } else {
           return Text(
-            'Location not available',
+                  EnumLocale.defaultError.name.tr,
             style: Theme.of(context).textTheme.bodySmall,
           ); // Handle null data
         }
@@ -198,7 +198,7 @@ class Country extends StatelessWidget {
           ); // Show loading indicator
         } else if (snapshot.hasError) {
           return Text(
-            'Error: ${snapshot.error}',
+                   EnumLocale.defaultError.name.tr,
             style: Theme.of(context).textTheme.bodySmall,
           );
         } else if (snapshot.hasData && snapshot.data != null) {
@@ -226,7 +226,7 @@ class Country extends StatelessWidget {
           );
         } else {
           return Text(
-            'Location not available',
+           EnumLocale.defaultError.name.tr,
             style: Theme.of(context).textTheme.bodySmall,
           ); // Handle null data
         }

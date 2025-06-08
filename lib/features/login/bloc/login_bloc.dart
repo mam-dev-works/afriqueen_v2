@@ -1,4 +1,3 @@
-import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/features/login/bloc/login_event.dart';
 import 'package:afriqueen/features/login/bloc/login_state.dart';
 import 'package:afriqueen/features/login/models/login_model.dart';
@@ -15,8 +14,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginModel _loginModel = LoginModel(email: '', password: '');
 
   LoginBloc({required LoginRepository loginrepository})
-    : _loginRepository = loginrepository,
-      super(LoginInitial()) {
+      : _loginRepository = loginrepository,
+        super(LoginInitial()) {
     //---------------------password visibility-----------------------------
     on<LoginPasswordVisibility>((
       LoginPasswordVisibility event,
@@ -42,7 +41,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       );
 
       if (userCredential != null) {
-        emit(LoginSuccess.fromState(state));
+        if (_loginRepository.isExistingUser) {
+          emit(LoginSuccess.fromState(state));
+        } else {
+          emit(GoogleLoginNewUser.fromState(state));
+        }
       } else {
         emit(LoginError.fromState(state, error: _loginRepository.error!.tr));
       }
@@ -53,19 +56,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       UserCredential? userCredential = await _loginRepository.loginWithGoogle();
 
       if (userCredential != null) {
-        bool isNewUser = await _loginRepository.checkUserAvaibility();
-        if (isNewUser == true) {
-          _app.setPageNumber(2);
-          emit(GoogleLoginNewUser.fromState(state));
-        } else if (isNewUser == false) {
-          emit(GoogleLoginOldUser.fromState(state));
+        if (_loginRepository.isExistingUser) {
+          emit(LoginSuccess.fromState(state));
         } else {
-          emit(
-            GoogleLoginError.fromState(
-              state,
-              error: EnumLocale.defaultError.name.tr,
-            ),
-          );
+          emit(GoogleLoginNewUser.fromState(state));
         }
       } else {
         emit(

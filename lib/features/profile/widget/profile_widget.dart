@@ -57,18 +57,23 @@ class AppBarTitle extends StatelessWidget {
   }
 }
 
-//----------Discription-----------------------
-class DiscriptionText extends StatelessWidget {
-  const DiscriptionText({super.key});
+//----------Description-----------------------
+class DescriptionText extends StatelessWidget {
+  const DescriptionText({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocSelector<ProfileBloc, ProfileState, String>(
-      selector: (state) => state.data.discription,
+      selector: (state) => state.data.description,
       builder: (context, data) {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.w),
-          child: Text(data, style: Theme.of(context).textTheme.bodyMedium),
+          child: Container(
+              padding: EdgeInsets.all(8.r),
+              decoration: BoxDecoration(
+                  color: AppColors.blue.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(12.r)),
+              child: Text(data, style: Theme.of(context).textTheme.bodyMedium)),
         );
       },
     );
@@ -81,14 +86,14 @@ class UserInterestsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<ProfileBloc, ProfileState, ProfileModel>(
-      selector: (state) => state.data,
+    return BlocSelector<ProfileBloc, ProfileState, List>(
+      selector: (state) => state.data.interests,
       builder: (context, data) {
         return GridView.builder(
           padding: EdgeInsets.symmetric(horizontal: 5.w),
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: data.interests.length,
+          itemCount: data.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
             mainAxisSpacing: 8.h,
@@ -96,6 +101,7 @@ class UserInterestsList extends StatelessWidget {
             childAspectRatio: 3,
           ),
           itemBuilder: (BuildContext context, index) {
+            final items =  data[index];
             return Container(
               padding: EdgeInsets.symmetric(horizontal: 2.w),
               height: 20.h,
@@ -116,7 +122,7 @@ class UserInterestsList extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  data.interests[index],
+                  items,
                   style: Theme.of(
                     context,
                   ).textTheme.bodyMedium!.copyWith(fontSize: 14.sp),
@@ -143,7 +149,12 @@ class UserSeniority extends StatelessWidget {
         final date = Seniority.formatJoinedTime(data);
         return Padding(
           padding: EdgeInsets.only(left: 20.w),
-          child: Text(date, style: Theme.of(context).textTheme.bodyMedium),
+          child: Container(
+              padding: EdgeInsets.all(8.r),
+              decoration: BoxDecoration(
+                  color: AppColors.blue.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(12.r)),
+              child: Text(date, style: Theme.of(context).textTheme.bodyMedium)),
         );
       },
     );
@@ -195,16 +206,15 @@ class ProfileImage extends StatelessWidget {
         return Padding(
           padding: EdgeInsets.only(bottom: 5.h),
           child: Container(
-            height: 200.h,
+            height: 280.h,
             width: double.maxFinite.w,
             decoration: BoxDecoration(
-              image:
-                  hasValidUrl
-                      ? DecorationImage(
-                        fit: BoxFit.cover,
-                        image: CachedNetworkImageProvider(url),
-                      )
-                      : null,
+              image: hasValidUrl
+                  ? DecorationImage(
+                      fit: BoxFit.cover,
+                      image: CachedNetworkImageProvider(url),
+                    )
+                  : null,
               color: AppColors.floralWhite,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12.r),
@@ -216,7 +226,6 @@ class ProfileImage extends StatelessWidget {
               padding: EdgeInsets.all(8.0.r),
               child: Align(
                 alignment: Alignment.topRight,
-
                 child: UserStatus(id: auth.currentUser!.uid),
               ),
             ),

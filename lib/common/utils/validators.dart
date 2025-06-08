@@ -68,8 +68,8 @@ abstract class AppValidator {
     return null;
   }
 
-  //-----------------Discription validator--------------------------
-  static String? validateDiscription(String? value) {
+  //-----------------Description validator--------------------------
+  static String? validateDescription(String? value) {
     if (value == null || value.isEmpty) {
       return EnumLocale.passwordRequiredText.name.tr;
     }

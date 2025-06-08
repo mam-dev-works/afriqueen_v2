@@ -22,3 +22,5 @@ final class Submit extends SignupEvent {}
 final class PasswordVisibility extends SignupEvent {}
 
 final class CheckedBox extends SignupEvent {}
+
+final class GoogleSignInButtonClicked extends SignupEvent {}

@@ -1,4 +1,3 @@
-
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/common/widgets/common_button.dart';
@@ -13,14 +12,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-
-
-
 // -----------------------------Gender screen components-----------------------------------
 
-//----------------Text Regarding gender discription--------------------------
-class GenderDiscription extends StatelessWidget {
-  const GenderDiscription({super.key});
+//----------------Text Regarding gender description--------------------------
+class GenderDescription extends StatelessWidget {
+  const GenderDescription({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +52,7 @@ class GenderNextButton extends StatelessWidget {
     return CommonButton(
       onPressed: () {
         app.setPageNumber(4);
-        Get.offAllNamed(AppRoutes.age);
+        Get.toNamed(AppRoutes.age);
       },
       buttonText: EnumLocale.next.name.tr,
     );
@@ -87,19 +83,21 @@ class Female extends StatelessWidget {
               EnumLocale.genderFemale.name.tr,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            trailing: BlocBuilder<CreateProfileBloc, CreateProfileState>(
-              builder: (context, state) {
-                return Radio<String>(
-                  activeColor: AppColors.green,
+            trailing: SizedBox(
+              width: 50.w,
+              child: BlocBuilder<CreateProfileBloc, CreateProfileState>(
+                builder: (context, state) {
+                  return Radio<String>(
+                    activeColor: AppColors.green,
 
-                  value: EnumLocale.genderFemale.name.tr,
-                  groupValue: state.gender,
-                  onChanged:
-                      (value) => context.read<CreateProfileBloc>().add(
-                        GenderChanged(gender: value!),
-                      ),
-                );
-              },
+                    value: EnumLocale.genderFemale.name.tr,
+                    groupValue: state.gender,
+                    onChanged: (value) => context.read<CreateProfileBloc>().add(
+                      GenderChanged(gender: value!),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ),
@@ -131,19 +129,21 @@ class Male extends StatelessWidget {
               EnumLocale.genderMale.name.tr,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            trailing: BlocBuilder<CreateProfileBloc, CreateProfileState>(
-              builder: (context, state) {
-                return Radio<String>(
-                  activeColor: AppColors.green,
+            trailing: SizedBox(
+              width: 50.w,
+              child: BlocBuilder<CreateProfileBloc, CreateProfileState>(
+                builder: (context, state) {
+                  return Radio<String>(
+                    activeColor: AppColors.green,
 
-                  value: EnumLocale.genderMale.name.tr,
-                  groupValue: state.gender,
-                  onChanged:
-                      (value) => context.read<CreateProfileBloc>().add(
-                        GenderChanged(gender: value!),
-                      ),
-                );
-              },
+                    value: EnumLocale.genderMale.name.tr,
+                    groupValue: state.gender,
+                    onChanged: (value) => context.read<CreateProfileBloc>().add(
+                      GenderChanged(gender: value!),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ),

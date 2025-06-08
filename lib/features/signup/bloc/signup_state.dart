@@ -49,6 +49,33 @@ final class Success extends SignupState {
       );
 }
 
+///--------------------------- State representing successful Google sign-in ------------------------------
+final class GoogleSignInSuccess extends SignupState {
+  GoogleSignInSuccess.fromState(SignupState state)
+    : super(
+        isPasswordHidden: state.isPasswordHidden,
+        isChecked: state.isChecked,
+      );
+}
+
+///--------------------------- State representing existing user Google sign-in ------------------------------
+final class GoogleSignInExistingUser extends SignupState {
+  const GoogleSignInExistingUser({
+    super.isPasswordHidden = true,
+    super.isChecked = false,
+  });
+
+  factory GoogleSignInExistingUser.fromState(SignupState state) {
+    return GoogleSignInExistingUser(
+      isPasswordHidden: state.isPasswordHidden,
+      isChecked: state.isChecked,
+    );
+  }
+
+  @override
+  List<Object?> get props => [isPasswordHidden, isChecked];
+}
+
 /// --------------------------- State representing a failed signup attempt with an error message -------------------------
 final class SignUpfail extends SignupState {
   final String error;

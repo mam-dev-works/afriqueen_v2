@@ -22,11 +22,13 @@ class HomeErrorContent extends StatelessWidget {
         return null;
       },
       builder: (context, errorMessage) {
-        return Center(
+        return  Scaffold(
+          body: Center(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 5.w),
             child: Text(errorMessage!),
           ),
+        ),
         );
       },
     );

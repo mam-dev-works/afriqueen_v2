@@ -11,11 +11,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-//--------------- Discription screen componets---------------------
+//--------------- Description screen componets---------------------
 
-//----------------Text Regarding name discription--------------------------
-class DiscriptionBody extends StatelessWidget {
-  const DiscriptionBody({super.key});
+//----------------Text Regarding name description--------------------------
+class DescriptionBody extends StatelessWidget {
+  const DescriptionBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,29 +27,28 @@ class DiscriptionBody extends StatelessWidget {
 }
 
 //----------------Text Regarding name Title--------------------------
-class DiscriptionTitle extends StatelessWidget {
-  const DiscriptionTitle({super.key});
+class DescriptionTitle extends StatelessWidget {
+  const DescriptionTitle({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       EnumLocale.descriptionTitle.name.tr,
-
       style: Theme.of(context).textTheme.bodyLarge,
     );
   }
 }
 
-//------------------------Textfield for user input for discription------------------------
-class TextFieldForDiscription extends StatefulWidget {
-  const TextFieldForDiscription({super.key});
+//------------------------Textfield for user input for description------------------------
+class TextFieldForDescription extends StatefulWidget {
+  const TextFieldForDescription({super.key});
 
   @override
-  State<TextFieldForDiscription> createState() =>
-      _TextFieldForDiscriptionState();
+  State<TextFieldForDescription> createState() =>
+      _TextFieldForDescriptionState();
 }
 
-class _TextFieldForDiscriptionState extends State<TextFieldForDiscription> {
+class _TextFieldForDescriptionState extends State<TextFieldForDescription> {
   final discriptionController = TextEditingController();
 
   @override
@@ -68,13 +67,12 @@ class _TextFieldForDiscriptionState extends State<TextFieldForDiscription> {
         maxLines: null, // Must be null when expands is true
         minLines: null,
         keyboardType: TextInputType.text,
-        onChanged:
-            (value) => context.read<CreateProfileBloc>().add(
-              DiscriptionChanged(discription: value.trim()),
+        onChanged: (value) => context.read<CreateProfileBloc>().add(
+              DescriptionChanged(description: value.trim()),
             ),
         cursorColor: AppColors.black,
         style: TextStyle(fontSize: 16),
-        validator: AppValidator.validateDiscription,
+        validator: AppValidator.validateDescription,
         controller: discriptionController,
         textAlignVertical: TextAlignVertical.top,
         decoration: InputDecoration(
@@ -96,12 +94,10 @@ class _TextFieldForDiscriptionState extends State<TextFieldForDiscription> {
             borderRadius: BorderRadius.circular(8.r),
             borderSide: BorderSide(width: 1.w, color: AppColors.blue),
           ),
-
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),
             borderSide: BorderSide(width: 2.w, color: AppColors.red),
           ),
-
           border: InputBorder.none,
         ),
       ),
@@ -111,8 +107,8 @@ class _TextFieldForDiscriptionState extends State<TextFieldForDiscription> {
 
 //------------------------Next Button ----------------------------------
 
-class DiscriptionNextButton extends StatelessWidget {
-  DiscriptionNextButton({super.key, required this.formKey});
+class DescriptionNextButton extends StatelessWidget {
+  DescriptionNextButton({super.key, required this.formKey});
   final GlobalKey<FormState> formKey;
   final AppGetStorage app = AppGetStorage();
 
@@ -122,7 +118,7 @@ class DiscriptionNextButton extends StatelessWidget {
       onPressed: () {
         if (formKey.currentState!.validate()) {
           app.setPageNumber(9);
-          Get.offAllNamed(AppRoutes.upload);
+          Get.toNamed(AppRoutes.upload);
         }
       },
       buttonText: EnumLocale.next.name.tr,

@@ -36,7 +36,8 @@ class EmailVerificationButton extends StatelessWidget {
               if (!currentContext.mounted) return;
 
               if (isVerified) {
-                Get.offAllNamed(AppRoutes.name);
+                Get.toNamed(AppRoutes.name);
+
                 appGetStorage.setPageNumber(2);
               } else {
                 snackBarMessage(
@@ -50,10 +51,9 @@ class EmailVerificationButton extends StatelessWidget {
             }
           },
 
-          buttonText:
-              state.isVerified
-                  ? EnumLocale.next.name.tr
-                  : EnumLocale.verifyYourEmailText.name.tr,
+          buttonText: state.isVerified
+              ? EnumLocale.next.name.tr
+              : EnumLocale.verifyYourEmailText.name.tr,
         );
       },
     );
@@ -118,12 +118,10 @@ class EmailVerificationDeleteAccount extends StatelessWidget {
                 color: AppColors.primaryColor,
                 fontSize: 14,
               ),
-              recognizer:
-                  TapGestureRecognizer()
-                    ..onTap =
-                        () => context.read<EmailVerificationBloc>().add(
-                          OnClickedDeleteButton(),
-                        ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => context.read<EmailVerificationBloc>().add(
+                  OnClickedDeleteButton(),
+                ),
             ),
           ],
         ),

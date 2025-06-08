@@ -20,24 +20,37 @@ class SettingScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 30.h),
-                //---------------------Logout-------------------------
-                LogoutListTile(),
-                //-------------divider----------------
+                //--------------Archive user list----------------------------
+                ArchiveListTile(),
                 CustomDivider(),
-                //----------------------Notification ----------------------------
-                NotificationListTile(),
-                //-------------divider----------------
-                CustomDivider(),
-                //------------------Privacy Settings------------------------------
-                PrivacyListTile(),
-                //-------------divider----------------
+                //--------------Blocked user list----------------------------
+                BlockedListTile(),
                 CustomDivider(),
                 //-------------------Help center-----------------------
                 HelpListTile(),
                 //-------------divider----------------
                 CustomDivider(),
+
                 //-----------------Change Language--------------------
                 LanguageListTile(),
+                //-------------divider----------------
+                CustomDivider(),
+                //----------------fav  list-----------------
+                FavoritesListTile(),
+                CustomDivider(),
+
+                //----------------------Notification ----------------------------
+                NotificationListTile(),
+                //-------------divider----------------
+                CustomDivider(),
+                //---------------------Logout-------------------------
+
+                LogoutListTile(),
+                //-------------divider----------------
+                CustomDivider(),
+
+                //------------------Privacy Settings------------------------------
+                PrivacyListTile(),
                 //-------------divider----------------
                 CustomDivider(),
               ],

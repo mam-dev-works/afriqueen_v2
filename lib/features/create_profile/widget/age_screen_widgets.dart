@@ -17,9 +17,9 @@ import 'package:get/get.dart';
 
 //----------------------- Age screen------------------------
 
-//----------------Text Regarding age discription--------------------------
-class AgeDiscription extends StatelessWidget {
-  const AgeDiscription({super.key});
+//----------------Text Regarding age description--------------------------
+class AgeDescription extends StatelessWidget {
+  const AgeDescription({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,6 @@ class AgeTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       EnumLocale.dobTitle.name.tr,
-
       style: Theme.of(context).textTheme.bodyLarge,
     );
   }
@@ -58,7 +57,7 @@ class AgeNextButton extends StatelessWidget {
           onPressed: () {
             if (DateTime.now().year - state.dob.year > 18) {
               app.setPageNumber(5);
-              Get.offAllNamed(AppRoutes.address);
+              Get.toNamed(AppRoutes.address);
             } else {
               snackBarMessage(
                 context,
@@ -81,35 +80,31 @@ class SelectDob extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap:
-          () => BottomPicker.date(
-            height: 350.h,
-            buttonStyle: BoxDecoration(
-              color: AppColors.primaryColor,
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            pickerTitle: Text(
-              EnumLocale.setYourDob.name.tr,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium!.copyWith(color: AppColors.primaryColor),
-            ),
-            dateOrder: DatePickerDateOrder.ymd,
-            initialDateTime: DateTime.now(),
-
-            minDateTime: DateTime(1950),
-            pickerTextStyle: TextStyle(
-              color: AppColors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-            ),
-            onChange: (index) {},
-            onSubmit:
-                (value) => context.read<CreateProfileBloc>().add(
-                  DobChanged(dob: value),
-                ),
-            bottomPickerTheme: BottomPickerTheme.plumPlate,
-          ).show(context),
+      onTap: () => BottomPicker.date(
+        height: 350.h,
+        buttonStyle: BoxDecoration(
+          color: AppColors.primaryColor,
+          borderRadius: BorderRadius.circular(8.r),
+        ),
+        pickerTitle: Text(
+          EnumLocale.setYourDob.name.tr,
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium!.copyWith(color: AppColors.primaryColor),
+        ),
+        dateOrder: DatePickerDateOrder.ymd,
+        initialDateTime: DateTime.now(),
+        minDateTime: DateTime(1950),
+        pickerTextStyle: TextStyle(
+          color: AppColors.black,
+          fontWeight: FontWeight.bold,
+          fontSize: 12,
+        ),
+        onChange: (index) {},
+        onSubmit: (value) =>
+            context.read<CreateProfileBloc>().add(DobChanged(dob: value)),
+        bottomPickerTheme: BottomPickerTheme.plumPlate,
+      ).show(context),
       child: Container(
         height: 40.h,
         width: 130.w,
@@ -118,14 +113,12 @@ class SelectDob extends StatelessWidget {
           border: Border.all(color: AppColors.primaryColor, width: 1.w),
           borderRadius: BorderRadius.circular(8.r),
         ),
-
         child: Center(
           child: BlocBuilder<CreateProfileBloc, CreateProfileState>(
             builder: (context, state) {
               debugPrint("${state.dob}");
               return Text(
                 state.dob.toString().split(' ').first,
-
                 style: Theme.of(context).textTheme.bodyMedium,
               );
             },

@@ -1,24 +1,26 @@
-// ----------------------Routes Name---------------------
+//--------------------------
 
 class AppRoutes {
-  static const String initial = '/';
-  static const String login = '/login';
-  static const String signup = '/signup';
-  static const String privacyAndPolicy = '/privacy';
-  static const String conditionOfUse = '/condition';
-  static const String forgotPassword = '/forgot';
-  static const String emailSent = '/emailSent';
-  static const String wellcome = '/welcome';
-  static const String main = '/main';
-  static const String emailVerification = '/emailVerification';
-  static const String name = '/name';
-  static const String gender = '/gender';
-  static const String age = '/age';
-  static const String address = '/address';
-  static const String interests = '/interests';
-  static const String passion = '/passion';
-  static const String upload = '/upload';
-  static const String setting = '/setting';
-  static const String discription = '/discription';
-  static const String profile = '/profile';
+  static const initial = '/';
+  static const signup = '/signup';
+  static const privacyAndPolicy = '/privacy-policy';
+  static const conditionOfUse = '/condition-of-use';
+  static const login = '/login';
+  static const forgotPassword = '/forgot-password';
+  static const emailSent = '/email-sent';
+  static const emailVerification = '/email-verification';
+  static const wellcome = '/welcome';
+  static const main = '/main';
+  static const name = '/name';
+  static const gender = '/gender';
+  static const age = '/age';
+  static const address = '/address';
+  static const interests = '/interests';
+  static const passion = '/passion';
+  static const upload = '/upload';
+  static const description = '/description';
+  static const setting = '/setting';
+  static const profile = '/profile';
+  static const favorite = '/favorite';
+  static const archive = '/archive';
 }

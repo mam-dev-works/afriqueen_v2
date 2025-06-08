@@ -20,7 +20,7 @@ enum EnumLocale {
   registeringDescriptionText2,
   registeringDescriptionText3,
   registeringDescriptionText4,
-
+  googleSignInCancelled,
   acceptPolicyAndCondition,
   doNotHaveAccount,
   alreadyHaveAccount,
@@ -33,6 +33,7 @@ enum EnumLocale {
   defaultError,
   loginWithGoogle,
   forgotPassword,
+  passwordChangeSuccess,
   passwordResetInstruction,
   rememberPassword,
   sendButtonText,
@@ -150,6 +151,24 @@ enum EnumLocale {
   more,
   blocked,
   addStory,
+  like,
+  message,
+  Favorite,
+  blockTitle,
+  yesBlock,
+  cancel,
+  yourStory,
+  addPhoto,
+  savedToFavorites,
+  savedToArchives,
+  removedFromFavorites,
+  removedFromArchives,
+  removed,
+  storyAdded,
+  noDataFound,
+  follow,
+  following,
+  noDataAvailable
 }
 
 /*abstract class AppStrings {

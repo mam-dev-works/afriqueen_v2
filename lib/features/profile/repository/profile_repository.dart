@@ -14,7 +14,7 @@ class ProfileRepository {
 
       final QuerySnapshot<Map<String, dynamic>> snapshot =
           await firebaseFirestore
-              .collection('profile')
+              .collection('user')
               .where('id', isEqualTo: uid)
               .get();
 

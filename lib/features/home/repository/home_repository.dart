@@ -16,7 +16,7 @@ class HomeRepository {
       // Fetch all profiles where 'id' is not equal to current user's uid
       final snapshot =
           await firebaseFirestore
-              .collection('profile')
+              .collection('user')
               .where('id', isNotEqualTo: uid)
               .get();
 

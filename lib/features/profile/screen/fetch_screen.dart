@@ -1,7 +1,7 @@
 //------------ main part of data fetched state-----------------
 import 'package:afriqueen/features/profile/screen/main_container_screen.dart';
-import 'package:afriqueen/features/profile/widget/fetch_screen_widget.dart';
 import 'package:afriqueen/features/profile/widget/profile_widget.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -27,14 +27,6 @@ class ProfileDataContent extends StatelessWidget {
                   //----------Main Container--------------
                   MainContainer(),
                   SizedBox(height: 30.h),
-
-                  //-------------------------Favorites use list------------------------
-                  FavoritesListTile(),
-
-                  //--------------Archive user list----------------------------
-                  ArchiveListTile(),
-                  //--------------Blocked user list----------------------------
-                  BlockedListTile(),
                 ],
               ),
             ),

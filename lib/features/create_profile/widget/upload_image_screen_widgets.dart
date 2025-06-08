@@ -113,9 +113,9 @@ class UploadImageCenterLogo extends StatelessWidget {
   }
 }
 
-//-------------Discription text----------------------
-class UploadImageDiscription extends StatelessWidget {
-  const UploadImageDiscription({super.key});
+//-------------Description text----------------------
+class UploadImageDescription extends StatelessWidget {
+  const UploadImageDescription({super.key});
 
   @override
   Widget build(BuildContext context) {

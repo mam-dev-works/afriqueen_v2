@@ -14,40 +14,37 @@ class WellcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => WellcomeBloc(),
-      child: Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: BlocListener<WellcomeBloc, WellcomeState>(
-              listener: (context, state) async {
-                await Get.updateLocale(Locale(state.languageCode!));
-                app.setLanguageCode(state.languageCode!);
-              },
-              // Sync with GetX,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 20.w,
-                ).copyWith(bottom: 10.h),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: BlocListener<WellcomeBloc, WellcomeState>(
+            listener: (context, state) async {
+              await Get.updateLocale(Locale(state.languageCode!));
+              app.setLanguageCode(state.languageCode!);
+            },
+            // Sync with GetX,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 20.w,
+              ).copyWith(bottom: 10.h),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
 
-                  spacing: 5.h,
-                  children: [
-                    SizedBox(height: 20.h),
-                    //-----------------Wellcome Text    and  langugage selector drop down-----------------------------
-                    const WellcomeTextAndDropDown(),
-                    //-------------------center image logo----------------------------
-                    const CenterImage(),
-                    //--------------------Welcome page discription----------------------------
-                    const WelcomeDiscription(),
+                spacing: 5.h,
+                children: [
+                  SizedBox(height: 20.h),
+                  //-----------------Wellcome Text    and  langugage selector drop down-----------------------------
+                  const WellcomeTextAndDropDown(),
+                  //-------------------center image logo----------------------------
+                  const CenterImage(),
+                  //--------------------Welcome page description----------------------------
+                  const WelcomeDescription(),
 
-                    SizedBox(height: 30.h),
-                    //------------------------Next Button ----------------------------------
-                    NextButton(),
-                  ],
-                ),
+                  SizedBox(height: 30.h),
+                  //------------------------Next Button ----------------------------------
+                  NextButton(),
+                ],
               ),
             ),
           ),

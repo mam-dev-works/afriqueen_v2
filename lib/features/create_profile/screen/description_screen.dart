@@ -1,11 +1,10 @@
 import 'package:afriqueen/common/widgets/steps.dart';
-
-import 'package:afriqueen/features/create_profile/widget/discription_screen_widgets.dart';
+import 'package:afriqueen/features/create_profile/widget/description_screen_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class DiscriptionScreen extends StatelessWidget {
-  DiscriptionScreen({super.key});
+class DescriptionScreen extends StatelessWidget {
+  DescriptionScreen({super.key});
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -27,17 +26,17 @@ class DiscriptionScreen extends StatelessWidget {
                   //---------------Stepper to show in which step they are in profile creation------------------------
                   const CustomSteps(currentStep: 6),
                   //-------------Title Text-----------------------
-                  const DiscriptionTitle(),
+                  const DescriptionTitle(),
                   //------------------Body text-------------------------
-                  const DiscriptionBody(),
+                  const DescriptionBody(),
 
                   SizedBox(height: 20.h),
 
-                  //------------------------Textfield for user input for discription------------------------
-                  const TextFieldForDiscription(),
+                  //------------------------Textfield for user input for description------------------------
+                  const TextFieldForDescription(),
                   //------------Next Button--------------------------------------
                   SizedBox(height: 40.h),
-                  DiscriptionNextButton(formKey: _formKey),
+                  DescriptionNextButton(formKey: _formKey),
                 ],
               ),
             ),

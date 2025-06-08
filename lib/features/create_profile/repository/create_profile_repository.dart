@@ -17,7 +17,7 @@ class CreateProfileRepository {
       final Map<String, dynamic> userData = {
         'id': FirebaseAuth.instance.currentUser!.uid,
         'pseudo': profile.pseudo,
-        'sex': profile.sex,
+        'sex': (profile.sex.trim().isEmpty) ? 'Male' : profile.sex,
         'age': profile.age,
         'country': profile.country,
         'city': profile.city,
@@ -26,10 +26,10 @@ class CreateProfileRepository {
         'interests': profile.interests,
 
         'imgURL': profile.imgURL,
-        'discription': profile.discription,
+        'description': profile.description,
       };
 
-      await _firestore.collection('profile').doc().set(userData);
+      await _firestore.collection('user').doc().set(userData);
     } catch (e) {
       debugPrint(
         "Error while uploading profile data to firebase : ${e.toString()}",
@@ -57,7 +57,10 @@ class CreateProfileRepository {
 
   Future<String?> uploadToCloudinary(String imagePath) async {
     try {
-      final cloudinary = CloudinaryPublic(AppStrings.cloudName,AppStrings.uploadPreset);
+      final cloudinary = CloudinaryPublic(
+        AppStrings.cloudName,
+        AppStrings.uploadPreset,
+      );
       CloudinaryResponse response = await cloudinary.uploadFile(
         CloudinaryFile.fromFile(
           imagePath,

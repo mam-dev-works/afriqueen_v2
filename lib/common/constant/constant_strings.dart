@@ -68,6 +68,6 @@ class AppStrings {
   ];
 
   static const List<String> language = ["English", "Français"];
-  static const cloudName = "dwzriczge";
-  static const uploadPreset =  "afrikhc9o0";
+  static const cloudName = "dv4p4ll3u";
+  static const uploadPreset =  "afriqueen";
 }

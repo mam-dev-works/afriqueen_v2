@@ -23,8 +23,8 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   final List<Widget> _widgets = [
     HomeScreen(),
-    AddScreen(),
     MatchScreen(),
+    AddScreen(),
     AddScreen(),
     ReelsScreen(),
   ];
@@ -41,7 +41,6 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _widgets[_selectedIndex],
-
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: AppColors.floralWhite,
@@ -68,42 +67,40 @@ class _MainScreenState extends State<MainScreen> {
               tabs: [
                 GButton(
                   textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: AppColors.primaryColor,
-                  ),
+                        color: AppColors.primaryColor,
+                      ),
                   iconSize: 27.r,
                   gap: 5.w,
                   icon: HugeIcons.strokeRoundedLocation01,
                 ),
-
                 GButton(
                   textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: AppColors.primaryColor,
-                  ),
+                        color: AppColors.primaryColor,
+                      ),
                   gap: 5.w,
                   iconSize: 27.r,
                   icon: HugeIcons.strokeRoundedCards01,
                 ),
-
                 GButton(
                   textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: AppColors.primaryColor,
-                  ),
+                        color: AppColors.primaryColor,
+                      ),
                   gap: 5.w,
                   iconSize: 27.r,
                   icon: CupertinoIcons.plus,
                 ),
                 GButton(
                   textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: AppColors.primaryColor,
-                  ),
+                        color: AppColors.primaryColor,
+                      ),
                   gap: 5.w,
                   iconSize: 27.r,
                   icon: CupertinoIcons.chat_bubble,
                 ),
                 GButton(
                   textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: AppColors.primaryColor,
-                  ),
+                        color: AppColors.primaryColor,
+                      ),
                   iconSize: 27.r,
                   gap: 5.w,
                   icon: CupertinoIcons.play_arrow,

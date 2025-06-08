@@ -1,4 +1,6 @@
+import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:equatable/equatable.dart';
+import 'package:get/get.dart';
 
 //----------------Create Profile State----------------------
 class CreateProfileState extends Equatable {
@@ -11,7 +13,7 @@ class CreateProfileState extends Equatable {
   final List<String> food;
   final List<String> adventure;
   final String imgURL;
-  final String discription;
+  final String description;
   const CreateProfileState({
     required this.love,
     required this.sports,
@@ -22,7 +24,7 @@ class CreateProfileState extends Equatable {
     required this.dob,
     required this.friendship,
     required this.passion,
-    required this.discription,
+    required this.description,
   });
 
   factory CreateProfileState.initial() {
@@ -36,7 +38,7 @@ class CreateProfileState extends Equatable {
       food: [],
       adventure: [],
       imgURL: '',
-      discription: '',
+      description: '',
     );
   }
   CreateProfileState copyWith({
@@ -49,7 +51,7 @@ class CreateProfileState extends Equatable {
     List<String>? food,
     List<String>? adventure,
     String? imgURL,
-    String? discription,
+    String? description,
   }) => CreateProfileState(
     gender: gender ?? this.gender,
     dob: dob ?? this.dob,
@@ -60,7 +62,7 @@ class CreateProfileState extends Equatable {
     food: food ?? this.food,
     adventure: adventure ?? this.adventure,
     imgURL: imgURL ?? this.imgURL,
-    discription: discription ?? this.discription,
+    description: description ?? this.description,
   );
   @override
   List<Object> get props => [
@@ -73,14 +75,14 @@ class CreateProfileState extends Equatable {
     food,
     adventure,
     imgURL,
-    discription,
+    description,
   ];
 }
 
 final class CreateProfileInitial extends CreateProfileState {
   CreateProfileInitial()
     : super(
-        gender: 'Male',
+        gender: EnumLocale.genderMale.name.tr,
         dob: DateTime.now(),
         friendship: [],
         passion: [],
@@ -89,7 +91,7 @@ final class CreateProfileInitial extends CreateProfileState {
         food: [],
         imgURL: '',
         adventure: [],
-        discription: '',
+        description: '',
       );
 }
 
@@ -105,7 +107,7 @@ final class Loading extends CreateProfileState {
         food: state.food,
         imgURL: state.imgURL,
         adventure: state.adventure,
-        discription: '',
+        description: '',
       );
 }
 
@@ -121,7 +123,7 @@ final class Success extends CreateProfileState {
         food: state.food,
         imgURL: state.imgURL,
         adventure: state.adventure,
-        discription: state.discription,
+        description: state.description,
       );
 }
 
@@ -139,7 +141,7 @@ final class Error extends CreateProfileState {
         food: state.food,
         imgURL: state.imgURL,
         adventure: state.adventure,
-        discription: state.discription,
+        description: state.description,
       );
 
   @override

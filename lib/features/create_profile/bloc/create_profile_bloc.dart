@@ -2,9 +2,11 @@ import 'package:afriqueen/features/create_profile/bloc/create_profile_event.dart
 import 'package:afriqueen/features/create_profile/bloc/create_profile_state.dart';
 import 'package:afriqueen/features/create_profile/model/create_profile_model.dart';
 import 'package:afriqueen/features/create_profile/repository/create_profile_repository.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
+import '../../../common/localization/enums/enums.dart';
 
 //------------------ Create Profile Bloc-------------------------------------
 class CreateProfileBloc extends Bloc<CreateProfileEvent, CreateProfileState> {
@@ -22,7 +24,6 @@ class CreateProfileBloc extends Bloc<CreateProfileEvent, CreateProfileState> {
     //-------------------------- For Gender-----------------------------
     on<GenderChanged>((GenderChanged event, Emitter<CreateProfileState> emit) {
       emit(state.copyWith(gender: event.gender));
-
       _box.write('sex', event.gender);
     });
 
@@ -92,13 +93,13 @@ class CreateProfileBloc extends Bloc<CreateProfileEvent, CreateProfileState> {
       if (path != null) return emit(state.copyWith(imgURL: path));
     });
 
-    //-----------User Discription-----------------------
-    on<DiscriptionChanged>((
-      DiscriptionChanged event,
+    //-----------User Description-----------------------
+    on<DescriptionChanged>((
+      DescriptionChanged event,
       Emitter<CreateProfileState> emit,
     ) {
-      emit(state.copyWith(discription: event.discription));
-      _box.write('discription', event.discription);
+      emit(state.copyWith(description: event.description));
+      _box.write('description', event.description);
     });
     //------------------------user submit data -------------------------------------
     on<SubmitButtonClicked>((
@@ -119,7 +120,7 @@ class CreateProfileBloc extends Bloc<CreateProfileEvent, CreateProfileState> {
 
         if (secureUrl != null && _interests.isNotEmpty) {
           final CreateProfileModel createProfileModel = CreateProfileModel(
-            discription: _box.read('discription') ?? '',
+            description: _box.read('description') ?? '',
             pseudo: _box.read('pseudo') ?? '',
             sex: _box.read('sex') ?? '',
             age: _box.read('age') ?? 0,

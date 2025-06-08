@@ -7,7 +7,7 @@ import 'package:afriqueen/common/widgets/common_textfield.dart';
 import 'package:afriqueen/features/forgot_password/bloc/forgot_password_bloc.dart';
 import 'package:afriqueen/features/forgot_password/bloc/forgot_password_event.dart';
 import 'package:afriqueen/routes/app_routes.dart';
-import 'package:flutter/gestures.dart'; 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -65,10 +65,9 @@ class _UserEmailState extends State<Email> {
       validator: AppValidator.validateEmail,
       obscureText: false,
 
-      onChanged:
-          (value) => context.read<ForgotPasswordBloc>().add(
-            UserEmail(userEmail: value.trim()),
-          ),
+      onChanged: (value) => context.read<ForgotPasswordBloc>().add(
+        UserEmail(userEmail: value.trim()),
+      ),
       keyboardType: TextInputType.emailAddress,
     );
   }
@@ -93,9 +92,8 @@ class RememberPassword extends StatelessWidget {
                 color: AppColors.primaryColor,
                 fontSize: 14,
               ),
-              recognizer:
-                  TapGestureRecognizer()
-                    ..onTap = () => Get.toNamed(AppRoutes.login),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => Get.offAllNamed(AppRoutes.login),
             ),
           ],
         ),
@@ -208,12 +206,9 @@ class DidnotRecieveTheLink extends StatelessWidget {
                 color: AppColors.primaryColor,
                 fontSize: 14,
               ),
-              recognizer:
-                  TapGestureRecognizer()
-                    ..onTap =
-                        () => context.read<ForgotPasswordBloc>().add(
-                          SendButtonClicked(),
-                        ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () =>
+                    context.read<ForgotPasswordBloc>().add(SendButtonClicked()),
             ),
           ],
         ),

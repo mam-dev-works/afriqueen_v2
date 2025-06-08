@@ -1,48 +1,48 @@
 {
   "project_info": {
-    "project_number": "729178992675",
-    "project_id": "afriqueen-e0b18",
-    "storage_bucket": "afriqueen-e0b18.firebasestorage.app"
+    "project_number": "426919301496",
+    "project_id": "afriqeen-bcd27",
+    "storage_bucket": "afriqeen-bcd27.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:729178992675:android:192a9f4f3fbaa74aa60196",
+        "mobilesdk_app_id": "1:426919301496:android:c42078ee7c5135f8bcf88d",
         "android_client_info": {
-          "package_name": "com.example.afriqueen"
+          "package_name": "com.company.afriqueen"
         }
       },
       "oauth_client": [
         {
-          "client_id": "729178992675-gduf9ahnkhnn4daurqk234kjtjkr7421.apps.googleusercontent.com",
+          "client_id": "426919301496-c33tkohl3debr406d2qas5t1kra82l6h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.afriqueen",
-            "certificate_hash": "d97a276d58010c1a823b7f9a58e5ede4f3a36d96"
+            "package_name": "com.company.afriqueen",
+            "certificate_hash": "f95876bb147a18776b539d92f93c771827f03665"
           }
         },
         {
-          "client_id": "729178992675-m3qpa1bqfd4g7qqgrq0tqslnltcqte36.apps.googleusercontent.com",
+          "client_id": "426919301496-18enm98vfaahpspkf545n6qve85v4jp8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAgOyAinTew7da7UVhsGr1APW7Hb8qYAsc"
+          "current_key": "AIzaSyAn_J5BloVOPPnyqJ6QgDvgYj9L26YbhSo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "729178992675-m3qpa1bqfd4g7qqgrq0tqslnltcqte36.apps.googleusercontent.com",
+              "client_id": "426919301496-18enm98vfaahpspkf545n6qve85v4jp8.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "729178992675-flmcpn5r3q0gvs4uo3d7taibo1q2sjdg.apps.googleusercontent.com",
+              "client_id": "426919301496-etg920dqlbpb7r41mi1hpmdrgoe76v1e.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.afriqueen"
+                "bundle_id": "com.company.afriqueen"
               }
             }
           ]

@@ -11,6 +11,12 @@ sealed class StoriesEvent extends Equatable {
 
 final class StoriesFetching extends StoriesEvent {}
 
-final class StoriesImage extends StoriesEvent {}
+final class StoriesImage extends StoriesEvent {
+final  String name;
+final  String img;
+StoriesImage({required this.name, required this.img});
+}
 
-final class StoriesVideo extends StoriesEvent {}
+
+
+

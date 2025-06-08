@@ -17,7 +17,7 @@ class HomeModel extends Equatable {
 
   final DateTime createdDate;
   final String imgURL;
-  final String discription;
+  final String description;
   const HomeModel({
     required this.id,
     required this.pseudo,
@@ -28,7 +28,7 @@ class HomeModel extends Equatable {
     required this.interests,
     required this.createdDate,
     required this.imgURL,
-    required this.discription,
+    required this.description,
   });
 
   HomeModel copyWith({
@@ -43,7 +43,7 @@ class HomeModel extends Equatable {
 
     DateTime? createdDate,
     String? imgURL,
-    String? discription,
+    String? description,
   }) {
     return HomeModel(
       id: id ?? this.id,
@@ -57,7 +57,7 @@ class HomeModel extends Equatable {
 
       createdDate: createdDate ?? this.createdDate,
       imgURL: imgURL ?? this.imgURL,
-      discription: discription ?? this.discription,
+      description: description ?? this.description,
     );
   }
 
@@ -74,7 +74,7 @@ class HomeModel extends Equatable {
 
       'createdDate': createdDate.millisecondsSinceEpoch,
       'imgURL': imgURL,
-      'discription': discription,
+      'description': description,
     };
   }
 
@@ -92,7 +92,7 @@ class HomeModel extends Equatable {
       createdDate:
           (map['createdDate'] as Timestamp?)?.toDate() ?? DateTime.now(),
       imgURL: map['imgURL'] as String,
-      discription: map['discription'] as String,
+      description: map['description'] as String,
     );
   }
 
@@ -118,7 +118,7 @@ class HomeModel extends Equatable {
 
       createdDate,
       imgURL,
-      discription,
+      description,
     ];
   }
 
@@ -133,6 +133,6 @@ class HomeModel extends Equatable {
     interests: [],
     createdDate: DateTime(0), // Or a fixed date like DateTime(0) if preferred
     imgURL: '',
-    discription: '',
+    description: '',
   );
 }

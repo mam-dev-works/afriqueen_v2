@@ -24,8 +24,8 @@ class AddressScreen extends StatelessWidget {
                 //----------------Text Regarding name Title--------------------------
                 const AddressTitle(),
 
-                //----------------Text Regarding name discription--------------------------
-                const AddressDiscription(),
+                //----------------Text Regarding name description--------------------------
+                const AddressDescription(),
                 SizedBox(height: 20.h),
                 //------------------Location of the user------------------------
                 const Location(),

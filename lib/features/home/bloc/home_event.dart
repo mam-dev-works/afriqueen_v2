@@ -7,4 +7,7 @@ class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class FetchAllExceptCurrentUser extends HomeEvent {}
+final class HomeUsersFetched extends HomeEvent {}
+final class  HomeUsersProfileList  extends HomeEvent {
+  
+}

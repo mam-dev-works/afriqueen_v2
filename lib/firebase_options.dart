@@ -43,36 +43,36 @@ class DefaultFirebaseOptions {
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyDKVPiM6zR54n_IKXKeST5OaM3_6d3fvlQ',
     appId: '1:729178992675:web:dfe1f974df98c2b7a60196',
-    messagingSenderId: '729178992675',
-    projectId: 'afriqueen-e0b18',
-    authDomain: 'afriqueen-e0b18.firebaseapp.com',
-    storageBucket: 'afriqueen-e0b18.firebasestorage.app',
+    messagingSenderId: '426919301496',
+    projectId: 'afriqeen-bcd27',
+    authDomain: 'afriqeen-bcd27.firebaseapp.com',
+    storageBucket: 'afriqeen-bcd27.firebasestorage.app',
     measurementId: 'G-Z25X0P7C9S',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAgOyAinTew7da7UVhsGr1APW7Hb8qYAsc',
-    appId: '1:729178992675:android:192a9f4f3fbaa74aa60196',
-    messagingSenderId: '729178992675',
-    projectId: 'afriqueen-e0b18',
-    storageBucket: 'afriqueen-e0b18.firebasestorage.app',
+    apiKey: 'AIzaSyAn_J5BloVOPPnyqJ6QgDvgYj9L26YbhSo',
+    appId: '1:426919301496:android:c42078ee7c5135f8bcf88d',
+    messagingSenderId: '426919301496',
+    projectId: 'afriqeen-bcd27',
+    storageBucket: 'afriqeen-bcd27.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAJj0uAA-sV7ejbS13EK92WCE2wnRiLSD4',
-    appId: '1:729178992675:ios:972b382d4935c8c6a60196',
-    messagingSenderId: '729178992675',
-    projectId: 'afriqueen-e0b18',
-    storageBucket: 'afriqueen-e0b18.firebasestorage.app',
-    iosBundleId: 'com.example.afriqueen',
+    apiKey: 'AIzaSyCltPWIfGs2673Uz45RSW6rtNubmYb8dGA',
+    appId: '1:426919301496:ios:2185019e1b50a7afbcf88d',
+    messagingSenderId: '426919301496',
+    projectId: 'afriqeen-bcd27',
+    storageBucket: 'afriqeen-bcd27.firebasestorage.app',
+    iosBundleId: 'com.company.afriqueen',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyAJj0uAA-sV7ejbS13EK92WCE2wnRiLSD4',
     appId: '1:729178992675:ios:972b382d4935c8c6a60196',
     messagingSenderId: '729178992675',
-    projectId: 'afriqueen-e0b18',
-    storageBucket: 'afriqueen-e0b18.firebasestorage.app',
+    projectId: 'afriqeen-bcd27',
+    storageBucket: 'afriqeen-bcd27.firebasestorage.app',
     iosBundleId: 'com.example.afriqueen',
   );
 
@@ -80,9 +80,9 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyDKVPiM6zR54n_IKXKeST5OaM3_6d3fvlQ',
     appId: '1:729178992675:web:76b5511ef01aa5aba60196',
     messagingSenderId: '729178992675',
-    projectId: 'afriqueen-e0b18',
-    authDomain: 'afriqueen-e0b18.firebaseapp.com',
-    storageBucket: 'afriqueen-e0b18.firebasestorage.app',
+    projectId: 'afriqeen-bcd27',
+    authDomain: 'afriqeen-bcd27.firebaseapp.com',
+    storageBucket: 'afriqeen-bcd27.firebasestorage.app',
     measurementId: 'G-7PB9VLHJ06',
   );
 }

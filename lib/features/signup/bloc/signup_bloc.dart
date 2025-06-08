@@ -1,9 +1,11 @@
+import 'package:afriqueen/features/login/bloc/login_state.dart';
 import 'package:afriqueen/features/signup/bloc/signup_event.dart';
 import 'package:afriqueen/features/signup/bloc/signup_state.dart';
 import 'package:afriqueen/features/signup/models/signup_model.dart';
 import 'package:afriqueen/features/signup/repository/signup_repository.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -23,6 +25,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     on<Submit>(_onSubmit);
     on<PasswordVisibility>(_onPasswordVisibility);
     on<CheckedBox>(_onCheckedBox);
+    on<GoogleSignInButtonClicked>(_onGoogleSignInButtonClicked);
   }
   //------------------------- on Clicking Signup button it  will run-----------------------------
   Future<void> _onSubmit(Submit event, Emitter<SignupState> emit) async {
@@ -34,6 +37,26 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     if (userCredential != null) {
       _appGetStorage.setPageNumber(1);
       emit(Success.fromState(state));
+    } else {
+      emit(SignUpfail.fromState(state, error: _repository.errorMessge!.tr));
+    }
+  }
+
+  //------------------------- on Clicking Google Sign In button it will run-----------------------------
+  Future<void> _onGoogleSignInButtonClicked(
+    GoogleSignInButtonClicked event,
+    Emitter<SignupState> emit,
+  ) async {
+    emit(Loading.fromState(state));
+    UserCredential? userCredential = await _repository.signupWithGoogle();
+
+    if (userCredential != null) {
+      if (_repository.isExistingUser) {
+        emit(GoogleSignInExistingUser.fromState(state));
+      } else {
+        _appGetStorage.setPageNumber(2);
+        emit(GoogleSignInSuccess.fromState(state));
+      }
     } else {
       emit(SignUpfail.fromState(state, error: _repository.errorMessge!.tr));
     }

@@ -3,7 +3,6 @@ import 'package:afriqueen/common/widgets/snackbar_message.dart';
 import 'package:afriqueen/common/widgets/steps.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_bloc.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_state.dart';
-
 import 'package:afriqueen/features/create_profile/widget/upload_image_screen_widgets.dart';
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:flutter/material.dart';
@@ -39,8 +38,8 @@ class UploadImageScreen extends StatelessWidget {
                   //-------------Title  text----------------------
                   const UploadImageTitle(),
 
-                  //-------------Discription text----------------------
-                  const UploadImageDiscription(),
+                  //-------------Description text----------------------
+                  const UploadImageDescription(),
                   //------------Center image logo---------------------
                   SizedBox(height: 10.h),
                   const UploadImageCenterLogo(),
@@ -84,8 +83,10 @@ class UploadImageScreen extends StatelessWidget {
       box.remove('food');
       box.remove('adventure');
       box.remove('imageURL');
-      box.remove('discription');
-      Get.offAllNamed(AppRoutes.main);
+      box.remove('description');
+      Get.offAllNamed(
+        AppRoutes.main,
+      );
     }
   }
 }

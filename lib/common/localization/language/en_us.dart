@@ -24,9 +24,9 @@ final Map<String, String> enUS = {
       'Password must contain a special character',
   EnumLocale.registeringDescriptionText1.name: "By registering, you accept our",
   EnumLocale.registeringDescriptionText2.name: " Terms and Conditions of Use",
-
   EnumLocale.registeringDescriptionText3.name: " and our",
   EnumLocale.registeringDescriptionText4.name: " Privacy Policy",
+  EnumLocale.googleSignInCancelled.name: 'Google Sign-In Cancelled',
   EnumLocale.acceptPolicyAndCondition.name:
       'Accept Terms and Conditions of Use and our Privacy Policy',
   EnumLocale.alreadyHaveAccount.name: "Already have an account? ",
@@ -42,7 +42,6 @@ You are always in control of your data. You can update or delete your profile, d
 Afriqueen is intended strictly for individuals aged 18 or older. We do not knowingly collect or process data from minors. By using our app, you agree to this privacy policy and any future updates we may apply. If changes are made to how we handle your data, we’ll notify you through the app or email.
 
 If you have any questions or concerns about how we use your information, you can contact us at privacy@Afriqueen.app.""",
-
   EnumLocale.conditionOfUseTitle.name:
       "Afriqueen – Terms and Conditions of Use\n",
   EnumLocale.conditionOfUseBody.name: """
@@ -71,12 +70,11 @@ By using Afriqueen, you agree to the following terms and conditions. These terms
 11. Governing Law: These terms shall be governed by and interpreted in accordance with the laws of [Insert Country or State]. Any disputes will be handled in the appropriate courts of that jurisdiction.
 
 12. Contact Information: If you have questions about these terms, please contact us at support@Afriqueen.app.""",
-
   EnumLocale.wrongPasswordError.name: 'Wrong password provided for that user.',
   EnumLocale.userNotFoundError.name: "No user found for that email.",
   EnumLocale.defaultError.name: "something went wrong please try again",
-
   EnumLocale.forgotPassword.name: "Forgot Password",
+  EnumLocale.passwordChangeSuccess.name: "Password changed successfully",
   EnumLocale.passwordResetInstruction.name:
       "Enter Your Registered email below to receive password reset instruction",
   EnumLocale.sendButtonText.name: "Send",
@@ -86,11 +84,9 @@ By using Afriqueen, you agree to the following terms and conditions. These terms
       "Please check your inbox and  click in the received link to reset a password",
   EnumLocale.didNotReceiveTheLink.name: "Didn't receive the link?",
   EnumLocale.resend.name: "Resend",
-
   EnumLocale.verifyEmailTitle.name: "Verify your Email address",
   EnumLocale.verifyEmailBody.name:
       "Thanks for Signup with us. Click on the button below to verify your email address.",
-
   EnumLocale.verifyYourEmailText.name: "Verify Your Email",
   EnumLocale.deleteAccountText.name:
       "If this Email wasn't intended for you. Feel free to ",
@@ -99,16 +95,13 @@ By using Afriqueen, you agree to the following terms and conditions. These terms
   EnumLocale.signupSuccessful.name: "Signup Successfull",
   EnumLocale.deleteSuccessful.name: "Delete Successfull",
   EnumLocale.emailVerifyRequired.name: "Email verification  is required !",
-
   EnumLocale.welcome.name: "Welcome",
   EnumLocale.welcomeDescriptionText.name:
       """Welcome to Afriqueen! Ready to meet some great people? Tell us a bit about yourself and what you're looking for. Keep it real, share a smile in your pic, and start exploring. Your next connection could be just a swipe away!""",
   EnumLocale.next.name: "Next",
   EnumLocale.locationPermissionRequired.name:
       "Location permission is required for further process",
-
   EnumLocale.nameHintText.name: "Enter pseudo name",
-
   EnumLocale.nameTitle.name: "Your pseudo name",
   EnumLocale.nameDescription.name:
       "It will be displayed on your profile and you will not be able to change it later",
@@ -122,11 +115,9 @@ By using Afriqueen, you agree to the following terms and conditions. These terms
       "You can change this information later by contacting our Customer service department.",
   EnumLocale.genderMale.name: "Male",
   EnumLocale.genderFemale.name: "Female",
-
   EnumLocale.dobTitle.name: "Your date of birth",
   EnumLocale.dobDescription.name:
       "Enter your age correctly; you won't be able to change it later.",
-
   EnumLocale.setYourDob.name: 'Set your Birthday',
   EnumLocale.ageErrorText.name: "Age must be greater than 18",
   EnumLocale.addressTitle.name: "Find Crushes in your city",
@@ -134,7 +125,6 @@ By using Afriqueen, you agree to the following terms and conditions. These terms
       "Country and city are automatically detected once the location service is enabled",
   EnumLocale.countryName.name: "Country",
   EnumLocale.cityName.name: "City",
-
   EnumLocale.interestTitle.name:
       "Choose a variety of keyboards that best reflect your interests",
   EnumLocale.friendshipInterests.name: "Friendship :",
@@ -146,7 +136,6 @@ By using Afriqueen, you agree to the following terms and conditions. These terms
   EnumLocale.interestsRequired.name: "At least choose one !",
   EnumLocale.passion.name: "passion :",
   EnumLocale.chooseOption.name: "Choose any option",
-
   EnumLocale.music.name: "Music",
   EnumLocale.creativity.name: "Creativity",
   EnumLocale.fitness.name: "Fitness",
@@ -190,7 +179,7 @@ By using Afriqueen, you agree to the following terms and conditions. These terms
       "Could you tell me a little bit about yourself?",
   EnumLocale.descriptionBody.name:
       "You can change this information later by contacting our Customer service department.",
-  EnumLocale.descriptionLabelText.name: "Discription",
+  EnumLocale.descriptionLabelText.name: "Description",
   EnumLocale.joinedJustNow.name: 'Joined just now',
   EnumLocale.joined.name: 'Joined',
   EnumLocale.minutesAgo.name: 'minutes ago',
@@ -211,4 +200,22 @@ By using Afriqueen, you agree to the following terms and conditions. These terms
   EnumLocale.more.name: 'More',
   EnumLocale.blocked.name: 'Blocked',
   EnumLocale.addStory.name: 'Add Story',
+  EnumLocale.like.name: 'Like',
+  EnumLocale.message.name: 'Message',
+  EnumLocale.Favorite.name: 'Favorite',
+  EnumLocale.blockTitle.name: 'Do you Want to Block this person? ',
+  EnumLocale.yesBlock.name: "Yes, block",
+  EnumLocale.cancel.name: 'Cancel',
+  EnumLocale.yourStory.name: 'Your Story',
+  EnumLocale.addPhoto.name: 'Add Photo',
+  EnumLocale.removed.name: 'Remove',
+  EnumLocale.savedToFavorites.name: 'Saved to your Favorites.',
+  EnumLocale.savedToArchives.name: 'Saved to your Archives.',
+  EnumLocale.removedFromFavorites.name: 'Removed from Favorites',
+  EnumLocale.removedFromArchives.name: 'Removed from Archives',
+  EnumLocale.noDataFound.name: 'No Data Found !',
+  EnumLocale.storyAdded.name: "Your story's been added!",
+  EnumLocale.following.name: "Following",
+  EnumLocale.follow.name: 'Follow',
+   EnumLocale.noDataAvailable.name: 'No Data Available',
 };

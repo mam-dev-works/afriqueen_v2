@@ -1,4 +1,5 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
+import 'package:afriqueen/common/constant/constant_strings.dart';
 import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/common/utils/validators.dart';
 import 'package:afriqueen/common/widgets/common_button.dart';
@@ -11,9 +12,9 @@ import 'package:afriqueen/routes/app_routes.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:get/get_utils/get_utils.dart';
-import 'package:get/route_manager.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 /// ---------------- Signup text ----------------
 class SignUpText extends StatelessWidget {
@@ -52,10 +53,8 @@ class _EmailInputState extends State<EmailInput> {
       controller: _emailController,
       validator: AppValidator.validateEmail,
       obscureText: false,
-
-      onChanged:
-          (value) =>
-              context.read<SignupBloc>().add(EmailChanged(email: value.trim())),
+      onChanged: (value) =>
+          context.read<SignupBloc>().add(EmailChanged(email: value.trim())),
       keyboardType: TextInputType.emailAddress,
     );
   }
@@ -87,13 +86,12 @@ class _PasswordInputState extends State<PasswordInput> {
           controller: _passwordController,
           validator: AppValidator.validatePassword,
           obscureText: state.isPasswordHidden,
-          onChanged:
-              (value) => context.read<SignupBloc>().add(
+          onChanged: (value) => context.read<SignupBloc>().add(
                 PasswordChanged(password: value.trim()),
               ),
           suffixIcon: IconButton(
-            onPressed:
-                () => context.read<SignupBloc>().add(PasswordVisibility()),
+            onPressed: () =>
+                context.read<SignupBloc>().add(PasswordVisibility()),
             icon: Icon(
               state.isPasswordHidden
                   ? Icons.visibility_off_outlined
@@ -108,14 +106,13 @@ class _PasswordInputState extends State<PasswordInput> {
 }
 
 /// ------------------- Register description and checkbox ------------------
-class RegisterDiscription extends StatelessWidget {
-  const RegisterDiscription({super.key});
+class RegisterDescription extends StatelessWidget {
+  const RegisterDescription({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
-
       children: [
         BlocBuilder<SignupBloc, SignupState>(
           builder: (context, state) {
@@ -140,11 +137,10 @@ class RegisterDiscription extends StatelessWidget {
                 TextSpan(
                   text: EnumLocale.registeringDescriptionText2.name.tr,
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: AppColors.primaryColor,
-                  ),
-                  recognizer:
-                      TapGestureRecognizer()
-                        ..onTap = () => Get.toNamed(AppRoutes.conditionOfUse),
+                        color: AppColors.primaryColor,
+                      ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => Get.toNamed(AppRoutes.conditionOfUse),
                 ),
                 TextSpan(
                   text: EnumLocale.registeringDescriptionText3.name.tr,
@@ -152,14 +148,14 @@ class RegisterDiscription extends StatelessWidget {
                 ),
                 TextSpan(
                   text: EnumLocale.registeringDescriptionText4.name.tr,
-
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: AppColors.primaryColor,
-                  ),
-
-                  recognizer:
-                      TapGestureRecognizer()
-                        ..onTap = () => Get.toNamed(AppRoutes.privacyAndPolicy),
+                        color: AppColors.primaryColor,
+                      ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => Navigator.pushNamed(
+                          context,
+                          AppRoutes.privacyAndPolicy,
+                        ),
                 ),
               ],
             ),
@@ -193,7 +189,6 @@ class SignupButton extends StatelessWidget {
               context.read<SignupBloc>().add(Submit());
             }
           },
-
           buttonText: EnumLocale.signupText.name.tr,
         );
       },
@@ -217,16 +212,70 @@ class AlreadyHaveAccount extends StatelessWidget {
             TextSpan(
               text: EnumLocale.loginText.name.tr,
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: AppColors.primaryColor,
-                fontSize: 16,
-              ),
-              recognizer:
-                  TapGestureRecognizer()
-                    ..onTap = () => Get.toNamed(AppRoutes.login),
+                    color: AppColors.primaryColor,
+                    fontSize: 16,
+                  ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => Get.toNamed(AppRoutes.login),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+//----------------------------Button for google signup-----------------------------
+class GoogleSignUpButton extends StatelessWidget {
+  const GoogleSignUpButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        height: 40.h,
+        width: 120.w,
+        child: ElevatedButton(
+          onPressed: () =>
+              context.read<SignupBloc>().add(GoogleSignInButtonClicked()),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.transparent,
+            padding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.r),
+            ),
+          ),
+          child: Ink(
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(8.r),
+            ),
+            child: Container(
+              padding: EdgeInsets.all(6.r),
+              alignment: Alignment.center,
+              child: SvgPicture.asset(AppStrings.googleLogo),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+//-------------------Signup Button and Google Signin Button-----------------------------
+class SignupAndGoogleSigninButton extends StatelessWidget {
+  const SignupAndGoogleSigninButton({super.key, required this.formKey});
+  final GlobalKey<FormState> formKey;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      spacing: 20,
+      children: [
+        SignupButton(formKey: formKey),
+        GoogleSignUpButton(),
+      ],
     );
   }
 }

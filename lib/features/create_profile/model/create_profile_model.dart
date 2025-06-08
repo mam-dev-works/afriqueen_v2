@@ -11,9 +11,9 @@ class CreateProfileModel extends Equatable {
   final List<String> interests;
   final DateTime createdDate;
   final String imgURL;
-  final String discription;
+  final String description;
   const CreateProfileModel({
-    required this.discription,
+    required this.description,
     required this.pseudo,
     required this.sex,
     required this.age,
@@ -34,7 +34,7 @@ class CreateProfileModel extends Equatable {
 
     List<String>? interests,
     String? imgURL,
-    String? discription,
+    String? description,
     DateTime? createdDate,
   }) {
     return CreateProfileModel(
@@ -47,7 +47,7 @@ class CreateProfileModel extends Equatable {
       interests: interests ?? this.interests,
       imgURL: imgURL ?? this.imgURL,
       createdDate: createdDate ?? this.createdDate,
-      discription: discription ?? this.discription,
+      description: description ?? this.description,
     );
   }
 

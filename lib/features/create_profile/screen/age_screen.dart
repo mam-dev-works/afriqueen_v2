@@ -1,6 +1,5 @@
 import 'package:afriqueen/common/widgets/steps.dart';
 import 'package:afriqueen/features/create_profile/widget/age_screen_widgets.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -25,8 +24,8 @@ class AgeScreen extends StatelessWidget {
                 //----------------Text Regarding name Title--------------------------
                 const AgeTitle(),
 
-                //----------------Text Regarding name discription--------------------------
-                const AgeDiscription(),
+                //----------------Text Regarding name description--------------------------
+                const AgeDescription(),
                 SizedBox(height: 20.h),
 
                 const SelectDob(),

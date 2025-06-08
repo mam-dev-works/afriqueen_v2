@@ -16,7 +16,7 @@ class ProfileModel extends Equatable {
   final List<String> interests;
   final DateTime createdDate;
   final String imgURL;
-  final String discription;
+  final String description;
   const ProfileModel({
     required this.id,
     required this.pseudo,
@@ -28,7 +28,7 @@ class ProfileModel extends Equatable {
     required this.interests,
     required this.createdDate,
     required this.imgURL,
-    required this.discription,
+    required this.description,
   });
 
   ProfileModel copyWith({
@@ -42,7 +42,7 @@ class ProfileModel extends Equatable {
     List<String>? interests,
     DateTime? createdDate,
     String? imgURL,
-    String? discription,
+    String? description,
   }) {
     return ProfileModel(
       id: id ?? this.id,
@@ -55,7 +55,7 @@ class ProfileModel extends Equatable {
       interests: interests ?? this.interests,
       createdDate: createdDate ?? this.createdDate,
       imgURL: imgURL ?? this.imgURL,
-      discription: discription ?? this.discription,
+      description: description ?? this.description,
     );
   }
 
@@ -71,7 +71,7 @@ class ProfileModel extends Equatable {
       'interests': interests,
       'createdDate': createdDate.millisecondsSinceEpoch,
       'imgURL': imgURL,
-      'discription': discription,
+      'description': description,
     };
   }
 
@@ -88,7 +88,7 @@ class ProfileModel extends Equatable {
       createdDate:
           (map['createdDate'] as Timestamp?)?.toDate() ?? DateTime.now(),
       imgURL: map['imgURL'] as String,
-      discription: map['discription'] as String,
+      description: map['description'] as String,
     );
   }
 
@@ -113,7 +113,7 @@ class ProfileModel extends Equatable {
       interests,
       createdDate,
       imgURL,
-      discription,
+      description,
     ];
   }
 
@@ -129,6 +129,6 @@ class ProfileModel extends Equatable {
     interests: const [],
     createdDate: DateTime(0), // Or a fixed date like DateTime(0) if preferred
     imgURL: '',
-    discription: '',
+    description: '',
   );
 }

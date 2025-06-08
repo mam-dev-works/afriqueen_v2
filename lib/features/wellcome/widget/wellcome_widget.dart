@@ -7,7 +7,6 @@ import 'package:afriqueen/features/wellcome/bloc/wellcome_event.dart';
 import 'package:afriqueen/features/wellcome/bloc/wellcome_state.dart';
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
-
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,11 @@ class NextButton extends StatelessWidget {
     return CommonButton(
       onPressed: () async {
         app.setHasOpenedApp();
-        Get.offAllNamed(AppRoutes.login);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRoutes.login,
+          (Route<dynamic> route) => false,
+        );
       },
 
       buttonText: EnumLocale.next.name.tr,
@@ -34,9 +37,9 @@ class NextButton extends StatelessWidget {
   }
 }
 
-//--------------------Welcome page discription----------------------------
-class WelcomeDiscription extends StatelessWidget {
-  const WelcomeDiscription({super.key});
+//--------------------Welcome page description----------------------------
+class WelcomeDescription extends StatelessWidget {
+  const WelcomeDescription({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -74,14 +77,13 @@ class DropDownForLanguage extends StatelessWidget {
   final DropdownController controller = DropdownController();
 
   final List<CoolDropdownItem<String>> country = [
- 
     CoolDropdownItem(
       label: "Français",
       value: "fr",
       icon: Image.asset(AppStrings.fr, height: 30.h, width: 30.w),
       selectedIcon: Image.asset(AppStrings.fr, height: 30.h, width: 30.w),
     ),
-       CoolDropdownItem(
+    CoolDropdownItem(
       label: "English",
       value: "en",
       icon: Image.asset(AppStrings.us, height: 30.h, width: 30.w),

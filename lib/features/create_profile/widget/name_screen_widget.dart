@@ -12,9 +12,9 @@ import 'package:get/get.dart';
 
 // -----------------------------Name screen components-----------------------------------
 
-//----------------Text Regarding name discription--------------------------
-class NameDiscription extends StatelessWidget {
-  const NameDiscription({super.key});
+//----------------Text Regarding name description--------------------------
+class NameDescription extends StatelessWidget {
+  const NameDescription({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +52,9 @@ class PseudoTextField extends StatelessWidget {
       controller: controller,
       validator: AppValidator.validatePseudo,
       obscureText: false,
-      onChanged:
-          (value) => context.read<CreateProfileBloc>().add(
-            PseudoChanged(pseudo: value.trim()),
-          ),
+      onChanged: (value) => context.read<CreateProfileBloc>().add(
+        PseudoChanged(pseudo: value.trim()),
+      ),
     );
   }
 }
@@ -72,7 +71,7 @@ class NameNextButton extends StatelessWidget {
       onPressed: () {
         if (formKey.currentState!.validate()) {
           app.setPageNumber(3);
-          Get.offAllNamed(AppRoutes.gender);
+          Get.toNamed(AppRoutes.gender);
         }
       },
       buttonText: EnumLocale.next.name.tr,

@@ -9,11 +9,13 @@ class ForgotPasswordBloc
     extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
   // Make repository private
   final ForgotPasswordRepository _repository;
+
   // Make model private
   ForgotPasswordModel _model = ForgotPasswordModel(email: "");
+
   ForgotPasswordBloc({required ForgotPasswordRepository repo})
-    : _repository = repo,
-      super(ForgotPasswordInitial()) {
+      : _repository = repo,
+        super(ForgotPasswordInitial()) {
     //-------------------------User email ------------------------
     on<UserEmail>((event, emit) {
       _model = _model.copyWith(email: event.userEmail);
@@ -22,6 +24,7 @@ class ForgotPasswordBloc
     on<SendButtonClicked>((event, emit) async {
       try {
         await _repository.sendEmailToRestPassword(_model);
+        emit(ForgotPasswordSuccess());
       } catch (e) {}
     });
   }

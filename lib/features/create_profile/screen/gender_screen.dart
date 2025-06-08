@@ -1,5 +1,4 @@
 import 'package:afriqueen/common/widgets/steps.dart';
-
 import 'package:afriqueen/features/create_profile/widget/gender_screen_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,8 +24,8 @@ class GenderScreen extends StatelessWidget {
                 //----------------Text Regarding name Title--------------------------
                 const GenderTitle(),
 
-                //----------------Text Regarding name discription--------------------------
-                const GenderDiscription(),
+                //----------------Text Regarding name description--------------------------
+                const GenderDescription(),
                 SizedBox(height: 20.h),
 
                 //----------------Male gender---------------------

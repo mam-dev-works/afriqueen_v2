@@ -74,7 +74,11 @@ class EmailVerificationScreen extends StatelessWidget {
         Theme.of(context),
       );
 
-      Get.offAllNamed(AppRoutes.signup);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRoutes.signup,
+        (Route<dynamic> route) => false,
+      );
     }
   }
 }

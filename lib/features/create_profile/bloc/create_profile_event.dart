@@ -92,13 +92,12 @@ final class PickImg extends CreateProfileEvent {}
 
 final class SubmitButtonClicked extends CreateProfileEvent {}
 
-final class DiscriptionChanged extends CreateProfileEvent {
-  final String discription;
+final class DescriptionChanged extends CreateProfileEvent {
+  final String description;
 
-  const DiscriptionChanged({required this.discription});
+  const DescriptionChanged({required this.description});
   @override
-  List<Object> get props => [discription];
+  List<Object> get props => [description];
 }
-
 
 final class ResetCreateProfileEvent extends CreateProfileEvent {}

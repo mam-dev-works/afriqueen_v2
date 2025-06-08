@@ -63,10 +63,9 @@ class FriendshipInchoice extends StatelessWidget {
                     return CheckboxListTile(
                       activeColor: AppColors.primaryColor,
                       value: selected,
-                      onChanged:
-                          isLimitReached
-                              ? null // disables unselected items if limit reached
-                              : state.onSelected(item),
+                      onChanged: isLimitReached
+                          ? null // disables unselected items if limit reached
+                          : state.onSelected(item),
                       title: ChoiceText(
                         style: Theme.of(context).textTheme.bodyMedium,
                         highlightColor: AppColors.floralWhite,
@@ -85,12 +84,11 @@ class FriendshipInchoice extends StatelessWidget {
                         children: [
                           Text(
                             EnumLocale.chooseOption.name.tr,
-                            style: Theme.of(
-                              context,
-                            ).textTheme.bodyLarge!.copyWith(
-                              color: AppColors.primaryColor,
-                              fontSize: 19.sp,
-                            ),
+                            style: Theme.of(context).textTheme.bodyLarge!
+                                .copyWith(
+                                  color: AppColors.primaryColor,
+                                  fontSize: 19.sp,
+                                ),
                           ),
 
                           IconButton(
@@ -127,12 +125,12 @@ class FriendshipInchoice extends StatelessWidget {
                             child: Text(
                               (state.value.isEmpty)
                                   ? EnumLocale
-                                      .chooseOption
-                                      .name
-                                      .tr // empty text = no placeholder
+                                        .chooseOption
+                                        .name
+                                        .tr // empty text = no placeholder
                                   : state.value.join(
-                                    ', ',
-                                  ), // or use .label if single select
+                                      ', ',
+                                    ), // or use .label if single select
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -212,24 +210,21 @@ class LoveInchoice extends StatelessWidget {
                       );
                     }
                   },
-                  itemCount:
-                      AppStrings
-                          .categorizedUserInterests["Love & Romance"]!
-                          .length,
+                  itemCount: AppStrings
+                      .categorizedUserInterests["Love & Romance"]!
+                      .length,
                   itemBuilder: (state, i) {
-                    final item =
-                        AppStrings
-                            .categorizedUserInterests["Love & Romance"]![i];
+                    final item = AppStrings
+                        .categorizedUserInterests["Love & Romance"]![i];
                     final selected = state.selected(item);
                     final isLimitReached = state.value.length >= 2 && !selected;
 
                     return CheckboxListTile(
                       activeColor: AppColors.primaryColor,
                       value: selected,
-                      onChanged:
-                          isLimitReached
-                              ? null // disables unselected items if limit reached
-                              : state.onSelected(item),
+                      onChanged: isLimitReached
+                          ? null // disables unselected items if limit reached
+                          : state.onSelected(item),
                       title: ChoiceText(
                         style: Theme.of(context).textTheme.bodyMedium,
                         highlightColor: AppColors.floralWhite,
@@ -248,12 +243,11 @@ class LoveInchoice extends StatelessWidget {
                         children: [
                           Text(
                             EnumLocale.chooseOption.name.tr,
-                            style: Theme.of(
-                              context,
-                            ).textTheme.bodyLarge!.copyWith(
-                              color: AppColors.primaryColor,
-                              fontSize: 19.sp,
-                            ),
+                            style: Theme.of(context).textTheme.bodyLarge!
+                                .copyWith(
+                                  color: AppColors.primaryColor,
+                                  fontSize: 19.sp,
+                                ),
                           ),
 
                           IconButton(
@@ -290,12 +284,12 @@ class LoveInchoice extends StatelessWidget {
                             child: Text(
                               (state.value.isEmpty)
                                   ? EnumLocale
-                                      .chooseOption
-                                      .name
-                                      .tr // empty text = no placeholder
+                                        .chooseOption
+                                        .name
+                                        .tr // empty text = no placeholder
                                   : state.value.join(
-                                    ', ',
-                                  ), // or use .label if single select
+                                      ', ',
+                                    ), // or use .label if single select
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -361,24 +355,21 @@ class SportsInchoice extends StatelessWidget {
                       );
                     }
                   },
-                  itemCount:
-                      AppStrings
-                          .categorizedUserInterests["Sports & Outdoors"]!
-                          .length,
+                  itemCount: AppStrings
+                      .categorizedUserInterests["Sports & Outdoors"]!
+                      .length,
                   itemBuilder: (state, i) {
-                    final item =
-                        AppStrings
-                            .categorizedUserInterests["Sports & Outdoors"]![i];
+                    final item = AppStrings
+                        .categorizedUserInterests["Sports & Outdoors"]![i];
                     final selected = state.selected(item);
                     final isLimitReached = state.value.length >= 2 && !selected;
 
                     return CheckboxListTile(
                       activeColor: AppColors.primaryColor,
                       value: selected,
-                      onChanged:
-                          isLimitReached
-                              ? null // disables unselected items if limit reached
-                              : state.onSelected(item),
+                      onChanged: isLimitReached
+                          ? null // disables unselected items if limit reached
+                          : state.onSelected(item),
                       title: ChoiceText(
                         style: Theme.of(context).textTheme.bodyMedium,
                         highlightColor: AppColors.floralWhite,
@@ -397,12 +388,11 @@ class SportsInchoice extends StatelessWidget {
                         children: [
                           Text(
                             EnumLocale.chooseOption.name.tr,
-                            style: Theme.of(
-                              context,
-                            ).textTheme.bodyLarge!.copyWith(
-                              color: AppColors.primaryColor,
-                              fontSize: 19.sp,
-                            ),
+                            style: Theme.of(context).textTheme.bodyLarge!
+                                .copyWith(
+                                  color: AppColors.primaryColor,
+                                  fontSize: 19.sp,
+                                ),
                           ),
 
                           IconButton(
@@ -439,12 +429,12 @@ class SportsInchoice extends StatelessWidget {
                             child: Text(
                               (state.value.isEmpty)
                                   ? EnumLocale
-                                      .chooseOption
-                                      .name
-                                      .tr // empty text = no placeholder
+                                        .chooseOption
+                                        .name
+                                        .tr // empty text = no placeholder
                                   : state.value.join(
-                                    ', ',
-                                  ), // or use .label if single select
+                                      ', ',
+                                    ), // or use .label if single select
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -510,24 +500,21 @@ class FoodInchoice extends StatelessWidget {
                       );
                     }
                   },
-                  itemCount:
-                      AppStrings
-                          .categorizedUserInterests["Food & Restaurants"]!
-                          .length,
+                  itemCount: AppStrings
+                      .categorizedUserInterests["Food & Restaurants"]!
+                      .length,
                   itemBuilder: (state, i) {
-                    final item =
-                        AppStrings
-                            .categorizedUserInterests["Food & Restaurants"]![i];
+                    final item = AppStrings
+                        .categorizedUserInterests["Food & Restaurants"]![i];
                     final selected = state.selected(item);
                     final isLimitReached = state.value.length >= 2 && !selected;
 
                     return CheckboxListTile(
                       activeColor: AppColors.primaryColor,
                       value: selected,
-                      onChanged:
-                          isLimitReached
-                              ? null // disables unselected items if limit reached
-                              : state.onSelected(item),
+                      onChanged: isLimitReached
+                          ? null // disables unselected items if limit reached
+                          : state.onSelected(item),
                       title: ChoiceText(
                         style: Theme.of(context).textTheme.bodyMedium,
                         highlightColor: AppColors.floralWhite,
@@ -546,12 +533,11 @@ class FoodInchoice extends StatelessWidget {
                         children: [
                           Text(
                             EnumLocale.chooseOption.name.tr,
-                            style: Theme.of(
-                              context,
-                            ).textTheme.bodyLarge!.copyWith(
-                              color: AppColors.primaryColor,
-                              fontSize: 19.sp,
-                            ),
+                            style: Theme.of(context).textTheme.bodyLarge!
+                                .copyWith(
+                                  color: AppColors.primaryColor,
+                                  fontSize: 19.sp,
+                                ),
                           ),
 
                           IconButton(
@@ -588,12 +574,12 @@ class FoodInchoice extends StatelessWidget {
                             child: Text(
                               (state.value.isEmpty)
                                   ? EnumLocale
-                                      .chooseOption
-                                      .name
-                                      .tr // empty text = no placeholder
+                                        .chooseOption
+                                        .name
+                                        .tr // empty text = no placeholder
                                   : state.value.join(
-                                    ', ',
-                                  ), // or use .label if single select
+                                      ', ',
+                                    ), // or use .label if single select
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -659,24 +645,21 @@ class AdventureInchoice extends StatelessWidget {
                       );
                     }
                   },
-                  itemCount:
-                      AppStrings
-                          .categorizedUserInterests["Adventure & Travel"]!
-                          .length,
+                  itemCount: AppStrings
+                      .categorizedUserInterests["Adventure & Travel"]!
+                      .length,
                   itemBuilder: (state, i) {
-                    final item =
-                        AppStrings
-                            .categorizedUserInterests["Adventure & Travel"]![i];
+                    final item = AppStrings
+                        .categorizedUserInterests["Adventure & Travel"]![i];
                     final selected = state.selected(item);
                     final isLimitReached = state.value.length >= 2 && !selected;
 
                     return CheckboxListTile(
                       activeColor: AppColors.primaryColor,
                       value: selected,
-                      onChanged:
-                          isLimitReached
-                              ? null // disables unselected items if limit reached
-                              : state.onSelected(item),
+                      onChanged: isLimitReached
+                          ? null // disables unselected items if limit reached
+                          : state.onSelected(item),
                       title: ChoiceText(
                         style: Theme.of(context).textTheme.bodyMedium,
                         highlightColor: AppColors.floralWhite,
@@ -695,12 +678,11 @@ class AdventureInchoice extends StatelessWidget {
                         children: [
                           Text(
                             EnumLocale.chooseOption.name.tr,
-                            style: Theme.of(
-                              context,
-                            ).textTheme.bodyLarge!.copyWith(
-                              color: AppColors.primaryColor,
-                              fontSize: 19.sp,
-                            ),
+                            style: Theme.of(context).textTheme.bodyLarge!
+                                .copyWith(
+                                  color: AppColors.primaryColor,
+                                  fontSize: 19.sp,
+                                ),
                           ),
 
                           IconButton(
@@ -737,12 +719,12 @@ class AdventureInchoice extends StatelessWidget {
                             child: Text(
                               (state.value.isEmpty)
                                   ? EnumLocale
-                                      .chooseOption
-                                      .name
-                                      .tr // empty text = no placeholder
+                                        .chooseOption
+                                        .name
+                                        .tr // empty text = no placeholder
                                   : state.value.join(
-                                    ', ',
-                                  ), // or use .label if single select
+                                      ', ',
+                                    ), // or use .label if single select
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -787,7 +769,7 @@ class InterestsNextButton extends StatelessWidget {
                 state.love.isNotEmpty &&
                 state.sports.isNotEmpty) {
               app.setPageNumber(7);
-              Get.offAllNamed(AppRoutes.passion);
+              Get.toNamed(AppRoutes.passion);
             } else {
               snackBarMessage(
                 context,
@@ -858,10 +840,9 @@ class PassionChoice extends StatelessWidget {
                 return CheckboxListTile(
                   activeColor: AppColors.primaryColor,
                   value: selected,
-                  onChanged:
-                      isLimitReached
-                          ? null // disables unselected items if limit reached
-                          : state.onSelected(item),
+                  onChanged: isLimitReached
+                      ? null // disables unselected items if limit reached
+                      : state.onSelected(item),
                   title: ChoiceText(
                     style: Theme.of(context).textTheme.bodyMedium,
                     highlightColor: AppColors.floralWhite,
@@ -920,12 +901,12 @@ class PassionChoice extends StatelessWidget {
                         child: Text(
                           (state.value.isEmpty)
                               ? EnumLocale
-                                  .chooseOption
-                                  .name
-                                  .tr // empty text = no placeholder
+                                    .chooseOption
+                                    .name
+                                    .tr // empty text = no placeholder
                               : state.value.join(
-                                ', ',
-                              ), // or use .label if single select
+                                  ', ',
+                                ), // or use .label if single select
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
@@ -955,7 +936,7 @@ class PassionNextButton extends StatelessWidget {
                 state.food.isNotEmpty &&
                 state.adventure.isNotEmpty) {
               app.setPageNumber(8);
-              Get.offAllNamed(AppRoutes.discription);
+              Get.toNamed(AppRoutes.description);
             } else {
               snackBarMessage(
                 context,
@@ -970,4 +951,3 @@ class PassionNextButton extends StatelessWidget {
     );
   }
 }
-

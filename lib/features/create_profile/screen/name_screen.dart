@@ -1,5 +1,4 @@
 import 'package:afriqueen/common/widgets/steps.dart';
-
 import 'package:afriqueen/features/create_profile/widget/name_screen_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,11 +28,11 @@ class NameScreen extends StatelessWidget {
                   //----------------Text Regarding name Title--------------------------
                   const NameTitle(),
 
-                  //----------------Text Regarding name discription--------------------------
-                  const NameDiscription(),
+                  //----------------Text Regarding name description--------------------------
+                  const NameDescription(),
                   SizedBox(height: 10.h),
                   //----------------- User input for pseudo---------
-                 PseudoTextField(),
+                  PseudoTextField(),
                   SizedBox(height: 100.h),
                   //----------------- Button to naviagte next page------------
                   NameNextButton(formKey: _formKey),

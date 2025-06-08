@@ -3,6 +3,7 @@ import 'package:afriqueen/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import 'package:line_icons/line_icons.dart';
 
 //-------------------App Bar-------------------------------
@@ -13,6 +14,7 @@ class HomeAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       centerTitle: true,
+      
       actions: [
         IconButton(
           onPressed: () {},
@@ -27,5 +29,3 @@ class HomeAppBar extends StatelessWidget {
     );
   }
 }
-
-

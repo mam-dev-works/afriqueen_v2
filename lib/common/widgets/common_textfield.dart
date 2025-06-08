@@ -49,12 +49,10 @@ class CommonTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.r),
           borderSide: BorderSide(width: 1.w, color: AppColors.blue),
         ),
-
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.r),
           borderSide: BorderSide(width: 2.w, color: AppColors.red),
         ),
-
         border: InputBorder.none,
       ),
     );
