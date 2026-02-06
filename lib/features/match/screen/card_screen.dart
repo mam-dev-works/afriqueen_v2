@@ -7,6 +7,9 @@ import 'package:afriqueen/features/archive/repository/archive_repository.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_bloc.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_event.dart';
 import 'package:afriqueen/features/favorite/repository/favorite_repository.dart';
+import 'package:afriqueen/features/chat/bloc/chat_bloc.dart';
+import 'package:afriqueen/features/chat/repository/chat_repository.dart';
+import 'package:afriqueen/features/chat/screen/chat_screen.dart';
 import 'package:afriqueen/features/home/model/home_model.dart';
 import 'package:afriqueen/features/match/bloc/match_bloc.dart';
 import 'package:afriqueen/features/match/bloc/match_event.dart';
@@ -34,12 +37,12 @@ class _CardScreenState extends State<CardScreen> {
   int currentCardIndex = 0;
   bool hasCheckedInitialLike = false;
   bool hasInitialized = false;
-  
+
   // Helper function to format last active time
   String _formatLastActive(DateTime lastActive) {
     final now = DateTime.now();
     final difference = now.difference(lastActive);
-    
+
     if (difference.inDays > 0) {
       return '${difference.inDays}d ago';
     } else if (difference.inHours > 0) {
@@ -50,12 +53,12 @@ class _CardScreenState extends State<CardScreen> {
       return 'Just now';
     }
   }
-  
+
   // Helper function to format created date
   String _formatCreatedDate(DateTime createdDate) {
     final now = DateTime.now();
     final difference = now.difference(createdDate);
-    
+
     if (difference.inDays > 365) {
       final years = (difference.inDays / 365).floor();
       return '$years year${years > 1 ? 's' : ''} ago';
@@ -68,7 +71,7 @@ class _CardScreenState extends State<CardScreen> {
       return 'Today';
     }
   }
-  
+
   @override
   void initState() {
     super.initState();
@@ -77,7 +80,7 @@ class _CardScreenState extends State<CardScreen> {
     hasCheckedInitialLike = false;
     currentCardIndex = 0;
   }
-  
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -86,6 +89,7 @@ class _CardScreenState extends State<CardScreen> {
     hasCheckedInitialLike = false;
     currentCardIndex = 0;
   }
+
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
@@ -104,28 +108,30 @@ class _CardScreenState extends State<CardScreen> {
         ),
       ],
       child: BlocBuilder<MatchBloc, MatchState>(
-                 builder: (context, state) {
-           // Refresh data every time the screen is entered
-           if (!hasInitialized) {
-             WidgetsBinding.instance.addPostFrameCallback((_) {
-               context.read<MatchBloc>().add(MatchUsersFetched());
-             });
-             hasInitialized = true;
-           }
-          
+        builder: (context, state) {
+          // Refresh data every time the screen is entered
+          if (!hasInitialized) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              context.read<MatchBloc>().add(MatchUsersFetched());
+            });
+            hasInitialized = true;
+          }
+
           // Reset currentCardIndex if it's out of bounds
           if (state.data.isNotEmpty && currentCardIndex >= state.data.length) {
             currentCardIndex = 0;
           }
-          
+
           // Check like status for the first card on initial load
           if (!hasCheckedInitialLike && state.data.isNotEmpty) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              context.read<MatchBloc>().add(CheckLikeStatus(userId: state.data[0]!.id));
+              context
+                  .read<MatchBloc>()
+                  .add(CheckLikeStatus(userId: state.data[0]!.id));
             });
             hasCheckedInitialLike = true;
           }
-          
+
           return Scaffold(
             backgroundColor: Color(0xFFFDFDFD),
             body: Builder(
@@ -175,71 +181,103 @@ class _CardScreenState extends State<CardScreen> {
                             ),
                           )
                         : Column(
-                        children: [
-                          // Card Swiper - no top spacing
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 8.w, right: 8.w, top: 0.h), // No top padding
-                              child: Row(
-                                children: [
-                                                                     // Card Swiper
-                                   Expanded(
-                                     child: state.data.isNotEmpty
-                                         ? SizedBox(
-                                             height: 420.h, // Reduced from 460 to 420
-                                             child: CardSwiper(
-                                        duration: Duration(milliseconds: 100),
-                                        numberOfCardsDisplayed: state.data.length > 1 ? 2 : 1,
-                                        padding: EdgeInsets.only(left: 5.w, right: 5.w, top: 0.h, bottom: 0.h), // No vertical padding
-                                        cardBuilder: (
-                                          context,
-                                          index,
-                                          horizontalThresholdPercentage,
-                                          verticalThresholdPercentage,
-                                        ) {
-                                          if (index >= state.data.length) {
-                                            return SizedBox.shrink();
-                                          }
-                                          final item = state.data[index];
-                                          if (item == null) {
-                                            return SizedBox.shrink();
-                                          }
-                                          return _buildCompactProfileCard(context, item);
-                                        },
-                                        onSwipe: (previousIndex, currentIndex, direction) {
-                                          // Update current card index and check like status
-                                          if (currentIndex != null && currentIndex < state.data.length) {
-                                            setState(() {
-                                              currentCardIndex = currentIndex;
-                                            });
-                                            final currentUser = state.data[currentIndex];
-                                            if (currentUser != null) {
-                                              context.read<MatchBloc>().add(CheckLikeStatus(userId: currentUser.id));
-                                            }
-                                          }
-                                          return true;
-                                        },
-                                        cardsCount: state.data.length,
+                            children: [
+                              // Card Swiper - no top spacing
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 8.w,
+                                      right: 8.w,
+                                      top: 0.h), // No top padding
+                                  child: Row(
+                                    children: [
+                                      // Card Swiper
+                                      Expanded(
+                                        child: state.data.isNotEmpty
+                                            ? SizedBox(
+                                                height: 420
+                                                    .h, // Reduced from 460 to 420
+                                                child: CardSwiper(
+                                                  duration: Duration(
+                                                      milliseconds: 100),
+                                                  numberOfCardsDisplayed:
+                                                      state.data.length > 1
+                                                          ? 2
+                                                          : 1,
+                                                  padding: EdgeInsets.only(
+                                                      left: 5.w,
+                                                      right: 5.w,
+                                                      top: 0.h,
+                                                      bottom: 0
+                                                          .h), // No vertical padding
+                                                  cardBuilder: (
+                                                    context,
+                                                    index,
+                                                    horizontalThresholdPercentage,
+                                                    verticalThresholdPercentage,
+                                                  ) {
+                                                    if (index >=
+                                                        state.data.length) {
+                                                      return SizedBox.shrink();
+                                                    }
+                                                    final item =
+                                                        state.data[index];
+                                                    if (item == null) {
+                                                      return SizedBox.shrink();
+                                                    }
+                                                    return _buildCompactProfileCard(
+                                                        context, item);
+                                                  },
+                                                  onSwipe: (previousIndex,
+                                                      currentIndex, direction) {
+                                                    // Update current card index and check like status
+                                                    if (currentIndex != null &&
+                                                        currentIndex <
+                                                            state.data.length) {
+                                                      setState(() {
+                                                        currentCardIndex =
+                                                            currentIndex;
+                                                      });
+                                                      final currentUser = state
+                                                          .data[currentIndex];
+                                                      if (currentUser != null) {
+                                                        context
+                                                            .read<MatchBloc>()
+                                                            .add(CheckLikeStatus(
+                                                                userId:
+                                                                    currentUser
+                                                                        .id));
+                                                      }
+                                                    }
+                                                    return true;
+                                                  },
+                                                  cardsCount: state.data.length,
+                                                ),
+                                              )
+                                            : Center(
+                                                child: Text(
+                                                  EnumLocale
+                                                      .noDataFound.name.tr,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium,
+                                                ),
+                                              ),
                                       ),
-                                    )
-                                    : Center(
-                                        child: Text(
-                                          EnumLocale.noDataFound.name.tr,
-                                          style: Theme.of(context).textTheme.bodyMedium,
-                                        ),
-                                      ),
+                                      SizedBox(width: 16.w),
+                                      // Action Buttons
+                                      state.data.isNotEmpty &&
+                                              currentCardIndex <
+                                                  state.data.length
+                                          ? _buildActionButtons(context,
+                                              state.data[currentCardIndex]!)
+                                          : SizedBox.shrink(),
+                                    ],
                                   ),
-                                  SizedBox(width: 16.w),
-                                  // Action Buttons
-                                  state.data.isNotEmpty && currentCardIndex < state.data.length
-                                      ? _buildActionButtons(context, state.data[currentCardIndex]!)
-                                      : SizedBox.shrink(),
-                                ],
+                                ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
                   };
                 } catch (e) {
                   // Catch any "Bad state: No element" or other errors
@@ -271,7 +309,8 @@ class _CardScreenState extends State<CardScreen> {
 
   Widget _buildAppBar(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 0.h), // No vertical padding
+      padding: EdgeInsets.symmetric(
+          horizontal: 4.w, vertical: 0.h), // No vertical padding
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -290,23 +329,24 @@ class _CardScreenState extends State<CardScreen> {
     );
   }
 
-       Widget _buildCompactProfileCard(BuildContext context, HomeModel user) {
+  Widget _buildCompactProfileCard(BuildContext context, HomeModel user) {
     final validUrl = user.photos.isNotEmpty &&
         user.photos.first.isNotEmpty &&
         Uri.tryParse(user.photos.first)?.hasAbsolutePath == true;
-    final UserProfileRepository _userProfileRepository = UserProfileRepository();
+    final UserProfileRepository _userProfileRepository =
+        UserProfileRepository();
 
-     return Container(
-       height: 400.h, // Reduced height from 440 to 400
-       decoration: BoxDecoration(
-         borderRadius: BorderRadius.circular(16.r),
-         color: Color(0xFFFDFDFD),
-       ),
-       child: ClipRRect(
-         borderRadius: BorderRadius.circular(16.r),
-         child: Column(
-           children: [
-                         // Profile Image Section
+    return Container(
+      height: 400.h, // Reduced height from 440 to 400
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16.r),
+        color: Color(0xFFFDFDFD),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16.r),
+        child: Column(
+          children: [
+            // Profile Image Section
             InkWell(
               onTap: () async {
                 try {
@@ -318,232 +358,251 @@ class _CardScreenState extends State<CardScreen> {
               },
               child: Container(
                 height: 250.h, // Reduced from 280 to 250
-               width: double.infinity,
-               child: Stack(
-                 children: [
-                   // Profile image with elite border
-                   Container(
-                     width: double.infinity,
-                     height: double.infinity,
-                     decoration: BoxDecoration(
-                       border: user.isElite ? Border.all(
-                         color: Color(0xFFFFD700), // Yellow border for elite accounts
-                         width: 3.w,
-                       ) : null,
-                       borderRadius: BorderRadius.circular(16.r),
-                     ),
-                     child: ClipRRect(
-                       borderRadius: BorderRadius.circular(user.isElite ? 13.r : 16.r),
-                       child: Container(
-                         width: double.infinity,
-                         height: double.infinity,
-                         decoration: validUrl
-                             ? BoxDecoration(
-                                 image: DecorationImage(
-                                   fit: BoxFit.cover,
-                                   image: CachedNetworkImageProvider(user.photos.first),
-                                 ),
-                               )
-                             : BoxDecoration(
-                                 color: Colors.grey[300],
-                               ),
-                         child: validUrl
-                             ? null
-                             : Center(
-                                 child: Icon(
-                                   Icons.person,
-                                   size: 80.r,
-                                   color: Colors.grey[600],
-                                 ),
-                               ),
-                       ),
-                     ),
-                   ),
-                   // Verified Badge (only show for elite accounts)
-                   if (user.isElite)
-                     Positioned(
-                       top: 12.h,
-                       right: 12.w,
-                       child: Container(
-                         width: 20.w,
-                         height: 20.h,
-                         decoration: BoxDecoration(
-                           color: Color(0xFF3A82F6),
-                           shape: BoxShape.circle,
-                         ),
-                         child: Icon(
-                           Icons.check,
-                           color: AppColors.white,
-                           size: 14.r,
-                         ),
-                       ),
-                     ),
-                   // User Info Overlay
-                   Positioned(
-                     bottom: 12.h,
-                     left: 12.w,
-                     right: 12.w,
-                     child: Column(
-                       crossAxisAlignment: CrossAxisAlignment.start,
-                       children: [
-                         Text(
-                           "${(user.name.isNotEmpty ? user.name : (user.pseudo.isNotEmpty ? user.pseudo : EnumLocale.unknownUser.name.tr))}, ${user.age ?? 0}",
-                           style: TextStyle(
-                             color: AppColors.white,
-                             fontSize: 16.sp,
-                             fontWeight: FontWeight.w600,
-                             fontFamily: 'Roboto-SemiBold',
-                             shadows: [
-                               Shadow(
-                                 color: Colors.black.withOpacity(0.7),
-                                 offset: Offset(0, 1),
-                                 blurRadius: 3,
-                               ),
-                             ],
-                           ),
-                         ),
-                         SizedBox(height: 2.h),
-                         Text(
-                           "${EnumLocale.lastConnection.name.tr}: ${_formatLastActive(user.lastActive)}",
-                           style: TextStyle(
-                             color: AppColors.white,
-                             fontSize: 10.sp,
-                             fontWeight: FontWeight.w400,
-                             shadows: [
-                               Shadow(
-                                 color: Colors.black.withOpacity(0.7),
-                                 offset: Offset(0, 1),
-                                 blurRadius: 3,
-                               ),
-                             ],
-                           ),
-                         ),
-                         Text(
-                           "${EnumLocale.profileCreated.name.tr}: ${_formatCreatedDate(user.createdDate)}",
-                           style: TextStyle(
-                             color: AppColors.white,
-                             fontSize: 10.sp,
-                             fontWeight: FontWeight.w400,
-                             shadows: [
-                               Shadow(
-                                 color: Colors.black.withOpacity(0.7),
-                                 offset: Offset(0, 1),
-                                 blurRadius: 3,
-                               ),
-                             ],
-                           ),
-                         ),
-                         SizedBox(height: 4.h),
-                         // Elite account text overlay
-                         if (user.isElite)
-                           Container(
-                             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-                             decoration: BoxDecoration(
-                               color: Color(0xFFFFD700).withOpacity(0.9),
-                               borderRadius: BorderRadius.circular(4.r),
-                             ),
-                             child: Text(
-                               "Compte élite",
-                               style: TextStyle(
-                                 color: AppColors.black,
-                                 fontSize: 10.sp,
-                                 fontWeight: FontWeight.w600,
-                                 fontFamily: 'Roboto-SemiBold',
-                               ),
-                             ),
-                           ),
-                         SizedBox(height: 4.h),
-                         Row(
-                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                           children: [
-                             Spacer(),
-                             FutureBuilder<double?>(
-                               future: DistanceCalculator.calculateDistanceToUser(user.city, user.country),
-                               builder: (context, snapshot) {
-                                 if (snapshot.connectionState == ConnectionState.waiting) {
-                                   return Text(
-                                     '...',
-                                     style: TextStyle(
-                                       color: AppColors.white,
-                                       fontSize: 12.sp,
-                                       fontWeight: FontWeight.w500,
-                                       shadows: [
-                                         Shadow(
-                                           color: Colors.black.withOpacity(0.7),
-                                           offset: Offset(0, 1),
-                                           blurRadius: 3,
-                                         ),
-                                       ],
-                                     ),
-                                   );
-                                 }
-                                 final distance = snapshot.data;
-                                 return Text(
-                                   DistanceCalculator.formatDistance(distance),
-                                   style: TextStyle(
-                                     color: AppColors.white,
-                                     fontSize: 12.sp,
-                                     fontWeight: FontWeight.w500,
-                                     shadows: [
-                                       Shadow(
-                                         color: Colors.black.withOpacity(0.7),
-                                         offset: Offset(0, 1),
-                                         blurRadius: 3,
-                                       ),
-                                     ],
-                                   ),
-                                 );
-                               },
-                             ),
-                           ],
-                         ),
-                       ],
-                     ),
-                   ),
-                 ],
-               ),
+                width: double.infinity,
+                child: Stack(
+                  children: [
+                    // Profile image with elite border
+                    Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        border: user.isElite
+                            ? Border.all(
+                                color: Color(
+                                    0xFFFFD700), // Yellow border for elite accounts
+                                width: 3.w,
+                              )
+                            : null,
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      child: ClipRRect(
+                        borderRadius:
+                            BorderRadius.circular(user.isElite ? 13.r : 16.r),
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          decoration: validUrl
+                              ? BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: CachedNetworkImageProvider(
+                                        user.photos.first),
+                                  ),
+                                )
+                              : BoxDecoration(
+                                  color: Colors.grey[300],
+                                ),
+                          child: validUrl
+                              ? null
+                              : Center(
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 80.r,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                        ),
+                      ),
+                    ),
+                    // Verified Badge (only show for elite accounts)
+                    if (user.isElite)
+                      Positioned(
+                        top: 12.h,
+                        right: 12.w,
+                        child: Container(
+                          width: 20.w,
+                          height: 20.h,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF3A82F6),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.check,
+                            color: AppColors.white,
+                            size: 14.r,
+                          ),
+                        ),
+                      ),
+                    // User Info Overlay
+                    Positioned(
+                      bottom: 12.h,
+                      left: 12.w,
+                      right: 12.w,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${(user.name.isNotEmpty ? user.name : (user.pseudo.isNotEmpty ? user.pseudo : EnumLocale.unknownUser.name.tr))}, ${user.age ?? 0}",
+                            style: TextStyle(
+                              color: AppColors.white,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Roboto-SemiBold',
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black.withOpacity(0.7),
+                                  offset: Offset(0, 1),
+                                  blurRadius: 3,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 2.h),
+                          Text(
+                            "${EnumLocale.lastConnection.name.tr}: ${_formatLastActive(user.lastActive)}",
+                            style: TextStyle(
+                              color: AppColors.white,
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w400,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black.withOpacity(0.7),
+                                  offset: Offset(0, 1),
+                                  blurRadius: 3,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Text(
+                            "${EnumLocale.profileCreated.name.tr}: ${_formatCreatedDate(user.createdDate)}",
+                            style: TextStyle(
+                              color: AppColors.white,
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w400,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black.withOpacity(0.7),
+                                  offset: Offset(0, 1),
+                                  blurRadius: 3,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 4.h),
+                          // Elite account text overlay
+                          if (user.isElite)
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8.w, vertical: 2.h),
+                              decoration: BoxDecoration(
+                                color: Color(0xFFFFD700).withOpacity(0.9),
+                                borderRadius: BorderRadius.circular(4.r),
+                              ),
+                              child: Text(
+                                "Compte élite",
+                                style: TextStyle(
+                                  color: AppColors.black,
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Roboto-SemiBold',
+                                ),
+                              ),
+                            ),
+                          SizedBox(height: 4.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Spacer(),
+                              FutureBuilder<double?>(
+                                future:
+                                    DistanceCalculator.calculateDistanceToUser(
+                                        user.city, user.country),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Text(
+                                      '...',
+                                      style: TextStyle(
+                                        color: AppColors.white,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w500,
+                                        shadows: [
+                                          Shadow(
+                                            color:
+                                                Colors.black.withOpacity(0.7),
+                                            offset: Offset(0, 1),
+                                            blurRadius: 3,
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                  final distance = snapshot.data;
+                                  return Text(
+                                    DistanceCalculator.formatDistance(distance),
+                                    style: TextStyle(
+                                      color: AppColors.white,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w500,
+                                      shadows: [
+                                        Shadow(
+                                          color: Colors.black.withOpacity(0.7),
+                                          offset: Offset(0, 1),
+                                          blurRadius: 3,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-             ),
-             // Profile Details Section
-             Expanded(
-                                child: Container(
-                   padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.w, bottom: 0),
-                   decoration: BoxDecoration(
-                     color: Color(0xFFFDFDFD),
-                   ),
-                 child: Column(
-                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                   children: [
-                     _buildCompactDetailRow(
-                       EnumLocale.sexualOrientation.name.tr,
-                       user.orientation.isNotEmpty ? user.orientation : EnumLocale.notSpecified.name.tr,
-                     ),
-                     SizedBox(height: 3.h), // Reduced spacing
-                     _buildCompactDetailRow(
-                       EnumLocale.maritalStatus.name.tr,
-                       user.relationshipStatus.isNotEmpty ? user.relationshipStatus : EnumLocale.notSpecified.name.tr,
-                     ),
-                     SizedBox(height: 3.h), // Reduced spacing
-                     _buildCompactDetailRow(
-                       EnumLocale.mainInterest.name.tr,
-                       user.mainInterests.isNotEmpty ? user.mainInterests.first : EnumLocale.notSpecified.name.tr,
-                     ),
-                     SizedBox(height: 3.h), // Reduced spacing
-                     _buildCompactDetailRow(
-                       EnumLocale.passions.name.tr,
-                       user.passions.isNotEmpty ? user.passions.take(2).join(", ") : EnumLocale.notSpecified.name.tr,
-                     ),
-                   ],
-                 ),
-               ),
-             ),
-           ],
-         ),
-       ),
-     );
-   }
+            ),
+            // Profile Details Section
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.only(
+                    left: 10.w, right: 10.w, top: 10.w, bottom: 0),
+                decoration: BoxDecoration(
+                  color: Color(0xFFFDFDFD),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _buildCompactDetailRow(
+                      EnumLocale.sexualOrientation.name.tr,
+                      user.orientation.isNotEmpty
+                          ? user.orientation
+                          : EnumLocale.notSpecified.name.tr,
+                    ),
+                    SizedBox(height: 3.h), // Reduced spacing
+                    _buildCompactDetailRow(
+                      EnumLocale.maritalStatus.name.tr,
+                      user.relationshipStatus.isNotEmpty
+                          ? user.relationshipStatus
+                          : EnumLocale.notSpecified.name.tr,
+                    ),
+                    SizedBox(height: 3.h), // Reduced spacing
+                    _buildCompactDetailRow(
+                      EnumLocale.mainInterest.name.tr,
+                      user.mainInterests.isNotEmpty
+                          ? user.mainInterests.first
+                          : EnumLocale.notSpecified.name.tr,
+                    ),
+                    SizedBox(height: 3.h), // Reduced spacing
+                    _buildCompactDetailRow(
+                      EnumLocale.passions.name.tr,
+                      user.passions.isNotEmpty
+                          ? user.passions.take(2).join(", ")
+                          : EnumLocale.notSpecified.name.tr,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-   Widget _buildProfileCard(BuildContext context, HomeModel user) {
+  Widget _buildProfileCard(BuildContext context, HomeModel user) {
     final validUrl = user.photos.isNotEmpty &&
         user.photos.first.isNotEmpty &&
         Uri.tryParse(user.photos.first)?.hasAbsolutePath == true;
@@ -569,10 +628,13 @@ class _CardScreenState extends State<CardScreen> {
               width: double.infinity,
               height: 300.h,
               decoration: BoxDecoration(
-                border: user.isElite ? Border.all(
-                  color: Color(0xFFFFD700), // Yellow border for elite accounts
-                  width: 3.w,
-                ) : null,
+                border: user.isElite
+                    ? Border.all(
+                        color: Color(
+                            0xFFFFD700), // Yellow border for elite accounts
+                        width: 3.w,
+                      )
+                    : null,
                 borderRadius: BorderRadius.circular(16.r),
               ),
               child: ClipRRect(
@@ -584,7 +646,8 @@ class _CardScreenState extends State<CardScreen> {
                       ? BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: CachedNetworkImageProvider(user.photos.first),
+                            image:
+                                CachedNetworkImageProvider(user.photos.first),
                           ),
                         )
                       : BoxDecoration(
@@ -680,7 +743,8 @@ class _CardScreenState extends State<CardScreen> {
                   // Elite account text overlay
                   if (user.isElite)
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
                       decoration: BoxDecoration(
                         color: Color(0xFFFFD700).withOpacity(0.9),
                         borderRadius: BorderRadius.circular(4.r),
@@ -701,9 +765,11 @@ class _CardScreenState extends State<CardScreen> {
                     children: [
                       Spacer(),
                       FutureBuilder<double?>(
-                        future: DistanceCalculator.calculateDistanceToUser(user.city, user.country),
+                        future: DistanceCalculator.calculateDistanceToUser(
+                            user.city, user.country),
                         builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
                             return Text(
                               '...',
                               style: TextStyle(
@@ -753,7 +819,7 @@ class _CardScreenState extends State<CardScreen> {
     return BlocBuilder<MatchBloc, MatchState>(
       builder: (context, state) {
         final isLiked = state.likedUsers[user.id] ?? false;
-        
+
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -769,51 +835,95 @@ class _CardScreenState extends State<CardScreen> {
                 }
               },
             ),
-        SizedBox(height: 8.h),
-        _buildActionButton(
-          icon: Icons.chat_bubble_outline,
-          color: Color(0xFFF7BD8E),
-          onTap: () {
-            // Message functionality
-            Get.toNamed('/chat', arguments: user);
-          },
-        ),
-        SizedBox(height: 8.h),
-        _buildActionButton(
-          icon: Icons.keyboard_arrow_down,
-          color: Color(0xFFF7BD8E),
-          onTap: () {
-            // Archive functionality
-            context.read<ArchiveBloc>().add(ArchiveUserAdded(archiveId: user.id));
-            // Remove user from match list
-            context.read<MatchBloc>().add(RemoveUserFromMatch(userId: user.id));
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(EnumLocale.savedToArchives.name.tr),
-                backgroundColor: Colors.green,
-              ),
-            );
-          },
-        ),
-        SizedBox(height: 8.h),
-        _buildActionButton(
-          icon: Icons.star_outline,
-          color: Color(0xFFF7BD8E),
-          onTap: () {
-            // Favorite functionality
-            context.read<FavoriteBloc>().add(FavoriteUserAdded(favId: user.id));
-            // Remove user from match list
-            context.read<MatchBloc>().add(RemoveUserFromMatch(userId: user.id));
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(EnumLocale.savedToFavorites.name.tr),
-                backgroundColor: Colors.green,
-              ),
-            );
-          },
-        ),
-      ],
-    );
+            SizedBox(height: 8.h),
+            _buildActionButton(
+              icon: Icons.chat_bubble_outline,
+              color: Color(0xFFF7BD8E),
+              onTap: () async {
+                // Message functionality
+                try {
+                  final chatRepository = ChatRepository();
+                  final photoUrl =
+                      user.photos.isNotEmpty ? user.photos.first : '';
+                  final chatId = await chatRepository.createOrGetChat(
+                    user.id,
+                    {
+                      'id': user.id,
+                      'name': user.pseudo,
+                      'photoUrl': photoUrl,
+                    },
+                  );
+                  if (!context.mounted) return;
+                  Get.to(
+                    () => RepositoryProvider(
+                      create: (context) => ChatRepository(),
+                      child: BlocProvider(
+                        create: (context) => ChatBloc(ChatRepository()),
+                        child: ChatScreen(
+                          chatId: chatId,
+                          receiverId: user.id,
+                          receiverName: user.pseudo,
+                          receiverPhotoUrl: photoUrl,
+                        ),
+                      ),
+                    ),
+                  );
+                } catch (e) {
+                  debugPrint('Error opening chat: $e');
+                  if (!context.mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(EnumLocale.defaultError.name.tr),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              },
+            ),
+            SizedBox(height: 8.h),
+            _buildActionButton(
+              icon: Icons.keyboard_arrow_down,
+              color: Color(0xFFF7BD8E),
+              onTap: () {
+                // Archive functionality
+                context
+                    .read<ArchiveBloc>()
+                    .add(ArchiveUserAdded(archiveId: user.id));
+                // Remove user from match list
+                context
+                    .read<MatchBloc>()
+                    .add(RemoveUserFromMatch(userId: user.id));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(EnumLocale.savedToArchives.name.tr),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 8.h),
+            _buildActionButton(
+              icon: Icons.star_outline,
+              color: Color(0xFFF7BD8E),
+              onTap: () {
+                // Favorite functionality
+                context
+                    .read<FavoriteBloc>()
+                    .add(FavoriteUserAdded(favId: user.id));
+                // Remove user from match list
+                context
+                    .read<MatchBloc>()
+                    .add(RemoveUserFromMatch(userId: user.id));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(EnumLocale.savedToFavorites.name.tr),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              },
+            ),
+          ],
+        );
       },
     );
   }
@@ -831,7 +941,9 @@ class _CardScreenState extends State<CardScreen> {
         decoration: BoxDecoration(
           color: color == Color(0xFFF7BD8E) ? color : Colors.white,
           shape: BoxShape.circle,
-          border: color == Color(0xFFF7BD8E) ? null : Border.all(color: Colors.grey.shade300, width: 1),
+          border: color == Color(0xFFF7BD8E)
+              ? null
+              : Border.all(color: Colors.grey.shade300, width: 1),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
@@ -842,126 +954,144 @@ class _CardScreenState extends State<CardScreen> {
         ),
         child: Icon(
           icon,
-          color: color == Color(0xFFF7BD8E) ? Colors.white : (icon == Icons.favorite ? Colors.red : Colors.black),
+          color: color == Color(0xFFF7BD8E)
+              ? Colors.white
+              : (icon == Icons.favorite ? Colors.red : Colors.black),
           size: 18.r,
         ),
-             ),
-     );
-   }
+      ),
+    );
+  }
 
-   Widget _buildProfileDetails(BuildContext context, HomeModel user) {
-     return Container(
-       padding: EdgeInsets.all(16.w),
-       decoration: BoxDecoration(
-         color: AppColors.white,
-         borderRadius: BorderRadius.circular(12.r),
-         boxShadow: [
-           BoxShadow(
-             color: Colors.black.withOpacity(0.05),
-             blurRadius: 4,
-             offset: Offset(0, 2),
-           ),
-         ],
-       ),
-       child: Column(
-         crossAxisAlignment: CrossAxisAlignment.start,
-         children: [
-           _buildDetailRow(
-             EnumLocale.sexualOrientation.name.tr,
-             user.orientation.isNotEmpty ? user.orientation : EnumLocale.notSpecified.name.tr,
-           ),
-           SizedBox(height: 12.h),
-           _buildDetailRow(
-             EnumLocale.maritalStatus.name.tr,
-             user.relationshipStatus.isNotEmpty ? user.relationshipStatus : EnumLocale.notSpecified.name.tr,
-           ),
-           SizedBox(height: 12.h),
-           _buildDetailRow(
-             EnumLocale.mainInterest.name.tr,
-             user.mainInterests.isNotEmpty ? user.mainInterests.first : EnumLocale.notSpecified.name.tr,
-           ),
-           SizedBox(height: 12.h),
-           _buildDetailRow(
-             EnumLocale.passions.name.tr,
-             user.passions.isNotEmpty ? user.passions.take(2).join(", ") : EnumLocale.notSpecified.name.tr,
-           ),
-         ],
-       ),
-     );
-   }
+  Widget _buildProfileDetails(BuildContext context, HomeModel user) {
+    return Container(
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(12.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 4,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildDetailRow(
+            EnumLocale.sexualOrientation.name.tr,
+            user.orientation.isNotEmpty
+                ? user.orientation
+                : EnumLocale.notSpecified.name.tr,
+          ),
+          SizedBox(height: 12.h),
+          _buildDetailRow(
+            EnumLocale.maritalStatus.name.tr,
+            user.relationshipStatus.isNotEmpty
+                ? user.relationshipStatus
+                : EnumLocale.notSpecified.name.tr,
+          ),
+          SizedBox(height: 12.h),
+          _buildDetailRow(
+            EnumLocale.mainInterest.name.tr,
+            user.mainInterests.isNotEmpty
+                ? user.mainInterests.first
+                : EnumLocale.notSpecified.name.tr,
+          ),
+          SizedBox(height: 12.h),
+          _buildDetailRow(
+            EnumLocale.passions.name.tr,
+            user.passions.isNotEmpty
+                ? user.passions.take(2).join(", ")
+                : EnumLocale.notSpecified.name.tr,
+          ),
+        ],
+      ),
+    );
+  }
 
-   Widget _buildCompactDetailRow(String label, String value) {
-     return Container(
-       width: double.infinity,
-       child: Column(
-         crossAxisAlignment: CrossAxisAlignment.start,
-         children: [
-           Text(
-             label,
-             style: TextStyle(
-               color: Colors.grey.shade800,
-               fontSize: 10.sp,
-               fontWeight: FontWeight.w600,
-             ),
-           ),
-           SizedBox(height: 3.h),
-           Wrap(
-             spacing: 3.w,
-             runSpacing: 2.h,
-             children: value.split(', ').map((tag) => Container(
-               padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 3.h),
-               decoration: BoxDecoration(
-                 color: AppColors.red,
-                 borderRadius: BorderRadius.circular(12.r),
-               ),
-               child: Text(
-                 tag,
-                 style: TextStyle(
-                   color: AppColors.white,
-                   fontSize: 9.sp,
-                   fontWeight: FontWeight.w500,
-                 ),
-               ),
-             )).toList(),
-           ),
-         ],
-       ),
-     );
-   }
+  Widget _buildCompactDetailRow(String label, String value) {
+    return Container(
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              color: Colors.grey.shade800,
+              fontSize: 10.sp,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          SizedBox(height: 3.h),
+          Wrap(
+            spacing: 3.w,
+            runSpacing: 2.h,
+            children: value
+                .split(', ')
+                .map((tag) => Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 6.w, vertical: 3.h),
+                      decoration: BoxDecoration(
+                        color: AppColors.red,
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      child: Text(
+                        tag,
+                        style: TextStyle(
+                          color: AppColors.white,
+                          fontSize: 9.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ))
+                .toList(),
+          ),
+        ],
+      ),
+    );
+  }
 
-   Widget _buildDetailRow(String label, String value) {
-     return Column(
-       crossAxisAlignment: CrossAxisAlignment.start,
-       children: [
-         Text(
-           label,
-           style: TextStyle(
-             color: Colors.grey.shade800,
-             fontSize: 12.sp,
-             fontWeight: FontWeight.w600,
-           ),
-         ),
-         SizedBox(height: 6.h),
-         Wrap(
-           spacing: 6.w,
-           runSpacing: 4.h,
-           children: value.split(', ').map((tag) => Container(
-             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-             decoration: BoxDecoration(
-               color: AppColors.red,
-               borderRadius: BorderRadius.circular(16.r),
-             ),
-             child: Text(
-               tag,
-               style: TextStyle(
-                 color: AppColors.white,
-                 fontSize: 11.sp,
-                 fontWeight: FontWeight.w500,
-               ),
-             ),
-           )).toList(),
-         ),
-       ],
-     );
-   }
+  Widget _buildDetailRow(String label, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            color: Colors.grey.shade800,
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        SizedBox(height: 6.h),
+        Wrap(
+          spacing: 6.w,
+          runSpacing: 4.h,
+          children: value
+              .split(', ')
+              .map((tag) => Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                    decoration: BoxDecoration(
+                      color: AppColors.red,
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                    child: Text(
+                      tag,
+                      style: TextStyle(
+                        color: AppColors.white,
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ))
+              .toList(),
+        ),
+      ],
+    );
+  }
 }

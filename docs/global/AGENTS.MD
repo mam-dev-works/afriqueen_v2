@@ -12,12 +12,5 @@ It has screen_utils.
 It has app_translations in french. in folder ../localization/language/en_us.dart and ../fr_fr.dart
 and another file called ../localization/tranlastions/app_translation.dart and is using getx translation. 
 
-I want to do the test driven development. ../test folder is the one where test is written. 
-
-I am currently fixing the bugs. I will give one bug at a time and we need to fix it using test 
-
-For bug fixing consider using bloc_test, mockito package for making this test driven bug fixing possible. 
-
 product docs is available at ../docs/product/*.md files 
-
 
