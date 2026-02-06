@@ -48,21 +48,7 @@ class _MyAppState extends State<MyApp> {
       debugPrint("[GLOBAL] onLink dynamicLinkData: $dynamicLinkData");
       final Uri deepLink = dynamicLinkData.link;
       debugPrint("[GLOBAL] onLink deepLink: $deepLink");
-      debugPrint("[GLOBAL] onLink queryParameters: ${deepLink.queryParameters}");
-      final email = _appGetStorage.getLastEmail();
-      debugPrint("[GLOBAL] onLink email: $email");
-
-      if (deepLink != null && email != null && email.isNotEmpty) {
-        // Extract the 'link' parameter which contains the actual Firebase Auth email link
-        final String? emailLink = deepLink.queryParameters['link'];
-        debugPrint("[GLOBAL] onLink extracted emailLink: $emailLink");
-        
-        if (emailLink != null) {
-          await _passwordlessLoginServices.handleLink(Uri.parse(emailLink), email, context);
-        } else {
-          debugPrint("[GLOBAL] onLink No 'link' parameter found in deepLink");
-        }
-      }
+      await _handleAuthLink(deepLink, source: "onLink");
     }).onError((error) {
       print('[GLOBAL] onLink error');
       print(error);
@@ -71,20 +57,8 @@ class _MyAppState extends State<MyApp> {
     FirebaseDynamicLinks.instance.getInitialLink().then((data) async {
       final Uri? deepLink = data?.link;
       debugPrint("[GLOBAL] getInitialLink deepLink: $deepLink");
-      debugPrint("[GLOBAL] getInitialLink queryParameters: ${deepLink?.queryParameters}");
-      final email = _appGetStorage.getLastEmail();
-      debugPrint("[GLOBAL] getInitialLink email: $email");
-
-      if (deepLink != null && email != null && email.isNotEmpty) {
-        // Extract the 'link' parameter which contains the actual Firebase Auth email link
-        final String? emailLink = deepLink.queryParameters['link'];
-        debugPrint("[GLOBAL] getInitialLink extracted emailLink: $emailLink");
-        
-        if (emailLink != null) {
-          await _passwordlessLoginServices.handleLink(Uri.parse(emailLink), email, context);
-        } else {
-          debugPrint("[GLOBAL] getInitialLink No 'link' parameter found in deepLink");
-        }
+      if (deepLink != null) {
+        await _handleAuthLink(deepLink, source: "getInitialLink");
       }
     });
 
@@ -97,19 +71,7 @@ class _MyAppState extends State<MyApp> {
     
     appLinks.uriLinkStream.listen((Uri uri) async {
       debugPrint("[GLOBAL] AppLinks uri: $uri");
-      debugPrint("[GLOBAL] AppLinks queryParameters: ${uri.queryParameters}");
-      
-      final email = _appGetStorage.getLastEmail();
-      debugPrint("[GLOBAL] AppLinks email: $email");
-      
-      if (email != null && email.isNotEmpty) {
-        final String? emailLink = uri.queryParameters['link'];
-        debugPrint("[GLOBAL] AppLinks emailLink: $emailLink");
-        
-        if (emailLink != null) {
-          await _passwordlessLoginServices.handleLink(Uri.parse(emailLink), email, context);
-        }
-      }
+      await _handleAuthLink(uri, source: "appLinks");
     }, onError: (error) {
       debugPrint("[GLOBAL] AppLinks error: $error");
     });
@@ -118,21 +80,31 @@ class _MyAppState extends State<MyApp> {
     appLinks.getInitialAppLink().then((Uri? uri) async {
       if (uri != null) {
         debugPrint("[GLOBAL] AppLinks initial uri: $uri");
-        debugPrint("[GLOBAL] AppLinks initial queryParameters: ${uri.queryParameters}");
-        
-        final email = _appGetStorage.getLastEmail();
-        debugPrint("[GLOBAL] AppLinks initial email: $email");
-        
-        if (email != null && email.isNotEmpty) {
-          final String? emailLink = uri.queryParameters['link'];
-          debugPrint("[GLOBAL] AppLinks initial emailLink: $emailLink");
-          
-          if (emailLink != null) {
-            await _passwordlessLoginServices.handleLink(Uri.parse(emailLink), email, context);
-          }
-        }
+        await _handleAuthLink(uri, source: "appLinksInitial");
       }
     });
+  }
+
+  Future<void> _handleAuthLink(Uri uri, {required String source}) async {
+    debugPrint("[GLOBAL] $source queryParameters: ${uri.queryParameters}");
+    final email = _appGetStorage.getLastEmail();
+    debugPrint("[GLOBAL] $source email: $email");
+
+    if (email == null || email.isEmpty) {
+      debugPrint("[GLOBAL] $source missing stored email, skipping auth link");
+      return;
+    }
+
+    final String? linkParam = uri.queryParameters['link'];
+    final String emailLink = linkParam ?? uri.toString();
+    debugPrint("[GLOBAL] $source emailLink: $emailLink");
+
+    if (!FirebaseAuth.instance.isSignInWithEmailLink(emailLink)) {
+      debugPrint("[GLOBAL] $source not a sign-in email link");
+      return;
+    }
+
+    await _passwordlessLoginServices.handleLink(Uri.parse(emailLink), email, context);
   }
 
   @override
