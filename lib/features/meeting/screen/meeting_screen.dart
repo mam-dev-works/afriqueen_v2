@@ -21,7 +21,7 @@ class MeetingScreen extends StatefulWidget {
 }
 
 class _MeetingScreenState extends State<MeetingScreen> {
-  int _selectedTabIndex = 0; // 0 for Match, 1 for Liste
+  int _selectedTabIndex = 0; // 0 for Match, 1 for List
 
   void _onTabChanged(int index) {
     setState(() {
@@ -31,11 +31,11 @@ class _MeetingScreenState extends State<MeetingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final availableHeight = MediaQuery.of(context).size.height - 
-                           MediaQuery.of(context).padding.top - // Status bar
-                           kToolbarHeight - // App bar
-                           kBottomNavigationBarHeight; // Bottom nav bar
-    
+    final availableHeight = MediaQuery.of(context).size.height -
+        MediaQuery.of(context).padding.top - // Status bar
+        kToolbarHeight - // App bar
+        kBottomNavigationBarHeight; // Bottom nav bar
+
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Column(
@@ -56,7 +56,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                     color: AppColors.black,
                   ),
                 ),
-                
+
                 // Match/Liste Tabs in center
                 Expanded(
                   child: Row(
@@ -66,12 +66,17 @@ class _MeetingScreenState extends State<MeetingScreen> {
                       GestureDetector(
                         onTap: () => _onTabChanged(0),
                         child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.w, vertical: 6.h),
                           decoration: BoxDecoration(
-                            color: _selectedTabIndex == 0 ? Color(0xFFF7BD8E) : Colors.transparent,
+                            color: _selectedTabIndex == 0
+                                ? Color(0xFFF7BD8E)
+                                : Colors.transparent,
                             borderRadius: BorderRadius.circular(18.r),
                             border: Border.all(
-                              color: _selectedTabIndex == 0 ? Color(0xFFF7BD8E) : Colors.grey.shade300,
+                              color: _selectedTabIndex == 0
+                                  ? Color(0xFFF7BD8E)
+                                  : Colors.grey.shade300,
                               width: 1,
                             ),
                           ),
@@ -80,25 +85,32 @@ class _MeetingScreenState extends State<MeetingScreen> {
                             style: TextStyle(
                               color: AppColors.black,
                               fontSize: 13.sp,
-                              fontWeight: _selectedTabIndex == 0 ? FontWeight.w600 : FontWeight.w400,
+                              fontWeight: _selectedTabIndex == 0
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                               fontFamily: 'Roboto-SemiBold',
                             ),
                           ),
                         ),
                       ),
-                      
+
                       SizedBox(width: 12.w),
-                      
+
                       // Liste Tab
                       GestureDetector(
                         onTap: () => _onTabChanged(1),
                         child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.w, vertical: 6.h),
                           decoration: BoxDecoration(
-                            color: _selectedTabIndex == 1 ? Color(0xFFF7BD8E) : Colors.transparent,
+                            color: _selectedTabIndex == 1
+                                ? Color(0xFFF7BD8E)
+                                : Colors.transparent,
                             borderRadius: BorderRadius.circular(18.r),
                             border: Border.all(
-                              color: _selectedTabIndex == 1 ? Color(0xFFF7BD8E) : Colors.grey.shade300,
+                              color: _selectedTabIndex == 1
+                                  ? Color(0xFFF7BD8E)
+                                  : Colors.grey.shade300,
                               width: 1,
                             ),
                           ),
@@ -107,7 +119,9 @@ class _MeetingScreenState extends State<MeetingScreen> {
                             style: TextStyle(
                               color: AppColors.black,
                               fontSize: 13.sp,
-                              fontWeight: _selectedTabIndex == 1 ? FontWeight.w600 : FontWeight.w400,
+                              fontWeight: _selectedTabIndex == 1
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                               fontFamily: 'Roboto-SemiBold',
                             ),
                           ),
@@ -116,7 +130,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
                     ],
                   ),
                 ),
-                
+
                 // Filter Icon
                 IconButton(
                   onPressed: () => Get.to(() => const FilterScreen()),
@@ -129,7 +143,7 @@ class _MeetingScreenState extends State<MeetingScreen> {
               ],
             ),
           ),
-          
+
           // Content based on selected tab - NO SCROLL
           Expanded(
             child: Container(
@@ -137,7 +151,8 @@ class _MeetingScreenState extends State<MeetingScreen> {
               child: _selectedTabIndex == 0
                   ? const _NoScrollCardScreen()
                   : BlocProvider(
-                      create: (context) => HomeBloc(repo: HomeRepository())..add(HomeUsersProfileList()),
+                      create: (context) => HomeBloc(repo: HomeRepository())
+                        ..add(HomeUsersProfileList()),
                       child: const _NoScrollHomeScreen(),
                     ),
             ),

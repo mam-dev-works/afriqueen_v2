@@ -53,7 +53,7 @@ class _MainScreenState extends State<MainScreen> {
         child: const ChatListScreen(),
       ), // Messagerie (Messaging)
     ];
-    
+
     if (FirebaseAuth.instance.currentUser != null) {
       StatusRepository().setupUserPresence();
     }
@@ -62,100 +62,106 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _widgets[_selectedIndex],
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 20,
-              color: Colors.black.withValues(alpha: 0.1),
-            ),
-          ],
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.h),
-            child: Stack(
-              children: [
-                GNav(
-              rippleColor: AppColors.grey.withValues(alpha: 0.2),
-              hoverColor: AppColors.grey.withValues(alpha: 0.2),
-              gap: 4.w,
-              activeColor: AppColors.orangeAccent,
-              iconSize: 20.r,
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
-              duration: Duration(milliseconds: 400),
-              tabBackgroundColor: AppColors.lightOrange,
-              color: Colors.grey.shade600,
-              tabs: [
-                GButton(
-                  text: EnumLocale.altNavbarEvenement.name.tr,
-                  textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppColors.orangeAccent,
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                  iconSize: 20.r,
-                  gap: 2.w,
-                  icon: Icons.calendar_today_outlined,
-                ),
-                GButton(
-                  text: EnumLocale.altNavbarStories.name.tr,
-                  textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppColors.orangeAccent,
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                  gap: 2.w,
-                  iconSize: 20.r,
-                  icon: Icons.photo_library_outlined,
-                ),
-                GButton(
-                  text: EnumLocale.altNavbarDiscover.name.tr,
-                  textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppColors.orangeAccent,
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                  gap: 2.w,
-                  iconSize: 20.r,
-                  icon: Icons.favorite,
-                ),
-                GButton(
-                  text: EnumLocale.altNavbarActivite.name.tr,
-                  textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppColors.orangeAccent,
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                  iconSize: 20.r,
-                  gap: 2.w,
-                  icon: Icons.access_time_outlined,
-                ),
-                GButton(
-                  text: EnumLocale.altNavbarMessagerie.name.tr,
-                  textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppColors.orangeAccent,
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                  gap: 2.w,
-                  iconSize: 20.r,
-                  icon: CupertinoIcons.chat_bubble,
-                ),
-              ],
-              selectedIndex: _selectedIndex,
-              onTabChange: (index) {
-                setState(() {
-                  _selectedIndex = index;
-                });
-              },
-            ),
+        body: _widgets[_selectedIndex],
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 20,
+                color: Colors.black.withValues(alpha: 0.1),
+              ),
             ],
           ),
-        ),
-      ),
-    ));
+          child: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.h),
+              child: Stack(
+                children: [
+                  GNav(
+                    rippleColor: AppColors.grey.withValues(alpha: 0.2),
+                    hoverColor: AppColors.grey.withValues(alpha: 0.2),
+                    gap: 4.w,
+                    activeColor: AppColors.orangeAccent,
+                    iconSize: 20.r,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+                    duration: Duration(milliseconds: 400),
+                    tabBackgroundColor: AppColors.lightOrange,
+                    color: Colors.grey.shade600,
+                    tabs: [
+                      GButton(
+                        text: EnumLocale.altNavbarEvenement.name.tr,
+                        textStyle:
+                            Theme.of(context).textTheme.bodySmall!.copyWith(
+                                  color: AppColors.orangeAccent,
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                        iconSize: 20.r,
+                        gap: 2.w,
+                        icon: Icons.calendar_today_outlined,
+                      ),
+                      GButton(
+                        text: EnumLocale.altNavbarStories.name.tr,
+                        textStyle:
+                            Theme.of(context).textTheme.bodySmall!.copyWith(
+                                  color: AppColors.orangeAccent,
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                        gap: 2.w,
+                        iconSize: 20.r,
+                        icon: Icons.photo_library_outlined,
+                      ),
+                      GButton(
+                        text: EnumLocale.altNavbarDiscover.name.tr,
+                        textStyle:
+                            Theme.of(context).textTheme.bodySmall!.copyWith(
+                                  color: AppColors.orangeAccent,
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                        gap: 2.w,
+                        iconSize: 20.r,
+                        icon: Icons.favorite,
+                      ),
+                      GButton(
+                        text: EnumLocale.altNavbarActivite.name.tr,
+                        textStyle:
+                            Theme.of(context).textTheme.bodySmall!.copyWith(
+                                  color: AppColors.orangeAccent,
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                        iconSize: 20.r,
+                        gap: 2.w,
+                        icon: Icons.access_time_outlined,
+                      ),
+                      GButton(
+                        text: EnumLocale.altNavbarMessagerie.name.tr,
+                        textStyle:
+                            Theme.of(context).textTheme.bodySmall!.copyWith(
+                                  color: AppColors.orangeAccent,
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                        gap: 2.w,
+                        iconSize: 20.r,
+                        icon: CupertinoIcons.chat_bubble,
+                      ),
+                    ],
+                    selectedIndex: _selectedIndex,
+                    onTabChange: (index) {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 }
