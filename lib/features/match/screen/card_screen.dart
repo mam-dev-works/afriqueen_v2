@@ -832,6 +832,9 @@ class _CardScreenState extends State<CardScreen> {
                   context.read<MatchBloc>().add(UnlikeUser(userId: user.id));
                 } else {
                   context.read<MatchBloc>().add(LikeUser(userId: user.id));
+                  context.read<MatchBloc>().add(RemoveUserFromMatch(
+                      userId: user
+                          .id)); // In the match settings, if I like it, it should move to the next profile (like an archive).
                 }
               },
             ),
