@@ -1,0 +1,1153 @@
+Events ,States,Bloc Name,Bloc On Methods ,Repository used ,Repository Methods Called ,Remarks ,,,,,,,,
+"ProfileEvent
+props = []
+
+ProfileFetch extends ProfileEvent
+ProfileClick","ProfileState
+ProfileModel data
+
+  ProfileState copyWith({ProfileModel? data}) =>
+      ProfileState(data: data ?? this.data);
+
+props = [data]
+
+ProfileInitial
+Loading
+Error
+","AppBarTitle is using 
+ProfileBloc
+
+ProfileRepository _repository;
+
+return BlocSelector<ProfileBloc, ProfileState, String>(
+      selector: (state) => state.data.description,
+      builder: (context, data) {
+        return Padding(",,UserProfileRepository,"_repository.fetchProfileData();
+emit(ProfileState(data: data))",,,,1,Map the Project Visually,,,,
+,,"ObservationBloc
+
+onEvent(
+onChange(
+onError(",,,,,,,,Excalidraw ,,,,"Test each step independently using print statements, logging, or temporary debug screens."
+"ConnectivityEvent
+
+ConnectivityStartMonitoring
+ConnectivityStatusChanged{
+bool isConnected } 
+ConnectivityCheckStatus
+","ConnectivityState
+
+ConnectivityInitial
+ConnectivityOnline
+ConnectivityOffline
+ConnectivityChecking","ConnectivityBloc
+
+    on<ConnectivityStartMonitoring>(_onStartMonitoring);
+    on<ConnectivityStatusChanged>(_onStatusChanged);
+    on<ConnectivityCheckStatus>(_onCheckStatus);",,,,,,,,,,,,
+"features/activity
+
+UserProfileEvent
+
+LoadAllUsers
+LoadViewedUsers
+LoadUsersIViewed
+LoadLikedUsers
+LoadUsersILiked
+LoadStoryILikedStory
+LoadMyStories
+MarkUserAsViewed{ String userId}
+RemoveUserFromViewed{String userId}","UserProfileState
+
+UserProfileInitial
+UserProfileLoading
+UserProfileLoaded{ List<UserProfileModel> users }
+StoryLoaded { List<StoryModel> stories}
+UserProfileError {String message}","UserProfileBloc
+
+on<LoadAllUsers>(_onLoadAllUsers); = _repository.getAllUsersStream(),
+    on<LoadViewedUsers>(_onLoadViewedUsers);
+    on<LoadUsersIViewed>(_onLoadUsersIViewed);
+    on<LoadLikedUsers>(_onLoadLikedUsers);
+    on<LoadUsersILiked>(_onLoadUsersILiked);
+    on<LoadStoryLikedUsers>(_onLoadStoryLikedUsers);
+    on<LoadUsersILikedStory>(_onLoadUsersILikedStory);
+    on<LoadMyStories>(_onLoadMyStories);
+    on<MarkUserAsViewed>(_onMarkUserAsViewed);
+    on<RemoveUserFromViewed>(_onRemoveUserFromViewed);",,UserProfileRepository,,,,,,Draw a flowchart: UI → Bloc → Repository → Firebase.,,,,UI widget → Bloc state → Event → Repository → Firebase call.
+"features/add/screen
+
+add_screen.dart => AddScreen() stateful widget ",,,,,,,,,,,,,,
+"features/archive
+
+ArchiveEvent
+
+ArchiveUserAdded { String archiveId;}
+ArchiveUserRemoved{ String archiveId;}
+ArchiveUsersFetched","ArchiveState
+List<HomeModel> archiveUserList;
+
+ArchiveInitial
+ArchiveUsersLoading
+ArchiveUsersError
+ArchiveDataEmpty","ArchiveBloc {
+ArchiveRepository _archiveRepository;
+HomeRepository _homeRepository = HomeRepository()
+
+
+ on<ArchiveUserAdded>(_onArchiveUserAdded);
+
+ on<ArchiveUserRemoved>(_onArchiveUserRemoved);
+
+   on<ArchiveUsersFetched>(_onArchiveUsersFetched);
+","class HomeModel extends Equatable {
+  final String id;
+  final String pseudo;
+  final String name;
+  final String gender;
+  final String orientation;
+  final int age;
+  final String country;
+  final String city;
+  final String description;
+  final String searchDescription;
+  final String whatLookingFor;
+  final String whatNotWant;","ArchiveRepository {
+Future<void> addArchive(String archiveId) async{}
+
+Future<ArchiveModel?> fetchArchives()","HomeRepository{
+FirebaseFirestor firebaseFirestore;
+InvisibleModeService _invisibleModeService = InvisibleModeService()
+
+Future<List<Placemark>?> updateLocation() async {}
+Future<List<HomeModel>> fetchAllExceptCurrentUser() async {}
+Future<HomeModel?> fetchUserById(String userId) async {}
+Future<List<HomeModel>> findUsersForBlock({
+    required List<String> selectedProfileTypes,
+    required List<String> selectedSexes,
+    required List<String> selectedOrientations,
+    required RangeValues ageRange,
+    List<String>? selectedMaritalStatuses,
+    List<String>? selectedMainInterests,
+  }) async {}
+  Future<void> updateCurrentUserInvisibility({
+    required List<String> invisibleToProfileTypes,
+    required List<String> invisibleToSexes,
+    required List<String> invisibleToOrientations,
+  }) async {}
+",,,,3,Leverage Hot Reload and Unit Testing and temporary debug_main.dart file ,,,,
+"features/blocked
+
+BlockedEvent
+
+BlockedUserAdded{ String blockedUserId; }
+BlockedUserRemoved{ String blockedUserId; }
+BlockedUsersFetched
+
+","BlocedState {
+List<HomeModel> blockedUserList;
+
+BlockedInitial
+BlockedUsersLoading
+BlockedUsersError{
+String errorMessage;}
+BlockedDataEmpty","BlockedBloc
+BlockedRepository _blockedRepository;
+HomeRepository _homeRepository;
+
+
+    on<BlockedUserAdded>(_onBlockedUserAdded);
+    on<BlockedUserRemoved>(_onBlockedUserRemoved);
+    on<BlockedUsersFetched>(_onBlockedUsersFetched);","class HomeModel extends Equatable {
+  final String id;
+  final String pseudo;
+  final String name;
+  final String gender;
+  final String orientation;
+  final int age;
+  final String country;
+  final String city;
+  final String description;
+  final String searchDescription;
+  final String whatLookingFor;
+  final String whatNotWant;","BlockedRepository{
+
+Future<void> addBlockedUser(String blockedUserId) async {}
+Future<void> removeBlockedUser(String blockedUserId) async {}
+  Future<BlockedModel?> fetchBlockedUsers() async {}
+  Future<bool> isUserBlocked(String userId) async {}
+  Future<void> blockUser(String userIdToBlock) async {}
+Future<void> unblockUser(String userIdToUnblock) async {}","HomeRepository{
+FirebaseFirestor firebaseFirestore;
+InvisibleModeService _invisibleModeService = InvisibleModeService()
+
+Future<List<Placemark>?> updateLocation() async {}
+Future<List<HomeModel>> fetchAllExceptCurrentUser() async {}
+Future<HomeModel?> fetchUserById(String userId) async {}
+Future<List<HomeModel>> findUsersForBlock({
+    required List<String> selectedProfileTypes,
+    required List<String> selectedSexes,
+    required List<String> selectedOrientations,
+    required RangeValues ageRange,
+    List<String>? selectedMaritalStatuses,
+    List<String>? selectedMainInterests,
+  }) async {}
+  Future<void> updateCurrentUserInvisibility({
+    required List<String> invisibleToProfileTypes,
+    required List<String> invisibleToSexes,
+    required List<String> invisibleToOrientations,
+  }) async {}
+",,,,,,Use small unit tests for bloc ,,,
+"ChatEvent
+
+LoadChats
+LoadMessages{ String chatId;}
+class SendMessage extends ChatEvent {
+  final String chatId;
+  final String receiverId;
+  final String content;
+  final MessageType type;
+  final File? imageFile;
+  final String? tempMessageId;
+}
+MarkMessagesAsRead{ String chatId}
+DeleteMessage{String chatId, String messageId}
+UpdateMessageStatus{ String chatId, String messageId, bool isUploaded}
+LoadMessageRequests 
+LoadRequestChats
+LoadReceivedRequestChats
+LoadSentRequestChats
+SendMessageRequest {
+final String receiverId;
+  final String content;
+  final String receiverName;
+  final String? receiverPhotoUrl;}
+AcceptMessageRequest { String requestId}
+RejectMessageRequestString requestId}
+AcceptRequestChat{String chatId;}
+DeclineRequestChat{ String chatId, String otherUserId;}
+ArchieveRejectedProfile{String otherUserId}
+LoadArchivedChats
+
+_ChatsUpdated {
+final List<ChatModel> chats;
+  const _ChatsUpdated(this.chats);
+  @override
+  List<Object?> get props => [chats];}
+
+_MessagesUpdated {
+  final List<MessageModel> messages;
+  const _MessagesUpdated(this.messages);}
+
+_ChatError {
+String message;
+}
+
+MessageRequestsUpdated {
+List<MessageRequestModel> requests;
+_MessageRequestsUpdated(this.requests);
+}
+
+_RequestChatsUpdated {
+List<ChatModel> requestChats;
+List<MessageRequestModel> requests;
+","In a single file :
+ChatState 
+
+ChatInitial
+ChatLoading 
+ChatError{
+String message;}
+ChatListLoaded {
+
+List<ChatModel> chats;
+
+}
+
+ChatListLoaded {
+List<ChatModel> chats;
+
+MessagesLoaded {
+List<MessageModel> messages;
+
+
+MessageRequestsLoaded {
+List<MessageRequestModel> request;}
+
+RequestChatsLoaded {
+
+List<ChatModel> requestChats;}
+
+ReceivedRequestChatsLoaded {
+List<ChatModel> receiveRequestChats;}
+
+SentRequestChatsLoaded {
+List<ChatModel> sentRequestChats;}
+
+RequestsAndRequestChatsLoaded {
+List<MessageRequestModel> requests;
+List<ChatModel> requestChats;
+
+","ChatBloc
+
+ChatRepository _chatRepository;
+StreamSubscription? _messagesSubscription;
+
+ on<LoadChats>(_onLoadChats);
+    on<LoadMessages>(_onLoadMessages);
+    on<SendMessage>(_onSendMessage);
+    on<MarkMessagesAsRead>(_onMarkMessagesAsRead);
+    on<LoadMessageRequests>(_onLoadMessageRequests);
+    on<LoadRequestChats>(_onLoadRequestChats);
+    on<LoadReceivedRequestChats>(_onLoadReceivedRequestChats);
+    on<LoadSentRequestChats>(_onLoadSentRequestChats);
+    on<SendMessageRequest>(_onSendMessageRequest);
+    on<AcceptMessageRequest>(_onAcceptMessageRequest);
+    on<AcceptRequestChat>(_onAcceptRequestChat);
+    on<DeclineRequestChat>(_onDeclineRequestChat);
+    on<ArchiveRejectedProfile>(_onArchiveRejectedProfile);
+    on<LoadArchivedChats>(_onLoadArchivedChats);
+    on<_ChatsUpdated>(_onChatsUpdated);
+    on<_MessagesUpdated>(_onMessagesUpdated);
+    on<_MessageRequestsUpdated>(_onMessageRequestsUpdated);
+    on<_ChatError>(_onChatError);
+    on<DeleteMessage>(_onDeleteMessage);
+    on<UpdateMessageStatus>(_onUpdateMessageStatus);
+    on<_RequestChatsUpdated>(_onRequestChatsUpdated);
+",,,,,,,,,,,,
+"feature/create_profile
+
+create_profile_event.dart
+
+CreateProfileEvent
+
+PseudoChanged{ String pseudo}
+GenderChanged {String gender;}
+OrientationChanged {String orientation}
+RelationshipStatusChanged {String status}
+DobChanged{DateTime dob;}
+AddressChanged{ String country, String city }
+FriendsShipChanged{ List<String> friendship;
+PassionChanged{ List<String> passion; }
+LoveChanged{ List<String> love}
+SportChanged{ LIst<String> sports; }
+FoodChanged { List<String> food; }
+AdventureChanged {List<String> adventure }
+PickImg 
+SubmitButtonClicked
+DescriptionChanged { String description } 
+ResetCreateProfileEvent {}
+final class CreateCompleteProfile extends CreateProfileEvent {
+  final String name;
+  final String description;
+  final DateTime dob;
+  final String gender;
+  final String orientation;
+  final String relationshipStatus;
+  final String country;
+  final String city;
+  final List<String> mainInterests;
+  final List<String> secondaryInterests;
+  final List<String> passions;
+  final List<String> photos;
+  final int height;
+  final int silhouette;
+  final List<String> ethnicOrigins;
+  final List<String> religions;
+  final List<String> qualities;
+  final List<String> flaws;
+  final int hasChildren;
+  final int wantsChildren;
+  final int hasAnimals;
+  final List<String> languages;
+  final List<String> educationLevels;
+  final int alcohol;
+  final int smoking;
+  final int snoring;
+  final List<String> hobbies;
+  final String searchDescription;
+  final String whatLookingFor;
+  final String whatNotWant;}","class CreateProfileState extends Equatable {
+  final String gender;
+  final String? orientation;
+  final String? relationshipStatus;
+  final DateTime dob;
+  final List<String> friendship;
+  final List<String> passion;
+  final List<String> love;
+  final List<String> sports;
+  final List<String> food;
+  final List<String> adventure;
+  final String imgURL;
+  final String description;}
+
+CreateProfileInitial
+
+Loading 
+
+Success
+
+
+","CreateProfileBloc
+
+  final CreateProfileRepository _profileRepository;
+  final _box = GetStorage();
+  Set<String> _interests = {};
+
+// -------------------------- For Pseudo -----------------------------
+on<PseudoChanged>((PseudoChanged event, Emitter<CreateProfileState> emit) {
+  _box.write('pseudo', event.pseudo);
+});
+
+// -------------------------- For Gender -----------------------------
+on<GenderChanged>((GenderChanged event, Emitter<CreateProfileState> emit) {
+  emit(state.copyWith(gender: event.gender));
+  _box.write('sex', event.gender);
+});
+
+// -------------------------- For Orientation -----------------------------
+on<OrientationChanged>((OrientationChanged event, Emitter<CreateProfileState> emit) {
+  emit(state.copyWith(orientation: event.orientation));
+  _box.write('orientation', event.orientation);
+});
+
+// -------------------------- For Relationship Status -----------------------------
+on<RelationshipStatusChanged>((RelationshipStatusChanged event, Emitter<CreateProfileState> emit) {
+  emit(state.copyWith(relationshipStatus: event.status));
+  _box.write('relationshipStatus', event.status);
+});
+
+// -------------------------- For Age / DOB -----------------------------
+on<DobChanged>((DobChanged event, Emitter<CreateProfileState> emit) {
+  emit(state.copyWith(dob: event.dob));
+  _box.write('age', DateTime.now().year - event.dob.year);
+});
+
+// -------------------------- For Address -----------------------------
+on<AddressChanged>((AddressChanged event, Emitter<CreateProfileState> emit) {
+  _box.write('country', event.country);
+  _box.write('city', event.city);
+});
+
+// -------------------------- For Friendship -----------------------------
+on<FriendsShipChanged>((FriendsShipChanged event, Emitter<CreateProfileState> emit) {
+  emit(state.copyWith(friendship: event.friendship));
+  _box.write('friendship', event.friendship);
+});
+
+// -------------------------- For Passion -----------------------------
+on<PassionChanged>((PassionChanged event, Emitter<CreateProfileState> emit) {
+  emit(state.copyWith(passion: event.passion));
+  _box.write('passion', event.passion);
+});
+
+// -------------------------- For Love -----------------------------
+on<LoveChanged>((LoveChanged event, Emitter<CreateProfileState> emit) {
+  emit(state.copyWith(love: event.love));
+  _box.write('love', event.love);
+});
+
+// -------------------------- For Sports -----------------------------
+on<SportChanged>((SportChanged event, Emitter<CreateProfileState> emit) {
+  emit(state.copyWith(sports: event.sports));
+  _box.write('sports', event.sports);
+});
+
+// -------------------------- For Food -----------------------------
+on<FoodChanged>((FoodChanged event, Emitter<CreateProfileState> emit) {
+  emit(state.copyWith(food: event.food));
+  _box.write('food', event.food);
+});
+
+// -------------------------- For Adventure -----------------------------
+on<AdventureChanged>((AdventureChanged event, Emitter<CreateProfileState> emit) {
+  emit(state.copyWith(adventure: event.adventure));
+  _box.write('adventure', event.adventure);
+});
+
+// -------------------------- For Profile Image -----------------------------
+on<PickImg>((PickImg event, Emitter<CreateProfileState> emit) async {
+  final path = await _profileRepository.imagePicker();
+  if (path != null) {
+    emit(state.copyWith(imgURL: path));
+  }
+});
+
+// -------------------------- For Description -----------------------------
+on<DescriptionChanged>((DescriptionChanged event, Emitter<CreateProfileState> emit) {
+  emit(state.copyWith(description: event.description));
+  _box.write('description', event.description);
+});
+
+// -------------------------- Submit Basic Profile -----------------------------
+on<SubmitButtonClicked>((SubmitButtonClicked event, Emitter<CreateProfileState> emit) async {
+  try {
+    emit(Loading.fromState(state));
+
+    final secureUrl = await _profileRepository.uploadToCloudinary(state.imgURL);
+
+    _interests.addAll(List<String>.from(_box.read('friendship') ?? []));
+    _interests.addAll(List<String>.from(_box.read('passion') ?? []));
+    _interests.addAll(List<String>.from(_box.read('love') ?? []));
+    _interests.addAll(List<String>.from(_box.read('sports') ?? []));
+    _interests.addAll(List<String>.from(_box.read('food') ?? []));
+    _interests.addAll(List<String>.from(_box.read('adventure') ?? []));
+
+    if (secureUrl != null && _interests.isNotEmpty) {
+      final CreateProfileModel createProfileModel = CreateProfileModel(
+        description: _box.read('description') ?? '',
+        pseudo: _box.read('pseudo') ?? '',
+        sex: _box.read('sex') ?? '',
+        age: _box.read('age') ?? 0,
+        country: _box.read('country') ?? '',
+        city: _box.read('city') ?? '',
+        interests: _interests.toList(),
+        imgURL: secureUrl,
+        createdDate: DateTime.now(),
+        name: _box.read('pseudo') ?? '',
+        dob: state.dob,
+        gender: state.gender,
+        orientation: state.orientation ?? '',
+        relationshipStatus: state.relationshipStatus ?? '',
+        mainInterests: [],
+        secondaryInterests: [],
+        passions: [],
+        photos: [secureUrl],
+        height: 170,
+        silhouette: 0,
+        ethnicOrigins: [],
+        religions: [],
+        qualities: [],
+        flaws: [],
+        hasChildren: -1,
+        wantsChildren: -1,
+        hasAnimals: -1,
+        languages: [],
+        educationLevels: [],
+        alcohol: -1,
+        smoking: -1,
+        snoring: -1,
+        hobbies: [],
+        searchDescription: '',
+        whatLookingFor: '',
+        whatNotWant: '',
+      );
+
+      await _profileRepository.uploadToFirebase(createProfileModel);
+      emit(Success.fromState(state));
+      add(ResetCreateProfileEvent());
+    }
+  } catch (e) {
+    emit(Error.fromState(state, errorMessage: e.toString()));
+  }
+});
+
+// -------------------------- Submit Complete Profile -----------------------------
+on<CreateCompleteProfile>((CreateCompleteProfile event, Emitter<CreateProfileState> emit) async {
+  try {
+    emit(Loading.fromState(state));
+
+    List<String> uploadedPhotoUrls = [];
+    if (event.photos.isNotEmpty) {
+      uploadedPhotoUrls = await _profileRepository.uploadMultiplePhotosToCloudinary(event.photos);
+    }
+
+    final CreateProfileModel createProfileModel = CreateProfileModel(
+      description: event.description,
+      pseudo: event.name,
+      sex: event.gender,
+      age: DateTime.now().year - event.dob.year,
+      country: event.country,
+      city: event.city,
+      interests: [
+        ...event.mainInterests,
+        ...event.secondaryInterests,
+        ...event.passions,
+      ],
+      imgURL: uploadedPhotoUrls.isNotEmpty ? uploadedPhotoUrls.first : '',
+      createdDate: DateTime.now(),
+      name: event.name,
+      dob: event.dob,
+      gender: event.gender,
+      orientation: event.orientation,
+      relationshipStatus: event.relationshipStatus,
+      mainInterests: event.mainInterests,
+      secondaryInterests: event.secondaryInterests,
+      passions: event.passions,
+      photos: uploadedPhotoUrls,
+      height: event.height,
+      silhouette: event.silhouette,
+      ethnicOrigins: event.ethnicOrigins,
+      religions: event.religions,
+      qualities: event.qualities,
+      flaws: event.flaws,
+      hasChildren: event.hasChildren,
+      wantsChildren: event.wantsChildren,
+      hasAnimals: event.hasAnimals,
+      languages: event.languages,
+      educationLevels: event.educationLevels,
+      alcohol: event.alcohol,
+      smoking: event.smoking,
+      snoring: event.snoring,
+      hobbies: event.hobbies,
+      searchDescription: event.searchDescription,
+      whatLookingFor: event.whatLookingFor,
+      whatNotWant: event.whatNotWant,
+    );
+
+    await _profileRepository.createCompleteUserProfile(createProfileModel);
+    emit(Success.fromState(state));
+    add(ResetCreateProfileEvent());
+  } catch (e) {
+    emit(Error.fromState(state, errorMessage: e.toString()));
+  }
+});
+
+// -------------------------- Reset Profile Creation -----------------------------
+on<ResetCreateProfileEvent>((ResetCreateProfileEvent event, Emitter<CreateProfileState> emit) {
+  _interests.clear();
+  _box.remove('pseudo');
+  _box.remove('sex');
+  _box.remove('age');
+  _box.remove('country');
+  _box.remove('city');
+  _box.remove('friendship');
+  _box.remove('passion');
+  _box.remove('love');
+  _box.remove('sports');
+  _box.remove('food');
+  _box.remove('adventure');
+  _box.remove('description');
+});
+",,,,,,,4,"repeatable system, and future bug fixes will be 3–5x faster.",,,,
+"feature/edit_profile 
+
+EditProfileEvent
+LoadProfile
+UpdateProfile { EditProfileModel model;}","EditProfileState 
+
+EditProfileInitial
+EditProfileLoading
+EditProfileLoaded { EditProfileModel model;}
+EditProfileError { String message;}
+EditProfileSuccess","EditProfileBloc 
+     EditProfileRepository repository; 
+
+    on<LoadProfile>(_onLoadProfile);
+    on<UpdateProfile>(_onUpdateProfile);","EditProfileRepository 
+
+Future<EditProfileModel?> getProfile() async {}
+Future<void> updateProfile(EditProfileModel model) async {}
+",,,,,,,,,,,
+"feature/email_verification
+
+EmailVerificiationEvent
+
+onButtonClicked 
+OnClickedDeleteButton","EmailVerificationState
+bool isVerified;
+
+EmailVerificationInitial
+EmailVerifiedError
+AccountDelete","EmailVerificationBloc
+
+on<OnButtonClicked>( ... )
+on<OnClickedDeleteButton>(...)","EmailVerificationRepository
+
+Future<void> sendEmailVerificationLink() async {}
+Future<bool> isEmailVerified() async {}
+Future deleteAccount() async {}",,,,,,,,,,,
+"feature/event (single file)
+EventMessageEvent
+
+LoadEventMessages
+LoadEventMessagesByEvent { String eventId; } 
+LoadUserEventMessages
+SendEventMessage  {
+   String eventId;
+   String content;
+   String eventTitle;
+   String eventImageUrl;
+   bool isEventFinished;
+   String eventStatus;
+}
+DeleteFinishedEventDiscussions
+LoadParticipatedEvents
+",,"EventMessageState
+
+EventMessageInitial
+EventMessageLoading 
+EventMessageLoaded  {
+List<EventMessageModel> messages;
+Map<String, List<EventMessageModel>> groupedMessages;
+}
+EventMessageByEventLoaded {
+List<EventMessageModel> messages;
+
+ParticipatedEventsLoaded {
+List<String> eventIds;}
+EventMessageError {
+String message;}
+EventMessageSent 
+FinishedEventDiscussionsDeleted","EventMessageBloc
+
+EventMessageRepository _repository
+
+ on<LoadEventMessages>(_onLoadEventMessages);
+    on<LoadEventMessagesByEvent>(_onLoadEventMessagesByEvent);
+    on<LoadUserEventMessages>(_onLoadUserEventMessages);
+    on<SendEventMessage>(_onSendEventMessage);
+    on<DeleteFinishedEventDiscussions>(_onDeleteFinishedEventDiscussions);
+    on<LoadParticipatedEvents>(_onLoadParticipatedEvents);
+  }","EventMessageRepository
+
+FirebaseFirestore _db;
+String _eventsCollection = 'events'
+String _eventMessagesCollection = 'event_messages';
+
+Stream<List<EventMessageModel>> streamEventMessages(String eventId) {}
+Stream<List<EventMessageModel>> streamUserEventMessages() {}
+Stream<Map<String, List<EventMessageModel>>> streamEventMessagesGrouped() {}
+
+  Future<void> sendEventMessage({
+    required String eventId,
+    required String content,
+    required String eventTitle,
+    required String eventImageUrl,
+    required bool isEventFinished,
+    required String eventStatus,
+  }) async {}
+Future<EventModel?> getEventDetails(String eventId) async {}
+  Future<void> deleteFinishedEventDiscussions() async {}
+Future<bool> isUserParticipatingInEvent(String eventId) async {}
+",,,,,,,,,,
+"feature/favorite
+
+FavoriteEvent
+
+FavoriteUserAdded{ String favId;}
+
+FavoriteUserRemoved {string favId;}
+FavoriteUsersFetched 
+ToggleFavoriteEvent","FavoriteState {
+List<HomeModel> favUserList;}
+
+FavoriteInitial
+FavoriteUsersLoading
+FavoriteUsersError { String errorMessage;}
+FavoriteDataEmpty ","FavoriteBloc
+
+    on<FavoriteUserAdded>(_onFavoriteUserAdded);
+
+    on<FavoriteUserRemoved>(_onFavoriteUserRemoved);
+
+    on<FavoriteUsersFetched>(_onFavoriteUsersFetched);","FavoriteRepository
+
+Future<void> addFavorite(String favId) async {}
+Future<void> removeFavorite(String favId) async {}
+Future<FavoriteModel?> fetchFavorites() async {}
+",,,,,,,,,,,
+"feature/forgot_password
+
+ForgotPasswordEvent
+UserEmail { String userEmail;}
+SendButtonClicked
+","ForgotPasswordState
+
+ForgotPasswordInitial
+ForgotPasswordSuccess","ForgotPasswordBloc
+final ForgotPasswordRepository _repository;
+
+on<UserEmail>((event, emit) {}
+on<SendButtonClicked>((event, emit) async {}","ForgotPasswordRepository{
+FirebaseAuth _auth = FirebaseAuth.instance;
+
+Future<void> sendEmailToRestPassword(ForgotPasswordModel model) async {}",,,,,,,,,,,
+"features/gifts 
+Only service are there ",,,,,,,,,,,,,,
+"features/home
+
+HomeEvent
+
+HomeUsersFetched
+HomeUsersProfileList
+FetchLikedUsers
+FetchFavoriteUsers
+FetchArchiveUsers
+FetchAllUsers","HomeState 
+
+List<HomeModel?> data;
+List<HomeModel?> profileList;
+int selectedTabIndex;
+
+  List<HomeModel?> newProfileList;
+   List<HomeModel?> likedProfileList;
+   List<HomeModel?> favoritesProfileList;
+   List<HomeModel?> archiveProfileList;
+   List<HomeModel?> allProfileList;
+
+HomeInitial
+Loading
+Error {String error}
+HomeDataIsEmpty","HomeBloc
+
+final HomeRepository __repository;
+  final FavoriteRepository _favoriteRepository = FavoriteRepository();
+  final ArchiveRepository _archiveRepository = ArchiveRepository();
+  final BlockedRepository _blockedRepository = BlockedRepository();
+  final LikeRepository _likeRepository = LikeRepository();
+
+
+on<HomeUsersFetched>((event, emit) async {
+on<HomeUsersProfileList>((event, emit) async {}
+on<FetchLikedUsers>((event, emit) async {
+on<FetchFavoriteUsers>((event, emit) async {
+on<FetchArchiveUsers>((event, emit) async {
+on<FetchAllUsers>((event, emit) async {
+
+","HomeRepository
+
+Future<List<Placemark>?> updateLocation() async {
+Future<List<HomeModel>> fetchAllExceptCurrentUser() async {
+Future<HomeModel?> fetchUserById(String userId) async {
+Future<List<HomeModel>> findUsersForBlock({
+    required List<String> selectedProfileTypes,
+    required List<String> selectedSexes,
+    required List<String> selectedOrientations,
+    required RangeValues ageRange,
+    List<String>? selectedMaritalStatuses,
+    List<String>? selectedMainInterests,
+  }) async {
+Future<void> updateCurrentUserInvisibility({
+","FavoriteRepository
+Future<void> addFavorite(String favId) async {
+Future<void> removeFavorite(String favId) async {
+Future<FavoriteModel?> fetchFavorites() async {
+
+","ArchiveRepository
+
+Future<void> addArchive(String archiveId) async {
+Future<void> removeArchive(String archiveId) async {
+Future<ArchiveModel?> fetchArchives() async {
+
+",,"BlockedRepository
+Future<void> addBlockedUser(String blockedUserId) async {
+
+Future<void> removeBlockedUser(String blockedUserId) async {
+
+Future<BlockedModel?> fetchBlockedUsers() async {
+
+Future<bool> isUserBlocked(String userId) async {
+
+Future<void> blockUser(String userIdToBlock) async {
+Future<void> unblockUser(String userIdToUnblock) async {","features/match/repository/like_repository.dart
+LikeRepository
+
+Future<void> likeUser(String likedUserId) async {
+Future<void> unlikeUser(String likedUserId) async {
+Future<bool> hasLikedUser(String likedUserId) async {
+Future<bool> isLikedByUser(String likerUserId) async {
+Future<List<String>> getLikedUserIds() async {
+",,,,,,
+"feature/login
+LoginEvent
+
+LoginEmailChanged{ String email;}
+LoginSubmit
+LoginPasswordChanged { String password;}
+LoginPasswordVisibility 
+GoogleSignInButtonClicked
+","LoginState {
+bool isLoginPasswordVisible;}
+
+LoginInitial {isLoginPasswordVisible}
+
+LoginSuccess
+LoginLoading
+LoginError
+GoogleLoginError
+GoogleLoginNewUser
+GoogleLoginOldUser","LoginBloc {
+final LoginRepository _repository;
+  bool _isPasswordHidden = true;
+
+on<LoginPasswordVisibility>((
+        LoginPasswordVisibility event,
+        Emitter<LoginState> emit,
+        ) {
+
+on<LoginEmailChanged>((event, emit) {
+on<LoginPasswordChanged>((event, emit) {
+on<LoginSubmit>((event, emit) async {
+on<GoogleSignInButtonClicked>((event, emit) async {
+","LoginRepository
+final FirebaseAuth _auth;
+  final FirebaseFirestore _firestore;
+  final AppGetStorage appGetStorage = AppGetStorage();
+  String? error;
+  bool isExistingUser = false;
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      'profile',
+    ],
+  );
+Future<UserCredential?> loginWithEmail(LoginModel loginModel) async {
+Future<UserCredential?> loginWithGoogle() async {
+",,,,,,,,,,,
+main/screen/main_screen.dart ,nothing ,,,,,,,,,,,,,
+"features/match/bloc
+match_event.dart 
+
+MatchEvent
+MatchUsersFetched
+LikeUser {
+String userId;}
+CheckLikeStatus {
+String userId;}
+UnlikeUser {
+String userId}
+RemoveUserFromMatch{
+String userId}","MatchState
+List<HomeModel?> data;
+  Map<String, bool> likedUsers;
+
+
+MatchInitial
+Loading
+Error {String error}
+MatchDataEmpty","MatchBloc
+
+final HomeRepository _homeRepository = HomeRepository();
+  final FavoriteRepository _favoriteRepository = FavoriteRepository();
+  final ArchiveRepository _archiveRepository = ArchiveRepository();
+  final BlockedRepository _blockedRepository = BlockedRepository();
+  final LikeRepository _likeRepository = LikeRepository();
+
+on<MatchUsersFetched>((event, emit) async {
+on<LikeUser>((event, emit) async {
+on<CheckLikeStatus>((event, emit) async {
+on<UnlikeUser>((event, emit) async {
+on<RemoveUserFromMatch>((event, emit) async {
+MatchState? fromJson(Map<String, dynamic> json) {
+Map<String, dynamic>? toJson(MatchState state) {
+","HomeRepository
+
+Future<List<Placemark>?> updateLocation() async {
+Future<List<HomeModel>> fetchAllExceptCurrentUser() async {
+Future<HomeModel?> fetchUserById(String userId) async {
+Future<List<HomeModel>> findUsersForBlock({
+    required List<String> selectedProfileTypes,
+    required List<String> selectedSexes,
+    required List<String> selectedOrientations,
+    required RangeValues ageRange,
+    List<String>? selectedMaritalStatuses,
+    List<String>? selectedMainInterests,
+  }) async {
+Future<void> updateCurrentUserInvisibility({
+","FavoriteRepository
+Future<void> addFavorite(String favId) async {
+Future<void> removeFavorite(String favId) async {
+Future<FavoriteModel?> fetchFavorites() async {
+
+","ArchiveRepository
+
+Future<void> addArchive(String archiveId) async {
+Future<void> removeArchive(String archiveId) async {
+Future<ArchiveModel?> fetchArchives() async {
+
+","BlockedRepository
+Future<void> addBlockedUser(String blockedUserId) async {
+
+Future<void> removeBlockedUser(String blockedUserId) async {
+
+Future<BlockedModel?> fetchBlockedUsers() async {
+
+Future<bool> isUserBlocked(String userId) async {
+
+Future<void> blockUser(String userIdToBlock) async {
+Future<void> unblockUser(String userIdToUnblock) async {","features/match/repository/like_repository.dart
+LikeRepository
+
+Future<void> likeUser(String likedUserId) async {
+Future<void> unlikeUser(String likedUserId) async {
+Future<bool> hasLikedUser(String likedUserId) async {
+Future<bool> isLikedByUser(String likerUserId) async {
+Future<List<String>> getLikedUserIds() async {
+",,,,,,,
+"features/meeting/screen/meeting_screen.dart 
+
+no blocs ",,,,,,,,,,,,,,
+"features/profile 
+
+ProfileEvent 
+ProfileFetch
+ProfileClick","ProfileState{
+ProfileModel data;
+}
+ProfileInitial
+Loading
+Error{ String error}","ProfileBloc
+final ProfileRepository _repository;
+
+on<ProfileFetch>((event, emit) async {
+","ProfileRepository
+
+Future<ProfileModel?> fetchProfileData() async {
+Future<ProfileModel?> fetchUserDataById(String userId) async {
+","class ProfileModel extends Equatable {
+  final String id;
+  final String pseudo;
+  final String sex;
+  final int age;
+  final String country;
+  final String city;
+
+  final List<String> interests;
+  final DateTime createdDate;
+  final String imgURL;
+  final String description;
+  final bool isElite;
+  final DateTime? lastActive;",,,"screens:
+comprehensive_edit_profile_screen.dart = ComprehensiveEditProfileScreen
+contact_us_screen.dart = ContactUsScreen
+delete_account_screen.dart = DeleteAccountScreen
+error_screen.dart = ProfileErrorContent
+fetch_screen.dart = ProfileDataContent
+identify_verification_screen.dart = IdentityVerificationScreen
+invisible_mode_screen.dart = InvisibleModeScreen
+language_selection_mode.dart = LanguageSelectionScreen
+main_container_screen.dart = MainContainer
+notification_settings_screen.dart = NotificationSettingsScreen
+premium_plans_screen.dart = PremiumPlansScreen
+profile_screen.dart = ProfileScreen
+referral_screen.dart = ReferralScreen
+suspen_account_screen.dart = SuspendAccountScreen","widgets
+profile_widgets.dart:
+ProfileAppBar
+AppBarTitle
+DescriptionText
+UserInterestsList
+UsersSeniority
+UserDetails
+ProfileImage
+ProfileMenuSection 
+",,,,,,
+"features/reels
+reels_screen.dart = ReelsScreen",,,,,,,,,,,,,,
+"features/report_profile
+",,,,,,,,,,,,,,
+"features/signup
+SignupEvent
+EmailChanged
+{String email;}
+PasswordChanged{String password;}
+Submit
+PasswordVisibility
+CheckedBox
+GoogleSignInButtonClicked
+","class SignupState {
+  final bool isPasswordHidden;
+  final bool isChecked;
+
+SignupInitial
+Loading
+Success
+GoogleSignInSuccess
+GoogleSignInExistingUser
+SignUpfail","SignupBloc
+
+SignupRepository _repository;
+bool _isBoxChecked = false;
+  bool _isPasswordHidden = true;
+  final AppGetStorage _appGetStorage = AppGetStorage();
+  SignUpModel _signUpModel = SignUpModel(email: '', password: '');
+
+on<EmailChanged>(_onEmailChanged);
+    on<PasswordChanged>(_onPasswordChanged);
+    on<Submit>(_onSubmit);
+    on<PasswordVisibility>(_onPasswordVisibility);
+    on<CheckedBox>(_onCheckedBox);
+    on<GoogleSignInButtonClicked>(_onGoogleSignInButtonClicked);","SignupRepository
+
+final FirebaseAuth _firebaseAuth;
+  final FirebaseFirestore _firestore;
+  final AppGetStorage appGetStorage = AppGetStorage();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+String? errorMessge;
+  bool isExistingUser = false;
+
+
+Future<UserCredential?> signupWithEmail(SignUpModel signupModel) async {
+
+Future<UserCredential?> signupWithGoogle() async {
+",,,,,,,,,,,
+"features/stories
+
+StoriesEvent
+
+StoriesFetching
+StoriesRefresh
+StoriesImage{String name, String img; File imageFile}
+StoriesLikeToggle{String storyId;}
+StoriesCheckLikeStatus{String storyId;}
+StoriesFetchLikedStories
+","StoriesState
+
+ final List<StoriesFetchModel> data;
+  final Map<String, bool> likedStories;
+  final List<StoriesFetchModel> likedStoriesList;
+
+StoriesInitial
+StoriesError {String errorMessage}
+StoriesFetchSuccss
+StoriesCreateSuccess","StoriesBloc
+  final StoriesRepository _storiesRepository;
+  StoriesModel _model = StoriesModel.empty;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+on<StoriesImage>((StoriesImage event, Emitter<StoriesState> emit) async {
+on<StoriesFetching>((
+      StoriesFetching event,
+      Emitter<StoriesState> emit,
+    ) async {
+on<StoriesRefresh>((
+      StoriesRefresh event,
+      Emitter<StoriesState> emit,
+    ) async {
+on<StoriesLikeToggle>((event, emit) async {
+on<StoriesCheckLikeStatus>((event, emit) async {
+n<StoriesFetchLikedStories>((event, emit) async {
+StoriesState? fromJson(Map<String, dynamic> json) {
+Map<String, dynamic>? toJson(StoriesState state) {",,,,,,,,,,,,
+"features/user_details:
+no blocs
+",,,,,,,,,,,,,,
+"features/wellcome
+
+ WellcomeEvent
+ChangeLanguageEvent
+","WellcomeState{
+String? languageCode;}
+
+WellcomeInitial
+","WellcomeBloc
+
+WellcomeState? fromJson(Map<String, dynamic> json) {
+Map<String, dynamic>? toJson(WellcomeState state) {",,,,,,,,,,,,
+"services/status
+
+StatusEvent
+GetStatus{ String uid;}","StatusState
+
+StatusState.initial
+StatusInitial","StatusBloc
+StatusRepository _repository;
+
+on<GetStatus>((GetStatus event, Emitter<StatusState> emit) async {","StatusRepository
+
+  void setupUserPresence() {
+  Future<StatusModel?> getUserPreence(String id) async {
+","class StatusModel extends Equatable {
+  final bool state;
+  final int lastChanged;",,,,,,,,,,
