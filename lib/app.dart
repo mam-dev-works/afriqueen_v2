@@ -3,6 +3,7 @@ import 'package:afriqueen/common/theme/app_theme.dart';
 import 'package:afriqueen/routes/app_pages.dart';
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
+import 'package:afriqueen/services/auth/auth_link_handler.dart';
 import 'package:afriqueen/services/passwordless_login_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' as getx;
 import 'package:app_links/app_links.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'dart:async';
 
 class MyApp extends StatefulWidget {
   MyApp({super.key});
@@ -21,38 +23,37 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final AppGetStorage _appGetStorage = AppGetStorage();
-  final PasswordlessLoginServices _passwordlessLoginServices = PasswordlessLoginServices();
+  final PasswordlessLoginServices _passwordlessLoginServices =
+      PasswordlessLoginServices();
+  late final AuthLinkHandler _authLinkHandler;
+  final AppLinks _appLinks = AppLinks();
+  StreamSubscription<PendingDynamicLinkData>? _dynamicLinkSubscription;
+  StreamSubscription<Uri>? _appLinksSubscription;
 
   @override
   void initState() {
     super.initState();
-    // _autoLogin();//todo:remove
+    _authLinkHandler = AuthLinkHandler(
+      auth: FirebaseAuth.instance,
+      emailProvider: _appGetStorage.getLastEmail,
+      onValidLink: _passwordlessLoginServices.handleLink,
+    );
     _initDynamicLinks();
-  }
-
-  void _autoLogin() async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: 'muradabbaszade143@gmail.com',
-        password: 'murad1234',
-      );
-      debugPrint('Auto-login successful');
-    } catch (e) {
-      debugPrint('Auto-login failed: \$e');
-    }
   }
 
   void _initDynamicLinks() {
     // Handle Firebase Dynamic Links
-    FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) async {
-      debugPrint("[GLOBAL] onLink dynamicLinkData: $dynamicLinkData");
-      final Uri deepLink = dynamicLinkData.link;
-      debugPrint("[GLOBAL] onLink deepLink: $deepLink");
-      await _handleAuthLink(deepLink, source: "onLink");
-    }).onError((error) {
-      print('[GLOBAL] onLink error');
-      print(error);
-    });
+    _dynamicLinkSubscription = FirebaseDynamicLinks.instance.onLink.listen(
+      (dynamicLinkData) async {
+        debugPrint("[GLOBAL] onLink dynamicLinkData: $dynamicLinkData");
+        final Uri deepLink = dynamicLinkData.link;
+        debugPrint("[GLOBAL] onLink deepLink: $deepLink");
+        await _handleAuthLink(deepLink, source: "onLink");
+      },
+      onError: (error) {
+        debugPrint('[GLOBAL] onLink error: $error');
+      },
+    );
 
     FirebaseDynamicLinks.instance.getInitialLink().then((data) async {
       final Uri? deepLink = data?.link;
@@ -67,9 +68,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _initAppLinks() {
-    final appLinks = AppLinks();
-    
-    appLinks.uriLinkStream.listen((Uri uri) async {
+    _appLinksSubscription = _appLinks.uriLinkStream.listen((Uri uri) async {
       debugPrint("[GLOBAL] AppLinks uri: $uri");
       await _handleAuthLink(uri, source: "appLinks");
     }, onError: (error) {
@@ -77,7 +76,7 @@ class _MyAppState extends State<MyApp> {
     });
 
     // Check for initial link
-    appLinks.getInitialAppLink().then((Uri? uri) async {
+    _appLinks.getInitialAppLink().then((Uri? uri) async {
       if (uri != null) {
         debugPrint("[GLOBAL] AppLinks initial uri: $uri");
         await _handleAuthLink(uri, source: "appLinksInitial");
@@ -87,24 +86,61 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _handleAuthLink(Uri uri, {required String source}) async {
     debugPrint("[GLOBAL] $source queryParameters: ${uri.queryParameters}");
-    final email = _appGetStorage.getLastEmail();
-    debugPrint("[GLOBAL] $source email: $email");
+    final decision = await _authLinkHandler.tryHandle(uri, context: context);
 
-    if (email == null || email.isEmpty) {
-      debugPrint("[GLOBAL] $source missing stored email, skipping auth link");
-      return;
+    if (decision == AuthLinkDecision.needsEmail) {
+      final email = await _promptForEmail(context);
+      if (email == null || email.isEmpty) {
+        debugPrint("[GLOBAL] $source email prompt cancelled");
+        return;
+      }
+      _appGetStorage.setLastEmail(email);
+      await _authLinkHandler.handleWithEmail(
+        uri,
+        email: email,
+        context: context,
+      );
     }
+  }
 
-    final String? linkParam = uri.queryParameters['link'];
-    final String emailLink = linkParam ?? uri.toString();
-    debugPrint("[GLOBAL] $source emailLink: $emailLink");
+  Future<String?> _promptForEmail(BuildContext context) async {
+    final TextEditingController controller = TextEditingController();
+    final result = await showDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Enter your email'),
+          content: TextField(
+            controller: controller,
+            keyboardType: TextInputType.emailAddress,
+            autofocus: true,
+            decoration: const InputDecoration(
+              hintText: 'name@example.com',
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () =>
+                  Navigator.of(context).pop(controller.text.trim()),
+              child: const Text('Continue'),
+            ),
+          ],
+        );
+      },
+    );
+    return result;
+  }
 
-    if (!FirebaseAuth.instance.isSignInWithEmailLink(emailLink)) {
-      debugPrint("[GLOBAL] $source not a sign-in email link");
-      return;
-    }
-
-    await _passwordlessLoginServices.handleLink(Uri.parse(emailLink), email, context);
+  @override
+  void dispose() {
+    _dynamicLinkSubscription?.cancel();
+    _appLinksSubscription?.cancel();
+    super.dispose();
   }
 
   @override
@@ -129,7 +165,7 @@ class _MyAppState extends State<MyApp> {
             }
 
             final String initialRoute = snapshot.hasData
-                ?routeNameFromPageNumber()!
+                ? routeNameFromPageNumber()!
                 : (_appGetStorage.hasOpenedApp()
                     ? AppRoutes.login
                     : AppRoutes.wellcome);
