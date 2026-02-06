@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:afriqueen/features/gifts/service/gift_recharge_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +28,9 @@ void main() async {
       statusBarIconBrightness: Brightness.dark,
     ),
   );
+
+  // Start the gift recharge service
+  GiftRechargeService.startPeriodicRechargeCheck();
 
   runApp(MyApp());
 }

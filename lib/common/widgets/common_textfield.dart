@@ -32,6 +32,8 @@ class CommonTextField extends StatelessWidget {
       controller: controller,
       obscureText: obscureText,
       obscuringCharacter: '•',
+      textAlignVertical: TextAlignVertical.center,
+      enableInteractiveSelection: true,
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
         errorMaxLines: 3,

@@ -1,15 +1,13 @@
 import 'dart:io';
-import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hugeicons/hugeicons.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'dart:async';
+import 'package:uuid/uuid.dart';
 
 class VoiceRecorderWidget extends StatefulWidget {
-  final Function(String path, String duration) onRecordingComplete;
+  final Function(File audioFile, int duration) onRecordingComplete;
 
   const VoiceRecorderWidget({
     Key? key,
@@ -24,8 +22,9 @@ class _VoiceRecorderWidgetState extends State<VoiceRecorderWidget> {
   final _audioRecorder = AudioRecorder();
   bool _isRecording = false;
   String? _recordedFilePath;
-  Duration _recordingDuration = Duration.zero;
-  Timer? _durationTimer;
+  int _recordDuration = 0;
+  Timer? _timer;
+  final _uuid = const Uuid();
 
   @override
   void initState() {
@@ -36,20 +35,28 @@ class _VoiceRecorderWidgetState extends State<VoiceRecorderWidget> {
   Future<void> _checkPermission() async {
     final status = await Permission.microphone.request();
     if (status != PermissionStatus.granted) {
-      // Handle permission denied
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Microphone permission is required to record voice messages'),
-        ),
-      );
+      throw 'Microphone permission not granted';
+    }
+  }
+
+  Future<void> _cleanupOldRecording() async {
+    if (_recordedFilePath != null) {
+      final oldFile = File(_recordedFilePath!);
+      if (await oldFile.exists()) {
+        await oldFile.delete();
+      }
     }
   }
 
   Future<void> _startRecording() async {
     try {
       if (await _audioRecorder.hasPermission()) {
+        // Clean up any existing recording
+        await _cleanupOldRecording();
+        
         final directory = await getTemporaryDirectory();
-        _recordedFilePath = '${directory.path}/voice_message_${DateTime.now().millisecondsSinceEpoch}.m4a';
+        final uniqueId = _uuid.v4();
+        _recordedFilePath = '${directory.path}/audio_${uniqueId}.m4a';
         
         await _audioRecorder.start(
           RecordConfig(
@@ -60,10 +67,16 @@ class _VoiceRecorderWidgetState extends State<VoiceRecorderWidget> {
           path: _recordedFilePath!,
         );
         
-        setState(() => _isRecording = true);
-        
-        // Start duration timer
-        _startDurationTimer();
+        setState(() {
+          _isRecording = true;
+          _recordDuration = 0;
+        });
+
+        _timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+          setState(() {
+            _recordDuration++;
+          });
+        });
       }
     } catch (e) {
       debugPrint('Error starting recording: $e');
@@ -72,80 +85,60 @@ class _VoiceRecorderWidgetState extends State<VoiceRecorderWidget> {
 
   Future<void> _stopRecording() async {
     try {
-      await _audioRecorder.stop();
-      _durationTimer?.cancel();
-      setState(() => _isRecording = false);
-      
-      if (_recordedFilePath != null) {
-        widget.onRecordingComplete(
-          _recordedFilePath!,
-          _formatDuration(_recordingDuration),
-        );
+      _timer?.cancel();
+      final path = await _audioRecorder.stop();
+      setState(() {
+        _isRecording = false;
+      });
+
+      if (path != null) {
+        final file = File(path);
+        if (await file.exists() && await file.length() > 0) {
+          widget.onRecordingComplete(file, _recordDuration);
+        } else {
+          debugPrint('Recording file is empty or does not exist');
+        }
       }
     } catch (e) {
       debugPrint('Error stopping recording: $e');
     }
   }
 
-  void _startDurationTimer() {
-    _durationTimer?.cancel();
-    _durationTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (mounted && _isRecording) {
-        setState(() {
-          _recordingDuration += Duration(seconds: 1);
-        });
-      } else {
-        timer.cancel();
-      }
-    });
-  }
-
-  String _formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
-    final minutes = twoDigits(duration.inMinutes.remainder(60));
-    final seconds = twoDigits(duration.inSeconds.remainder(60));
-    return '$minutes:$seconds';
+  String _formatDuration(int seconds) {
+    final minutes = seconds ~/ 60;
+    final remainingSeconds = seconds % 60;
+    return '$minutes:${remainingSeconds.toString().padLeft(2, '0')}';
   }
 
   @override
   void dispose() {
-    _durationTimer?.cancel();
-    _audioRecorder.dispose();
+    _timer?.cancel();
+    if (_isRecording) {
+      _audioRecorder.stop();
+    }
+    _cleanupOldRecording();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-      decoration: BoxDecoration(
-        color: AppColors.grey.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12.r),
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
-            icon: Icon(
-              _isRecording ? HugeIcons.strokeRoundedStop : HugeIcons.strokeRoundedMic01,
-              color: _isRecording ? AppColors.red : AppColors.primaryColor,
-            ),
+            icon: Icon(_isRecording ? Icons.stop : Icons.mic),
             onPressed: _isRecording ? _stopRecording : _startRecording,
+            color: _isRecording ? Colors.red : Colors.blue,
           ),
-          SizedBox(width: 8.w),
           if (_isRecording) ...[
+            const SizedBox(width: 8),
             Text(
-              _formatDuration(_recordingDuration),
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: AppColors.grey,
-              ),
-            ),
-            SizedBox(width: 8.w),
-            Container(
-              width: 8.w,
-              height: 8.w,
-              decoration: BoxDecoration(
-                color: AppColors.red,
-                shape: BoxShape.circle,
+              _formatDuration(_recordDuration),
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ],

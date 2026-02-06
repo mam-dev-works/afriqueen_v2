@@ -23,15 +23,8 @@ class MainContainer extends StatelessWidget {
             ? Container(
                 width: double.maxFinite.w,
                 decoration: BoxDecoration(
-                  color: AppColors.blue.withValues(alpha: 0.1),
+                  color: Colors.grey[50],
                   borderRadius: BorderRadius.circular(12.r),
-                  shape: BoxShape.rectangle,
-                  border: Border(
-                    top: BorderSide.none,
-                    left: BorderSide(color: AppColors.grey, width: 1.w),
-                    right: BorderSide(color: AppColors.grey, width: 1.w),
-                    bottom: BorderSide(color: AppColors.grey, width: 1.w),
-                  ),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -39,17 +32,23 @@ class MainContainer extends StatelessWidget {
                   children: [
                     //---------------User Profile Image--------------------
                     ProfileImage(),
-                    //-----------Account age----------------------
-                    UserSeniority(),
-
+                    SizedBox(height: 16.h),
+                    
                     //---------------User Profile Details--------------------
                     UserDetails(),
+                    SizedBox(height: 24.h),
 
                     //------------------------------ user interests------------------------------
                     UserInterestsList(),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 24.h),
+
+                    //-----------Account age----------------------
+                    UserSeniority(),
+                    SizedBox(height: 24.h),
+
+                    //---------------Description--------------------
                     DescriptionText(),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 24.h),
                   ],
                 ),
               )

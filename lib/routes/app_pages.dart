@@ -2,6 +2,14 @@ import 'package:afriqueen/features/archive/bloc/archive_bloc.dart';
 import 'package:afriqueen/features/archive/bloc/archive_event.dart';
 import 'package:afriqueen/features/archive/repository/archive_repository.dart';
 import 'package:afriqueen/features/archive/screen/archive_screen.dart';
+import 'package:afriqueen/features/blocked/bloc/blocked_bloc.dart';
+import 'package:afriqueen/features/blocked/bloc/blocked_event.dart';
+import 'package:afriqueen/features/blocked/repository/blocked_repository.dart';
+import 'package:afriqueen/features/blocked/screen/blocked_screen.dart';
+import 'package:afriqueen/features/chat/bloc/chat_bloc.dart';
+import 'package:afriqueen/features/gifts/screen/send_gifts_screen.dart';
+import 'package:afriqueen/features/chat/repository/chat_repository.dart';
+import 'package:afriqueen/features/chat/screen/chat_screen.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_bloc.dart';
 import 'package:afriqueen/features/create_profile/repository/create_profile_repository.dart';
 import 'package:afriqueen/features/create_profile/screen/address_screen.dart';
@@ -12,6 +20,8 @@ import 'package:afriqueen/features/create_profile/screen/interests_screen.dart';
 import 'package:afriqueen/features/create_profile/screen/name_screen.dart';
 import 'package:afriqueen/features/create_profile/screen/passion_screen.dart';
 import 'package:afriqueen/features/create_profile/screen/upload_image_screen.dart';
+import 'package:afriqueen/features/edit_profile/bloc/edit_profile_bloc.dart';
+import 'package:afriqueen/features/edit_profile/screen/edit_profile_screen.dart';
 import 'package:afriqueen/features/email_verification/bloc/email_verification_bloc.dart';
 import 'package:afriqueen/features/email_verification/repository/email_verification_repository.dart';
 import 'package:afriqueen/features/email_verification/screen/email_verification_screen.dart';
@@ -29,11 +39,22 @@ import 'package:afriqueen/features/home/repository/home_repository.dart';
 import 'package:afriqueen/features/login/bloc/login_bloc.dart';
 import 'package:afriqueen/features/login/repository/login_repository.dart';
 import 'package:afriqueen/features/login/screen/login_screen.dart';
+import 'package:afriqueen/features/login/screen/login_page.dart';
 import 'package:afriqueen/features/main/screen/main_screen.dart';
 import 'package:afriqueen/features/profile/bloc/profile_bloc.dart';
 import 'package:afriqueen/features/profile/bloc/profile_event.dart';
 import 'package:afriqueen/features/profile/repository/profile_repository.dart';
 import 'package:afriqueen/features/profile/screen/profile_screen.dart';
+import 'package:afriqueen/features/profile/screen/language_selection_screen.dart';
+import 'package:afriqueen/features/profile/screen/referral_screen.dart';
+import 'package:afriqueen/features/profile/screen/premium_plans_screen.dart';
+import 'package:afriqueen/features/profile/screen/contact_us_screen.dart';
+import 'package:afriqueen/features/profile/screen/identity_verification_screen.dart';
+import 'package:afriqueen/features/profile/screen/notification_settings_screen.dart';
+import 'package:afriqueen/features/profile/screen/suspend_account_screen.dart';
+import 'package:afriqueen/features/profile/screen/delete_account_screen.dart';
+import 'package:afriqueen/features/profile/screen/comprehensive_edit_profile_screen.dart';
+import 'package:afriqueen/features/profile/screen/invisible_mode_screen.dart';
 import 'package:afriqueen/features/setting/screen/setting_screen.dart';
 import 'package:afriqueen/features/signup/bloc/signup_bloc.dart';
 import 'package:afriqueen/features/signup/repository/signup_repository.dart';
@@ -43,12 +64,21 @@ import 'package:afriqueen/features/signup/widgets/privacy_and_policy.dart';
 import 'package:afriqueen/features/stories/bloc/stories_bloc.dart';
 import 'package:afriqueen/features/stories/bloc/stories_event.dart';
 import 'package:afriqueen/features/stories/repository/stories_repository.dart';
+import 'package:afriqueen/features/stories/screen/create_story_screen.dart';
+import 'package:afriqueen/features/stories/screen/my_story_screen.dart';
 import 'package:afriqueen/features/wellcome/bloc/wellcome_bloc.dart';
 import 'package:afriqueen/features/wellcome/screen/wellcome_screen.dart';
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:afriqueen/features/profile/widget/profile_widget.dart';
+import 'package:afriqueen/features/profile/screen/main_container_screen.dart';
+
+import '../features/chat/screen/chat_list_screen.dart';
+import '../features/create_profile/screen/create_profile_flow.dart';
+import '../features/edit_profile/repository/edit_profile_repository.dart';
 
 // Group all your screen imports here for clarity
 final AppGetStorage app = AppGetStorage();
@@ -76,14 +106,9 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
 
     case AppRoutes.login:
       return MaterialPageRoute(
-        builder: (_) => RepositoryProvider(
-          lazy: true,
-          create: (context) => LoginRepository(),
-          child: BlocProvider(
-            create: (context) =>
-                LoginBloc(loginrepository: context.read<LoginRepository>()),
-            child: LoginScreen(),
-          ),
+        builder: (_) => BlocProvider(
+          create: (_) => LoginBloc(),
+          child: LoginScreen(),
         ),
       );
     // forgot password part
@@ -262,9 +287,32 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
             child: DescriptionScreen(),
           ),
         ),
+        
       );
     case AppRoutes.setting:
       return MaterialPageRoute(builder: (_) => SettingScreen());
+    case AppRoutes.profileHome:
+      return MaterialPageRoute(
+        builder: (_) => RepositoryProvider(
+          create: (context) => ProfileRepository(),
+          child: BlocProvider(
+            create: (context) => ProfileBloc(repo: context.read<ProfileRepository>())..add(ProfileFetch()),
+            child: Scaffold(
+              body: CustomScrollView(
+                slivers: [
+                  ProfileAppBar(),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12.w).copyWith(top: 5.h, bottom: 80.h),
+                      child: ProfileMenuSection(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
     case AppRoutes.profile:
       return MaterialPageRoute(
         builder: (_) => RepositoryProvider(
@@ -300,6 +348,116 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
             child: ArchiveScreen(),
           ),
         ),
+      );
+    case AppRoutes.blocked:
+      return MaterialPageRoute(
+        builder: (_) => RepositoryProvider(
+          create: (_) => BlockedRepository(),
+          child: BlocProvider(
+            create: (context) => BlockedBloc(
+              repository: context.read<BlockedRepository>(),
+            )..add(BlockedUsersFetched()),
+            child: BlockedScreen(),
+          ),
+        ),
+      );
+    case AppRoutes.editProfile:
+      return MaterialPageRoute(
+        builder: (_) => RepositoryProvider(
+          create: (_) => EditProfileRepository(),
+          child: BlocProvider(
+            create: (context) => EditProfileBloc(
+              repository: context.read<EditProfileRepository>(),
+            ),
+            child: EditProfileScreen(),
+          ),
+        ),
+      );
+    case AppRoutes.chat:
+      return MaterialPageRoute(
+        builder: (_) => RepositoryProvider(
+          create: (_) => ChatRepository(),
+          child: BlocProvider(
+            create: (context) => ChatBloc(
+              ChatRepository(),
+            ),
+            child: const ChatListScreen(),
+          ),
+        ),
+      );
+    case AppRoutes.createProfile:
+      return MaterialPageRoute(
+        builder: (_) => RepositoryProvider(
+          create: (_) => CreateProfileRepository(),
+          child: BlocProvider(
+            create: (context) => CreateProfileBloc(
+              repository: context.read<CreateProfileRepository>(),
+            ),
+            child: CreateProfileFlow(),
+          ),
+        ),
+      );
+    case AppRoutes.myStory:
+      return MaterialPageRoute(
+        builder: (_) => BlocProvider(
+          create: (context) => StoriesBloc(
+            repo: context.read<StoriesRepository>(),
+          ),
+          child: MyStoryScreen(),
+        ),
+      );
+    case AppRoutes.createStory:
+      return MaterialPageRoute(
+        builder: (_) => BlocProvider(
+          create: (context) => StoriesBloc(
+            repo: context.read<StoriesRepository>(),
+          ),
+          child: CreateStoryScreen(),
+        ),
+      );
+    case AppRoutes.languageSelection:
+      return MaterialPageRoute(
+        builder: (_) => const LanguageSelectionScreen(),
+      );
+    case AppRoutes.referral:
+      return MaterialPageRoute(
+        builder: (_) => const ReferralScreen(),
+      );
+    case AppRoutes.premiumPlans:
+      return MaterialPageRoute(
+        builder: (_) => const PremiumPlansScreen(),
+      );
+    case AppRoutes.contactUs:
+      return MaterialPageRoute(
+        builder: (_) => const ContactUsScreen(),
+      );
+    case AppRoutes.identityVerification:
+      return MaterialPageRoute(
+        builder: (_) => const IdentityVerificationScreen(),
+      );
+    case AppRoutes.notificationSettings:
+      return MaterialPageRoute(
+        builder: (_) => const NotificationSettingsScreen(),
+      );
+    case AppRoutes.suspendAccount:
+      return MaterialPageRoute(
+        builder: (_) => const SuspendAccountScreen(),
+      );
+    case AppRoutes.deleteAccount:
+      return MaterialPageRoute(
+        builder: (_) => const DeleteAccountScreen(),
+      );
+    case AppRoutes.comprehensiveEditProfile:
+      return MaterialPageRoute(
+        builder: (_) => const ComprehensiveEditProfileScreen(),
+      );
+    case AppRoutes.sendGifts:
+      return MaterialPageRoute(
+        builder: (_) => const SendGiftsScreen(),
+      );
+    case AppRoutes.invisibleMode:
+      return MaterialPageRoute(
+        builder: (_) => const InvisibleModeScreen(),
       );
     default:
       return MaterialPageRoute(

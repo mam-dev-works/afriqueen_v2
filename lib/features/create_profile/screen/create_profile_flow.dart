@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_bloc.dart';
 import 'package:afriqueen/features/create_profile/repository/create_profile_repository.dart';
-import 'package:afriqueen/features/create_profile/screen/name_screen.dart';
+import 'package:afriqueen/features/create_profile/screen/unified_profile_setup_screen.dart';
 
 class CreateProfileFlow extends StatelessWidget {
   const CreateProfileFlow({super.key});
@@ -15,7 +15,7 @@ class CreateProfileFlow extends StatelessWidget {
         create: (context) => CreateProfileBloc(
           repository: context.read<CreateProfileRepository>(),
         ),
-        child:  NameScreen(),
+        child: UnifiedProfileSetupScreen(),
       ),
     );
   }

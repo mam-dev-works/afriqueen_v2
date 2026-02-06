@@ -25,60 +25,70 @@ class LoginRepository {
   LoginRepository({
     FirebaseAuth? auth,
     FirebaseFirestore? firestore,
-  })  : _auth = auth ?? FirebaseAuth.instance,
+  })
+      : _auth = auth ?? FirebaseAuth.instance,
         _firestore = firestore ?? FirebaseFirestore.instance;
 
   //------------------------------login with Email ------------------------------------------
   Future<UserCredential?> loginWithEmail(LoginModel loginModel) async {
     try {
       await _auth.setLanguageCode(appGetStorage.getLanguageCode());
-      final UserCredential credential = await _auth.signInWithEmailAndPassword(
+
+      // Sign in with email and password directly
+      final UserCredential userCredential = await _auth
+          .signInWithEmailAndPassword(
         email: loginModel.email,
         password: loginModel.password,
       );
-      debugPrint("Current user ID :${credential.user!.uid}");
 
-      try {
-        final user = credential.user;
-        if (user != null) {
+      debugPrint("Current user ID :${userCredential.user?.uid}");
+
+      if (userCredential.user != null) {
+        try {
           final querySnapshot = await _firestore
               .collection('user')
-              .where('id', isEqualTo: user.uid)
+              .where('id', isEqualTo: userCredential.user!.uid)
               .limit(1)
               .get();
 
-          if (querySnapshot.docs.isNotEmpty) {
-            isExistingUser = true;
-            debugPrint("User already exists in Firestore with UID: ${user.uid}");
-          } else {
-            isExistingUser = false;
-            debugPrint("New user with UID: ${user.uid}, proceeding to profile setup");
-          }
-        } else {
-          debugPrint("No user found in Firebase Auth");
+          isExistingUser = querySnapshot.docs.isNotEmpty;
+          debugPrint(isExistingUser
+              ? "User already exists in Firestore with UID: ${userCredential
+              .user!.uid}"
+              : "New user with UID: ${userCredential.user!
+              .uid}, proceeding to profile setup");
+        } catch (e) {
+          debugPrint('Error checking user in Firestore: $e');
           isExistingUser = false;
         }
-      } catch (e) {
-        debugPrint('Error checking user in Firestore: $e');
+      } else {
+        debugPrint("No user found in Firebase Auth");
         isExistingUser = false;
       }
 
-      return credential;
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       debugPrint('Firebase Auth Exception: ${e.code} - ${e.message}');
-      null; // Important: clear the credential if login fails!
 
-      if (e.code == 'user-not-found') {
-        error = EnumLocale.userNotFoundError.name.tr;
-      } else if (e.code == 'wrong-password') {
-        error = EnumLocale.wrongPasswordError.name.tr;
-      } else {
-        error = EnumLocale.defaultError.name.tr;
+      switch (e.code) {
+        case 'user-not-found':
+          error = EnumLocale.userNotFoundError.name.tr;
+          break;
+        case 'wrong-password':
+          error = EnumLocale.wrongPasswordError.name.tr;
+          break;
+        case 'invalid-credential':
+          error = EnumLocale.invalidCredentialsError.name.tr;
+          break;
+        default:
+          error = EnumLocale.defaultError.name.tr;
       }
+      return null;
     } catch (e) {
+      debugPrint('Unexpected error: $e');
       error = EnumLocale.defaultError.name.tr;
-    };
-    return null;
+      return null;
+    }
   }
 
   //----------------------login with google----------------------------
@@ -87,17 +97,18 @@ class LoginRepository {
       // First, sign out from any existing Google Sign In session
       await _googleSignIn.signOut();
       await _auth.signOut();
-      
+
       // Trigger the authentication flow
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      
+
       if (googleUser == null) {
         debugPrint("Google Sign In was cancelled by user");
         return null;
       }
 
       // Obtain the auth details from the request
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth = await googleUser
+          .authentication;
 
       // Create a new credential
       final credential = GoogleAuthProvider.credential(
@@ -119,10 +130,12 @@ class LoginRepository {
 
           if (querySnapshot.docs.isNotEmpty) {
             isExistingUser = true;
-            debugPrint("User already exists in Firestore with UID: ${user.uid}");
+            debugPrint(
+                "User already exists in Firestore with UID: ${user.uid}");
           } else {
             isExistingUser = false;
-            debugPrint("New user with UID: ${user.uid}, proceeding to profile setup");
+            debugPrint(
+                "New user with UID: ${user.uid}, proceeding to profile setup");
           }
         } else {
           debugPrint("No user found in Firebase Auth");
@@ -135,7 +148,6 @@ class LoginRepository {
 
       debugPrint("Google Sign In successful: ${userCredential.user?.email}");
       return userCredential;
-      
     } on FirebaseAuthException catch (e) {
       debugPrint("Firebase Auth Error: ${e.code} - ${e.message}");
       error = e.message ?? EnumLocale.defaultError.name.tr;

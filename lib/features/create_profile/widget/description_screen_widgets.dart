@@ -75,6 +75,7 @@ class _TextFieldForDescriptionState extends State<TextFieldForDescription> {
         validator: AppValidator.validateDescription,
         controller: discriptionController,
         textAlignVertical: TextAlignVertical.top,
+        enableInteractiveSelection: true,
         decoration: InputDecoration(
           alignLabelWithHint: true,
           isDense: true,

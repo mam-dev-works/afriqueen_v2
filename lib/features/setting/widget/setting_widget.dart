@@ -13,14 +13,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 
-
 class FavoritesListTile extends StatelessWidget {
   const FavoritesListTile({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: ()=> Get.toNamed(AppRoutes.favorite),
+      onTap: () => Get.toNamed(AppRoutes.favorite),
       trailing: SizedBox(
           width: 50.w,
           child: Icon(
@@ -46,7 +45,7 @@ class ArchiveListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: ()=> Get.toNamed(AppRoutes.archive),
+      onTap: () => Get.toNamed(AppRoutes.archive),
       trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
       leading: Icon(HugeIcons.strokeRoundedArchive),
       title: Text(
@@ -65,7 +64,7 @@ class BlockedListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {},
+      onTap: () => Get.toNamed(AppRoutes.blocked),
       trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
       leading: Icon(HugeIcons.strokeRoundedBlocked),
       title: Text(
@@ -76,6 +75,7 @@ class BlockedListTile extends StatelessWidget {
     );
   }
 }
+
 //-----------App Bar--------------------------
 class SettingAppBar extends StatelessWidget {
   const SettingAppBar({super.key});
@@ -87,12 +87,12 @@ class SettingAppBar extends StatelessWidget {
         onPressed: () => Get.back(),
         icon: Icon(HugeIcons.strokeRoundedMultiplicationSign),
       ),
-
       title: SettingTitle(),
       centerTitle: true,
     );
   }
 }
+
 //----------------Title Text------------------------
 class SettingTitle extends StatelessWidget {
   const SettingTitle({super.key});
@@ -110,7 +110,9 @@ class SettingTitle extends StatelessWidget {
 //-----------------Change Language--------------------
 class LanguageListTile extends StatelessWidget {
   LanguageListTile({super.key});
+
   final app = AppGetStorage();
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -127,9 +129,9 @@ class LanguageListTile extends StatelessWidget {
               title: Text(
                 EnumLocale.chooseOption.name.tr,
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: AppColors.primaryColor,
-                  fontSize: 19.sp,
-                ),
+                      color: AppColors.primaryColor,
+                      fontSize: 19.sp,
+                    ),
               ),
               trailing: SizedBox(
                 width: 50.w,
@@ -142,12 +144,10 @@ class LanguageListTile extends StatelessWidget {
                 ),
               ),
             ),
-    
             SizedBox(
               height: 100.h,
               child: ListView.builder(
                 itemCount: AppStrings.language.length,
-    
                 itemBuilder: (context, index) => Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -268,7 +268,7 @@ class LogoutListTile extends StatelessWidget {
       onTap: () async {
         final BuildContext currentContext = context;
         await FirebaseAuth.instance.signOut();
-    
+
         if (!currentContext.mounted) return;
         customLoading(context);
         await Future.delayed(Duration(milliseconds: 1500));
@@ -278,6 +278,25 @@ class LogoutListTile extends StatelessWidget {
           (Route<dynamic> route) => false,
         );
       },
+      trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
+    );
+  }
+}
+
+//---------------------EditProfile-------------------------
+class EditProfileTile extends StatelessWidget {
+  const EditProfileTile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(HugeIcons.strokeRoundedEditUser02),
+      title: Text(
+        EnumLocale.editProfile.name.tr,
+        style: Theme.of(context).textTheme.bodyMedium,
+        overflow: TextOverflow.ellipsis,
+      ),
+      onTap: () => Get.toNamed(AppRoutes.editProfile),
       trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
     );
   }

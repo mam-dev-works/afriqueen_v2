@@ -26,4 +26,21 @@ class ProfileRepository {
     }
     return null;
   }
+
+  Future<ProfileModel?> fetchUserDataById(String userId) async {
+    try {
+      final QuerySnapshot<Map<String, dynamic>> snapshot =
+          await firebaseFirestore
+              .collection('user')
+              .where('id', isEqualTo: userId)
+              .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        return ProfileModel.fromMap(snapshot.docs.first.data());
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
 }

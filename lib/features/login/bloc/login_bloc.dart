@@ -2,25 +2,25 @@ import 'package:afriqueen/features/login/bloc/login_event.dart';
 import 'package:afriqueen/features/login/bloc/login_state.dart';
 import 'package:afriqueen/features/login/models/login_model.dart';
 import 'package:afriqueen/features/login/repository/login_repository.dart';
-import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:flutter/foundation.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final LoginRepository _loginRepository;
+  final LoginRepository _repository;
   bool _isPasswordHidden = true;
-  final _app = AppGetStorage();
   LoginModel _loginModel = LoginModel(email: '', password: '');
 
-  LoginBloc({required LoginRepository loginrepository})
-      : _loginRepository = loginrepository,
-        super(LoginInitial()) {
+  LoginBloc({
+    LoginRepository? repository,
+  }) : _repository = repository ?? LoginRepository(),
+    super(LoginInitial()) {
     //---------------------password visibility-----------------------------
     on<LoginPasswordVisibility>((
-      LoginPasswordVisibility event,
-      Emitter<LoginState> emit,
-    ) {
+        LoginPasswordVisibility event,
+        Emitter<LoginState> emit,
+        ) {
       _isPasswordHidden = !_isPasswordHidden;
       emit(state.copyWith(isLoginPasswordVisible: _isPasswordHidden));
     });
@@ -35,35 +35,40 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     //------------------------User pressed LoginButton--------------------------
     on<LoginSubmit>((event, emit) async {
-      emit(LoginLoading.fromState(state));
-      UserCredential? userCredential = await _loginRepository.loginWithEmail(
-        _loginModel,
-      );
+      try {
+        emit(LoginLoading.fromState(state));
+        UserCredential? userCredential = await _repository.loginWithEmail(
+          _loginModel,
+        );
 
-      if (userCredential != null) {
-        if (_loginRepository.isExistingUser) {
-          emit(LoginSuccess.fromState(state));
+        if (userCredential != null && userCredential.user != null) {
+          if (_repository.isExistingUser) {
+            emit(LoginSuccess.fromState(state));
+          } else {
+            emit(GoogleLoginNewUser.fromState(state));
+          }
         } else {
-          emit(GoogleLoginNewUser.fromState(state));
+          emit(LoginError.fromState(state, error: _repository.error ?? 'Authentication failed'));
         }
-      } else {
-        emit(LoginError.fromState(state, error: _loginRepository.error!.tr));
+      } catch (e) {
+        debugPrint('Login error: $e');
+        emit(LoginError.fromState(state, error: _repository.error ?? 'Something went wrong'));
       }
     });
     // -------------------google signing--------------------------------------
     on<GoogleSignInButtonClicked>((event, emit) async {
       emit(LoginLoading.fromState(state));
-      UserCredential? userCredential = await _loginRepository.loginWithGoogle();
+      UserCredential? userCredential = await _repository.loginWithGoogle();
 
       if (userCredential != null) {
-        if (_loginRepository.isExistingUser) {
+        if (_repository.isExistingUser) {
           emit(LoginSuccess.fromState(state));
         } else {
           emit(GoogleLoginNewUser.fromState(state));
         }
       } else {
         emit(
-          GoogleLoginError.fromState(state, error: _loginRepository.error!.tr),
+          GoogleLoginError.fromState(state, error: _repository.error!.tr),
         );
       }
     });

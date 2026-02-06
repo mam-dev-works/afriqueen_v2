@@ -26,8 +26,8 @@ class FetchedScreen extends StatelessWidget {
             itemCount: favData.length,
             itemBuilder: (context, index) {
               final item = favData[index];
-              final hasValidUrl = item.imgURL.isNotEmpty &&
-                  Uri.tryParse(item.imgURL)?.hasAbsolutePath == true;
+                      final hasValidUrl = item.photos.isNotEmpty &&
+            Uri.tryParse(item.photos.first)?.hasAbsolutePath == true;
 
               return hasValidUrl
                   ? Container(

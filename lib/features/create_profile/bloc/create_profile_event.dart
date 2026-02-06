@@ -23,6 +23,22 @@ final class GenderChanged extends CreateProfileEvent {
   List<Object> get props => [gender];
 }
 
+final class OrientationChanged extends CreateProfileEvent {
+  final String orientation;
+
+  const OrientationChanged({required this.orientation});
+  @override
+  List<Object> get props => [orientation];
+}
+
+final class RelationshipStatusChanged extends CreateProfileEvent {
+  final String status;
+
+  const RelationshipStatusChanged({required this.status});
+  @override
+  List<Object> get props => [status];
+}
+
 final class DobChanged extends CreateProfileEvent {
   final DateTime dob;
 
@@ -101,3 +117,103 @@ final class DescriptionChanged extends CreateProfileEvent {
 }
 
 final class ResetCreateProfileEvent extends CreateProfileEvent {}
+
+final class CreateCompleteProfile extends CreateProfileEvent {
+  final String name;
+  final String description;
+  final DateTime dob;
+  final String gender;
+  final String orientation;
+  final String relationshipStatus;
+  final String country;
+  final String city;
+  final List<String> mainInterests;
+  final List<String> secondaryInterests;
+  final List<String> passions;
+  final List<String> photos;
+  final int height;
+  final int silhouette;
+  final List<String> ethnicOrigins;
+  final List<String> religions;
+  final List<String> qualities;
+  final List<String> flaws;
+  final int hasChildren;
+  final int wantsChildren;
+  final int hasAnimals;
+  final List<String> languages;
+  final List<String> educationLevels;
+  final int alcohol;
+  final int smoking;
+  final int snoring;
+  final List<String> hobbies;
+  final String searchDescription;
+  final String whatLookingFor;
+  final String whatNotWant;
+
+  const CreateCompleteProfile({
+    required this.name,
+    required this.description,
+    required this.dob,
+    required this.gender,
+    required this.orientation,
+    required this.relationshipStatus,
+    required this.country,
+    required this.city,
+    required this.mainInterests,
+    required this.secondaryInterests,
+    required this.passions,
+    required this.photos,
+    required this.height,
+    required this.silhouette,
+    required this.ethnicOrigins,
+    required this.religions,
+    required this.qualities,
+    required this.flaws,
+    required this.hasChildren,
+    required this.wantsChildren,
+    required this.hasAnimals,
+    required this.languages,
+    required this.educationLevels,
+    required this.alcohol,
+    required this.smoking,
+    required this.snoring,
+    required this.hobbies,
+    required this.searchDescription,
+    required this.whatLookingFor,
+    required this.whatNotWant,
+  });
+
+  @override
+  List<Object> get props => [
+    name,
+    description,
+    dob,
+    gender,
+    orientation,
+    relationshipStatus,
+    country,
+    city,
+    mainInterests,
+    secondaryInterests,
+    passions,
+    photos,
+    height,
+    silhouette,
+    ethnicOrigins,
+    religions,
+    qualities,
+    flaws,
+    hasChildren,
+    wantsChildren,
+    hasAnimals,
+    languages,
+    educationLevels,
+    alcohol,
+    smoking,
+    snoring,
+    hobbies,
+    searchDescription,
+    whatLookingFor,
+    whatNotWant,
+  ];
+}

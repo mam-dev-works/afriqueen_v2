@@ -25,13 +25,16 @@ dependencies {
     // Core Google Play Services
     implementation("com.google.android.gms:play-services-tasks:18.1.0")
 
+    // AppCompat for image_cropper (UCrop)
+    implementation("androidx.appcompat:appcompat:1.6.1")
+
     // Other Flutter dependencies (if any)
     // implementation("androidx.annotation:annotation:1.x.x") // Example
 }
 
 android {
     namespace = "com.company.afriqueen"
-    compileSdk = 35
+    compileSdk = 36
     ndkVersion = "29.0.13113456"
 
     compileOptions {
@@ -48,7 +51,7 @@ android {
         applicationId = "com.company.afriqueen"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 23
+        minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

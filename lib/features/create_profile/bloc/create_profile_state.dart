@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 //----------------Create Profile State----------------------
 class CreateProfileState extends Equatable {
   final String gender;
+  final String? orientation;
+  final String? relationshipStatus;
   final DateTime dob;
   final List<String> friendship;
   final List<String> passion;
@@ -25,11 +27,15 @@ class CreateProfileState extends Equatable {
     required this.friendship,
     required this.passion,
     required this.description,
+    this.orientation,
+    this.relationshipStatus,
   });
 
   factory CreateProfileState.initial() {
     return CreateProfileState(
       gender: 'Male',
+      orientation: null,
+      relationshipStatus: null,
       dob: DateTime.now(),
       friendship: [],
       passion: [],
@@ -43,6 +49,8 @@ class CreateProfileState extends Equatable {
   }
   CreateProfileState copyWith({
     String? gender,
+    String? orientation,
+    String? relationshipStatus,
     DateTime? dob,
     List<String>? friendship,
     List<String>? passion,
@@ -54,6 +62,8 @@ class CreateProfileState extends Equatable {
     String? description,
   }) => CreateProfileState(
     gender: gender ?? this.gender,
+    orientation: orientation ?? this.orientation,
+    relationshipStatus: relationshipStatus ?? this.relationshipStatus,
     dob: dob ?? this.dob,
     friendship: friendship ?? this.friendship,
     passion: passion ?? this.passion,
@@ -65,8 +75,10 @@ class CreateProfileState extends Equatable {
     description: description ?? this.description,
   );
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
     gender,
+    orientation,
+    relationshipStatus,
     friendship,
     dob,
     passion,

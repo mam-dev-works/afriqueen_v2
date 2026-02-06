@@ -43,14 +43,20 @@ class SettingScreen extends StatelessWidget {
                 NotificationListTile(),
                 //-------------divider----------------
                 CustomDivider(),
-                //---------------------Logout-------------------------
-
-                LogoutListTile(),
-                //-------------divider----------------
-                CustomDivider(),
 
                 //------------------Privacy Settings------------------------------
                 PrivacyListTile(),
+                //-------------divider----------------
+                CustomDivider(),
+
+                //---------------------EditProfile-------------------------
+                EditProfileTile(),
+                //-------------divider----------------
+                CustomDivider(),
+
+                //---------------------Logout-------------------------
+
+                LogoutListTile(),
                 //-------------divider----------------
                 CustomDivider(),
               ],

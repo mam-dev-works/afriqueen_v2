@@ -14,48 +14,65 @@ import 'package:get/get.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: BlocListener<LoginBloc, LoginState>(
           listener: _listener,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20.w,
-              ).copyWith(top: 20.h),
-              child: Form(
-                key: _formKey,
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.white,
+                  Colors.grey[50]!,
+                ],
+              ),
+            ),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 5.h,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // app logo image
-                    SizedBox(height: 50.h),
-                    //----- afriqueen logo------------
+                    // Top spacing
+                    SizedBox(height: 80.h),
+                    
+                    // App Logo with better spacing
                     const AppLogo(),
-                    SizedBox(height: 20.h),
-                    //----------------text---------------
-                    const LoginText(),
-                    SizedBox(height: 10.h),
-                    //--------------TextField For Email---------------
-                    const LoginEmailInput(),
-                    SizedBox(height: 10.h),
-                    //--------------TextField For Password---------------
-                    const LoginPasswordInput(),
-
-                    //----------------Forget Password--------------------
-                    const ForgotPassword(),
-                    SizedBox(height: 45.h),
-                    //--------------------------Signup button and Login with Email Both Inside This ---------------------
-                    LoginAndGoogleSigninButton(formKey: _formKey),
-                    //------------------if user has already have account------------------
-                    SizedBox(height: 3.h),
-                    const DonotHaveAccount(),
+                    SizedBox(height: 40.h),
+                    
+                    // Welcome text with improved styling
+                    Text(
+                      EnumLocale.loginText.name.tr,
+                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 8.h),
+                    
+                    // Subtitle
+                    Text(
+                      EnumLocale.passwordlessLoginSubtitle.name.tr,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Colors.grey[600],
+                        fontSize: 16.sp,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 60.h),
+                    
+                    // Passwordless Login Button
+                    const PasswordlessLoginButton(),
+                    
+                    // Bottom spacing
+                    SizedBox(height: 40.h),
                   ],
                 ),
               ),

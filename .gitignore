@@ -52,7 +52,10 @@ web/.dart_tool/
 *.lock
 *.tmp
 *.swp
+*.db
 
 # Environment files (optional)
 .env
 .env.*
+
+extracted/firebase_cpp_sdk_windows/

@@ -13,6 +13,7 @@ class AppStrings {
   static const String us = 'assets/images/country/us.png';
   static const String fr = 'assets/images/country/fr.png';
   static const String uploadImage = 'assets/images/upload_image.json';
+
   //---------------- fonts  path strings-------------------------
 
   static const String robotoLight = 'assets/fonts/Roboto-Light.ttf';
@@ -35,7 +36,6 @@ class AppStrings {
       EnumLocale.slowDancing.name.tr,
       EnumLocale.loveLetters.name.tr,
     ],
-
     "Sports & Outdoors": [
       EnumLocale.football.name.tr,
       EnumLocale.yoga.name.tr,
@@ -57,17 +57,96 @@ class AppStrings {
       EnumLocale.camping.name.tr,
       EnumLocale.cityBreaks.name.tr,
     ],
+    "Passion": [
+      EnumLocale.music.name.tr,
+      EnumLocale.creativity.name.tr,
+      EnumLocale.fitness.name.tr,
+      EnumLocale.travel.name.tr,
+      EnumLocale.fashion.name.tr,
+    ]
   };
-
-  static List<String> passion = [
-    EnumLocale.music.name.tr,
-    EnumLocale.creativity.name.tr,
-    EnumLocale.fitness.name.tr,
-    EnumLocale.travel.name.tr,
-    EnumLocale.fashion.name.tr,
-  ];
 
   static const List<String> language = ["English", "Français"];
   static const cloudName = "dv4p4ll3u";
-  static const uploadPreset =  "afriqueen";
+  static const uploadPreset = "afriqueen";
+
+  static List<String> characterTraits = [
+    EnumLocale.friendly.name.tr,
+    EnumLocale.ambitious.name.tr,
+    EnumLocale.creative.name.tr,
+    EnumLocale.organized.name.tr,
+    EnumLocale.adventurous.name.tr,
+    EnumLocale.patient.name.tr,
+    EnumLocale.honest.name.tr,
+    EnumLocale.reliable.name.tr,
+    EnumLocale.optimistic.name.tr,
+    EnumLocale.empathetic.name.tr,
+    EnumLocale.confident.name.tr,
+    EnumLocale.humble.name.tr,
+    EnumLocale.passionate.name.tr,
+    EnumLocale.determined.name.tr,
+    EnumLocale.adaptable.name.tr,
+  ];
+
+  static List<String> religions = [
+    EnumLocale.christianity.name.tr,
+    EnumLocale.islam.name.tr,
+    EnumLocale.hinduism.name.tr,
+    EnumLocale.buddhism.name.tr,
+    EnumLocale.judaism.name.tr,
+    EnumLocale.sikhism.name.tr,
+    EnumLocale.taoism.name.tr,
+    EnumLocale.confucianism.name.tr,
+    EnumLocale.shinto.name.tr,
+    EnumLocale.otherReligion.name.tr,
+  ];
+
+  static List<String> levelOfStudy = [
+    EnumLocale.highSchool.name.tr,
+    EnumLocale.associateDegree.name.tr,
+    EnumLocale.bachelorsDegree.name.tr,
+    EnumLocale.mastersDegree.name.tr,
+    EnumLocale.doctorate.name.tr,
+    EnumLocale.postDoctorate.name.tr,
+    EnumLocale.professionalCertification.name.tr,
+    EnumLocale.tradeSchool.name.tr,
+    EnumLocale.selfTaught.name.tr,
+    EnumLocale.otherStudy.name.tr,
+  ];
+
+  static List<String> incomeLevel = [
+    EnumLocale.lessThan20000.name.tr,
+    EnumLocale.between20000And40000.name.tr,
+    EnumLocale.between40000And60000.name.tr,
+    EnumLocale.between60000And80000.name.tr,
+    EnumLocale.between80000And100000.name.tr,
+    EnumLocale.between100000And150000.name.tr,
+    EnumLocale.between150000And200000.name.tr,
+    EnumLocale.moreThan200000.name.tr,
+    EnumLocale.preferNotToSay.name.tr,
+  ];
+
+  static List<String> ethnicOrigins = [
+    EnumLocale.african.name.tr,
+    EnumLocale.asian.name.tr,
+    EnumLocale.caucasian.name.tr,
+    EnumLocale.hispanic.name.tr,
+    EnumLocale.middleEastern.name.tr,
+    EnumLocale.mixed.name.tr,
+    EnumLocale.nativeAmerican.name.tr,
+    EnumLocale.pacificIslander.name.tr,
+    EnumLocale.otherEthnic.name.tr,
+  ];
+
+  static List<String> silhouettes = [
+    EnumLocale.athletic.name.tr,
+    EnumLocale.average.name.tr,
+    EnumLocale.curvy.name.tr,
+    EnumLocale.slim.name.tr,
+    EnumLocale.muscular.name.tr,
+    EnumLocale.plusSize.name.tr,
+    EnumLocale.petite.name.tr,
+    EnumLocale.tall.name.tr,
+    EnumLocale.otherSilhouette.name.tr,
+  ];
 }

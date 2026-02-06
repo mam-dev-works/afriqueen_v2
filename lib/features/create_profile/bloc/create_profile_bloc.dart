@@ -27,6 +27,18 @@ class CreateProfileBloc extends Bloc<CreateProfileEvent, CreateProfileState> {
       _box.write('sex', event.gender);
     });
 
+    //-------------------------- For Orientation-----------------------------
+    on<OrientationChanged>((OrientationChanged event, Emitter<CreateProfileState> emit) {
+      emit(state.copyWith(orientation: event.orientation));
+      _box.write('orientation', event.orientation);
+    });
+
+    //-------------------------- For Relationship Status-----------------------------
+    on<RelationshipStatusChanged>((RelationshipStatusChanged event, Emitter<CreateProfileState> emit) {
+      emit(state.copyWith(relationshipStatus: event.status));
+      _box.write('relationshipStatus', event.status);
+    });
+
     //-------------------------- For Age-----------------------------
     on<DobChanged>((DobChanged event, Emitter<CreateProfileState> emit) {
       //debugPrint("${DateTime.now().year - value.year}");
@@ -102,10 +114,7 @@ class CreateProfileBloc extends Bloc<CreateProfileEvent, CreateProfileState> {
       _box.write('description', event.description);
     });
     //------------------------user submit data -------------------------------------
-    on<SubmitButtonClicked>((
-      SubmitButtonClicked event,
-      Emitter<CreateProfileState> emit,
-    ) async {
+    on<SubmitButtonClicked>((SubmitButtonClicked event, Emitter<CreateProfileState> emit) async {
       try {
         emit(Loading.fromState(state));
         final secureUrl = await _profileRepository.uploadToCloudinary(
@@ -129,6 +138,34 @@ class CreateProfileBloc extends Bloc<CreateProfileEvent, CreateProfileState> {
             interests: _interests.toList(),
             imgURL: secureUrl,
             createdDate: DateTime.now(),
+            // New fields with default values
+            name: _box.read('pseudo') ?? '',
+            dob: state.dob,
+            gender: state.gender,
+            orientation: state.orientation ?? '',
+            relationshipStatus: state.relationshipStatus ?? '',
+            mainInterests: [],
+            secondaryInterests: [],
+            passions: [],
+            photos: [secureUrl],
+            height: 170,
+            silhouette: 0,
+            ethnicOrigins: [],
+            religions: [],
+            qualities: [],
+            flaws: [],
+            hasChildren: -1,
+            wantsChildren: -1,
+            hasAnimals: -1,
+            languages: [],
+            educationLevels: [],
+            alcohol: -1,
+            smoking: -1,
+            snoring: -1,
+            hobbies: [],
+            searchDescription: '',
+            whatLookingFor: '',
+            whatNotWant: '',
           );
           await _profileRepository.uploadToFirebase(createProfileModel);
           emit(Success.fromState(state));
@@ -139,12 +176,80 @@ class CreateProfileBloc extends Bloc<CreateProfileEvent, CreateProfileState> {
       }
     });
 
-    //----------------Reset state-------------------
-    on<ResetCreateProfileEvent>((
-      ResetCreateProfileEvent event,
-      Emitter<CreateProfileState> emit,
-    ) {
-      emit(CreateProfileInitial());
+    //------------------------Create complete user profile -------------------------------------
+    on<CreateCompleteProfile>((CreateCompleteProfile event, Emitter<CreateProfileState> emit) async {
+      try {
+        emit(Loading.fromState(state));
+        
+        // Upload photos to Cloudinary if they exist
+        List<String> uploadedPhotoUrls = [];
+        if (event.photos.isNotEmpty) {
+          uploadedPhotoUrls = await _profileRepository.uploadMultiplePhotosToCloudinary(event.photos);
+        }
+        
+        final CreateProfileModel createProfileModel = CreateProfileModel(
+          description: event.description,
+          pseudo: event.name,
+          sex: event.gender,
+          age: DateTime.now().year - event.dob.year,
+          country: event.country,
+          city: event.city,
+          interests: [...event.mainInterests, ...event.secondaryInterests, ...event.passions],
+          imgURL: uploadedPhotoUrls.isNotEmpty ? uploadedPhotoUrls.first : '',
+          createdDate: DateTime.now(),
+          // New fields
+          name: event.name,
+          dob: event.dob,
+          gender: event.gender,
+          orientation: event.orientation,
+          relationshipStatus: event.relationshipStatus,
+          mainInterests: event.mainInterests,
+          secondaryInterests: event.secondaryInterests,
+          passions: event.passions,
+          photos: uploadedPhotoUrls,
+          height: event.height,
+          silhouette: event.silhouette,
+          ethnicOrigins: event.ethnicOrigins,
+          religions: event.religions,
+          qualities: event.qualities,
+          flaws: event.flaws,
+          hasChildren: event.hasChildren,
+          wantsChildren: event.wantsChildren,
+          hasAnimals: event.hasAnimals,
+          languages: event.languages,
+          educationLevels: event.educationLevels,
+          alcohol: event.alcohol,
+          smoking: event.smoking,
+          snoring: event.snoring,
+          hobbies: event.hobbies,
+          searchDescription: event.searchDescription,
+          whatLookingFor: event.whatLookingFor,
+          whatNotWant: event.whatNotWant,
+        );
+        
+        await _profileRepository.createCompleteUserProfile(createProfileModel);
+        emit(Success.fromState(state));
+        add(ResetCreateProfileEvent());
+      } catch (e) {
+        emit(Error.fromState(state, errorMessage: e.toString()));
+      }
+    });
+
+    //------------------------Reset create profile event -------------------------------------
+    on<ResetCreateProfileEvent>((ResetCreateProfileEvent event, Emitter<CreateProfileState> emit) {
+      _interests.clear();
+      _box.remove('pseudo');
+      _box.remove('sex');
+      _box.remove('age');
+      _box.remove('country');
+      _box.remove('city');
+      _box.remove('friendship');
+      _box.remove('passion');
+      _box.remove('love');
+      _box.remove('sports');
+      _box.remove('food');
+      _box.remove('adventure');
+      _box.remove('description');
     });
   }
 }

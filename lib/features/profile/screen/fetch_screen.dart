@@ -26,6 +26,9 @@ class ProfileDataContent extends StatelessWidget {
                 children: [
                   //----------Main Container--------------
                   MainContainer(),
+                  SizedBox(height: 16.h),
+                  //----------Profile Menu (like screenshots)--------------
+                  ProfileMenuSection(),
                   SizedBox(height: 30.h),
                 ],
               ),

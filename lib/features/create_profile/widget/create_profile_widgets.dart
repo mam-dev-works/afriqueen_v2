@@ -628,6 +628,8 @@ class AdventureInchoice extends StatelessWidget {
           child: Center(
             child: BlocBuilder<CreateProfileBloc, CreateProfileState>(
               builder: (context, state) {
+
+
                 return Choice<String>.prompt(
                   multiple: true,
                   value: state.adventure,
@@ -831,9 +833,9 @@ class PassionChoice extends StatelessWidget {
                   );
                 }
               },
-              itemCount: AppStrings.passion.length,
+              itemCount: AppStrings.categorizedUserInterests["Passion"]!.length,
               itemBuilder: (state, i) {
-                final item = AppStrings.passion[i];
+                final item = AppStrings.categorizedUserInterests["Passion"]![i];
                 final selected = state.selected(item);
                 final isLimitReached = state.value.length >= 2 && !selected;
 

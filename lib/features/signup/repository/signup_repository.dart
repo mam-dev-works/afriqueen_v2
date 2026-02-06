@@ -54,7 +54,6 @@ class SignupRepository {
   ///-------------------- Sign up a user with Google----------------------------
   Future<UserCredential?> signupWithGoogle() async {
     try {
-      // Önceki oturumu temizle
       await _googleSignIn.signOut();
       
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();

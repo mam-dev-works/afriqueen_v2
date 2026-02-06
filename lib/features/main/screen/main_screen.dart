@@ -1,16 +1,26 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
-import 'package:afriqueen/features/add/screen/add_screen.dart';
+import 'package:afriqueen/common/localization/enums/enums.dart';
+import 'package:afriqueen/features/chat/bloc/chat_bloc.dart';
+import 'package:afriqueen/features/chat/repository/chat_repository.dart';
+import 'package:afriqueen/features/chat/screen/chat_list_screen.dart';
 import 'package:afriqueen/features/reels/screen/reels_screen.dart';
-import 'package:afriqueen/features/home/screen/home_screen.dart';
-import 'package:afriqueen/features/match/screen/match_screen.dart';
+import 'package:afriqueen/features/meeting/screen/meeting_screen.dart';
+import 'package:afriqueen/features/stories/screen/stories_screen.dart';
+import 'package:afriqueen/features/activity/screen/activity_screen.dart';
 import 'package:afriqueen/services/status/repository/status_repository.dart';
+import 'package:afriqueen/features/event/bloc/event_message_bloc.dart';
+import 'package:afriqueen/features/event/repository/event_message_repository.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:hugeicons/hugeicons.dart';
+
+import '../../add/screen/add_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -20,18 +30,30 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 0;
-  final List<Widget> _widgets = [
-    HomeScreen(),
-    MatchScreen(),
-    AddScreen(),
-    AddScreen(),
-    ReelsScreen(),
-  ];
+  int _selectedIndex = 2; // Meeting butonu aktif olsun (swap sonrası index 2)
+  late final List<Widget> _widgets;
 
   @override
   void initState() {
     super.initState();
+    _widgets = [
+      AddScreen(), // Evenement (Event)
+      const StoriesScreen(), // Story
+      const MeetingScreen(), // Meeting (combines Match, Liste, Profile)
+      const ActivityScreenWrapper(), // Activité (Activity)
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => ChatBloc(ChatRepository()),
+          ),
+          BlocProvider(
+            create: (context) => EventMessageBloc(EventMessageRepository()),
+          ),
+        ],
+        child: const ChatListScreen(),
+      ), // Messagerie (Messaging)
+    ];
+    
     if (FirebaseAuth.instance.currentUser != null) {
       StatusRepository().setupUserPresence();
     }
@@ -43,7 +65,7 @@ class _MainScreenState extends State<MainScreen> {
       body: _widgets[_selectedIndex],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: AppColors.floralWhite,
+          color: AppColors.white,
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
@@ -54,56 +76,73 @@ class _MainScreenState extends State<MainScreen> {
         child: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 8.h),
-            child: GNav(
+            child: Stack(
+              children: [
+                GNav(
               rippleColor: AppColors.grey.withValues(alpha: 0.2),
               hoverColor: AppColors.grey.withValues(alpha: 0.2),
-              gap: 8.w,
-              activeColor: AppColors.primaryColor,
-              iconSize: 24.r,
-              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 3.h),
+              gap: 4.w,
+              activeColor: AppColors.orangeAccent,
+              iconSize: 20.r,
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
               duration: Duration(milliseconds: 400),
-              tabBackgroundColor: AppColors.grey.withValues(alpha: 0.2),
-              color: Colors.black,
+              tabBackgroundColor: AppColors.lightOrange,
+              color: Colors.grey.shade600,
               tabs: [
                 GButton(
+                  text: EnumLocale.altNavbarEvenement.name.tr,
                   textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppColors.primaryColor,
+                        color: AppColors.orangeAccent,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w500,
                       ),
-                  iconSize: 27.r,
-                  gap: 5.w,
-                  icon: HugeIcons.strokeRoundedLocation01,
+                  iconSize: 20.r,
+                  gap: 2.w,
+                  icon: Icons.calendar_today_outlined,
                 ),
                 GButton(
+                  text: EnumLocale.altNavbarStories.name.tr,
                   textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppColors.primaryColor,
+                        color: AppColors.orangeAccent,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w500,
                       ),
-                  gap: 5.w,
-                  iconSize: 27.r,
-                  icon: HugeIcons.strokeRoundedCards01,
+                  gap: 2.w,
+                  iconSize: 20.r,
+                  icon: Icons.photo_library_outlined,
                 ),
                 GButton(
+                  text: EnumLocale.altNavbarDiscover.name.tr,
                   textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppColors.primaryColor,
+                        color: AppColors.orangeAccent,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w500,
                       ),
-                  gap: 5.w,
-                  iconSize: 27.r,
-                  icon: CupertinoIcons.plus,
+                  gap: 2.w,
+                  iconSize: 20.r,
+                  icon: Icons.favorite,
                 ),
                 GButton(
+                  text: EnumLocale.altNavbarActivite.name.tr,
                   textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppColors.primaryColor,
+                        color: AppColors.orangeAccent,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w500,
                       ),
-                  gap: 5.w,
-                  iconSize: 27.r,
+                  iconSize: 20.r,
+                  gap: 2.w,
+                  icon: Icons.access_time_outlined,
+                ),
+                GButton(
+                  text: EnumLocale.altNavbarMessagerie.name.tr,
+                  textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: AppColors.orangeAccent,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                  gap: 2.w,
+                  iconSize: 20.r,
                   icon: CupertinoIcons.chat_bubble,
-                ),
-                GButton(
-                  textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppColors.primaryColor,
-                      ),
-                  iconSize: 27.r,
-                  gap: 5.w,
-                  icon: CupertinoIcons.play_arrow,
                 ),
               ],
               selectedIndex: _selectedIndex,
@@ -113,9 +152,10 @@ class _MainScreenState extends State<MainScreen> {
                 });
               },
             ),
+            ],
           ),
         ),
       ),
-    );
+    ));
   }
 }

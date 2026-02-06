@@ -27,4 +27,18 @@ class AppGetStorage {
   setPageNumber(int value) {
     box.write('pageNumber', value);
   }
+
+  //------------------------- for magic link email ------------------
+  String? getLastEmail() {
+    return box.read('lastEmail');
+  }
+
+  void setLastEmail(String email) {
+    box.write('lastEmail', email);
+  }
+
+  //------------------------- Clear all stored data ------------------
+  Future<void> clearAll() async {
+    await box.erase();
+  }
 }

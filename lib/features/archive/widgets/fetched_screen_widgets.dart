@@ -13,6 +13,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:afriqueen/features/chat/bloc/chat_bloc.dart';
+import 'package:afriqueen/features/chat/repository/chat_repository.dart';
+import 'package:afriqueen/features/chat/screen/chat_screen.dart';
 
 import '../../favorite/bloc/favorite_bloc.dart';
 
@@ -36,14 +39,60 @@ class UserImage extends StatelessWidget {
             ),
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: CachedNetworkImageProvider(Homedata!.imgURL),
+              image: CachedNetworkImageProvider(Homedata!.photos.first),
             ),
+            // Elite styling
+            border: Homedata!.isElite 
+                ? Border.all(
+                    color: Colors.amber,
+                    width: 3.w,
+                  )
+                : null,
           ),
         ),
         Positioned(
           top: 8.r,
           right: 8.r,
           child: UserStatus(id: Homedata!.id),
+        ),
+        // Elite badge
+        if (Homedata!.isElite)
+          Positioned(
+            top: 8.r,
+            left: 8.r,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+              decoration: BoxDecoration(
+                color: Colors.amber,
+                borderRadius: BorderRadius.circular(12.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 4,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.star,
+                    color: Colors.white,
+                    size: 16.r,
+                  ),
+                  SizedBox(width: 4.w),
+                  Text(
+                    'ELITE',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
         ),
       ],
     );
@@ -115,7 +164,57 @@ class ButtonsList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () async {
+                  final chatRepository = ChatRepository();
+                  try {
+                    debugPrint('Creating chat for user: ${Homedata!.id}');
+                    final chatId = await chatRepository.createOrGetChat(
+                      Homedata!.id,
+                      {
+                        'id': Homedata!.id,
+                        'name': Homedata!.pseudo,
+                        'photoUrl': Homedata!.photos.first,
+                      },
+                    );
+                    debugPrint('Chat created with ID: $chatId');
+                    
+                    if (!context.mounted) return;
+                    
+                    final args = {
+                      'chatId': chatId,
+                      'otherUser': {
+                        'id': Homedata!.id,
+                        'name': Homedata!.pseudo,
+                        'photoUrl': Homedata!.photos.first,
+                      },
+                    };
+                    debugPrint('Navigating to chat with args: $args');
+                    
+                    Get.to(
+                      () => RepositoryProvider(
+                        create: (context) => ChatRepository(),
+                        child: BlocProvider(
+                          create: (context) => ChatBloc(ChatRepository()),
+                          child: ChatScreen(
+                            chatId: chatId,
+                            receiverId: Homedata!.id,
+                            receiverName: Homedata!.pseudo,
+                            receiverPhotoUrl: Homedata!.photos.first,
+                          ),
+                        ),
+                      ),
+                      arguments: args,
+                    );
+                  } catch (e) {
+                    debugPrint('Error creating chat: $e');
+                    if (!context.mounted) return;
+                    snackBarMessage(
+                      context,
+                      EnumLocale.defaultError.name.tr,
+                      Theme.of(context),
+                    );
+                  }
+                },
                 icon: Icon(
                   CupertinoIcons.chat_bubble,
                   color: AppColors.black,
@@ -253,7 +352,7 @@ class Interests extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 5.w),
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemCount: homeModel.interests.length,
+      itemCount: homeModel.mainInterests.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         mainAxisSpacing: 8.h,
@@ -280,7 +379,7 @@ class Interests extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              homeModel.interests[index],
+              homeModel.mainInterests[index],
               style: Theme.of(
                 context,
               ).textTheme.bodyMedium!.copyWith(fontSize: 14.sp),

@@ -17,6 +17,8 @@ class ProfileModel extends Equatable {
   final DateTime createdDate;
   final String imgURL;
   final String description;
+  final bool isElite;
+  final DateTime? lastActive;
   const ProfileModel({
     required this.id,
     required this.pseudo,
@@ -29,6 +31,8 @@ class ProfileModel extends Equatable {
     required this.createdDate,
     required this.imgURL,
     required this.description,
+    this.isElite = false,
+    this.lastActive,
   });
 
   ProfileModel copyWith({
@@ -43,6 +47,8 @@ class ProfileModel extends Equatable {
     DateTime? createdDate,
     String? imgURL,
     String? description,
+    bool? isElite,
+    DateTime? lastActive,
   }) {
     return ProfileModel(
       id: id ?? this.id,
@@ -56,6 +62,8 @@ class ProfileModel extends Equatable {
       createdDate: createdDate ?? this.createdDate,
       imgURL: imgURL ?? this.imgURL,
       description: description ?? this.description,
+      isElite: isElite ?? this.isElite,
+      lastActive: lastActive ?? this.lastActive,
     );
   }
 
@@ -72,23 +80,27 @@ class ProfileModel extends Equatable {
       'createdDate': createdDate.millisecondsSinceEpoch,
       'imgURL': imgURL,
       'description': description,
+      'isElite': isElite,
+      'lastActive': lastActive?.millisecondsSinceEpoch,
     };
   }
 
   factory ProfileModel.fromMap(Map<String, dynamic> map) {
     return ProfileModel(
-      id: map['id'] as String,
-      pseudo: map['pseudo'] as String,
-      sex: map['sex'] as String,
-      age: map['age'] as int,
-      country: map['country'] as String,
-      city: map['city'] as String,
+      id: map['id']?.toString() ?? '',
+      pseudo: map['pseudo']?.toString() ?? '',
+      sex: map['sex']?.toString() ?? map['gender']?.toString() ?? '',
+      age: map['age'] is int ? map['age'] as int : 0,
+      country: map['country']?.toString() ?? '',
+      city: map['city']?.toString() ?? '',
 
-      interests: List<String>.from(map['interests'] ?? []),
+      interests: List<String>.from(map['interests'] ?? map['mainInterests'] ?? []),
       createdDate:
           (map['createdDate'] as Timestamp?)?.toDate() ?? DateTime.now(),
-      imgURL: map['imgURL'] as String,
-      description: map['description'] as String,
+      imgURL: map['imgURL']?.toString() ?? (map['photos'] is List && (map['photos'] as List).isNotEmpty ? (map['photos'] as List).first.toString() : ''),
+      description: map['description']?.toString() ?? map['searchDescription']?.toString() ?? '',
+      isElite: map['isElite'] as bool? ?? false,
+      lastActive: (map['lastActive'] as Timestamp?)?.toDate(),
     );
   }
 
@@ -114,6 +126,8 @@ class ProfileModel extends Equatable {
       createdDate,
       imgURL,
       description,
+      isElite,
+      lastActive ?? DateTime(0),
     ];
   }
 
@@ -130,5 +144,7 @@ class ProfileModel extends Equatable {
     createdDate: DateTime(0), // Or a fixed date like DateTime(0) if preferred
     imgURL: '',
     description: '',
+    isElite: false,
+    lastActive: null,
   );
 }
